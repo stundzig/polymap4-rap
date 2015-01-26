@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.rap.ui.resources">
+      <resource
+            class="org.polymap.rap.updownload.dnd.DndResource">
+      </resource>
+   </extension>
+   <extension
+         point="org.eclipse.rap.ui.serviceHandler">
+      <serviceHandler
+            class="org.polymap.rap.updownload.dnd.DndServiceHandler"
+            id="org.polymap.rap.updownload.DndServiceHandler">
+      </serviceHandler>
+      <serviceHandler
+            class="org.polymap.rap.updownload.download.DownloadServiceHandler"
+            id="org.polymap.rap.updownload.DownloadServiceHandler">
+      </serviceHandler>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.http.registry.servlets">
+      <servlet
+            alias="/dndupload"
+            class="org.polymap.rap.updownload.dnd.DndUploadServlet"
+            load-on-startup="true">
+      </servlet>
+   </extension>
+
+</plugin>

@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
@@ -33,9 +32,8 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 public class Icon extends OpenLayersObject {
 
-	public Icon(OpenLayersWidget widget, String url, Size size, Pixel offset) {
-		super(widget);
-		create("  new OpenLayers.Icon( '" + url + "',"
+	public Icon(String url, Size size, Pixel offset) {
+		super.create("  new OpenLayers.Icon( '" + url + "',"
 				+ size.getJSObjRef() + "," + offset.getJSObjRef() + ");");
 	}
 }

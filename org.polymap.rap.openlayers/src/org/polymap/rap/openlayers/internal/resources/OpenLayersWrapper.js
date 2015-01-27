@@ -68,7 +68,6 @@
 		this.element = document.createElement("div");
 		this.parent.append(this.element);
 		this.parent.addListener("Resize", this.layout);
-		this.objs;
 		rap.on("render", this.onRender);
 	};
 

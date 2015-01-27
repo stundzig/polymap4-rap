@@ -100,14 +100,14 @@ public class OpenLayersSessionHandler {
 	 * OpenLayersWidgetProvider.getInstance().cmd_stack.removeElementAt(0);
 	 * return res; }
 	 */
-//
-//	public void addCommand(OpenLayersCommand command) {
-//		if (widget == null) {
-//			cmdsBeforeWidgetWasPresent.add(command);
-//		} else {
-//			widget.executeCommand(command);
-//		}
-//	}
+
+	public void addCommand(OpenLayersCommand command) {
+		if (widget == null) {
+			cmdsBeforeWidgetWasPresent.add(command);
+		} else {
+			widget.executeCommand(command);
+		}
+	}
 
 	public OpenLayersObject getObj(String objRef) {
 		return obj_ref2obj.get(objRef);

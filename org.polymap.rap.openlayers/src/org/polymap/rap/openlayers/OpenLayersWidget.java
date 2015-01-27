@@ -92,6 +92,8 @@ public class OpenLayersWidget extends Composite {
 		remote.setHandler(operationHandler);
 		remote.set("appearance", "composite");
 		remote.set("overflow", "hidden");
+		
+//		remote.
 
 		OpenLayersSessionHandler.getInstance().setWidget(this);
 

@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 import org.polymap.rap.openlayers.controls.Control;
 
@@ -31,11 +30,11 @@ import org.polymap.rap.openlayers.controls.Control;
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  * 
  */
+
 public class ControlPosition extends OpenLayersObject {
 
-	public ControlPosition(OpenLayersWidget widget, Control ctrl) {
-		super(widget);
-		create(ctrl.getJSObjRef() + ".div;");
+	public ControlPosition(Control ctrl) {
+		super.create(ctrl.getJSObjRef() + ".div;");
 	}
 
 	public void setRight(int right) {

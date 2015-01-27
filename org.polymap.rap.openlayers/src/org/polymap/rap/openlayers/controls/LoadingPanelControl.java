@@ -22,8 +22,6 @@
 
 package org.polymap.rap.openlayers.controls;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
-
 /**
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
@@ -32,9 +30,8 @@ import org.polymap.rap.openlayers.OpenLayersWidget;
 
 public class LoadingPanelControl extends Control {
 
-	public LoadingPanelControl(OpenLayersWidget widget) {
-    	super(widget);
-		create("new OpenLayers.Control.LoadingPanel();");
+	public LoadingPanelControl() {
+		super.create("new OpenLayers.Control.LoadingPanel();");
 	}
 	
 }

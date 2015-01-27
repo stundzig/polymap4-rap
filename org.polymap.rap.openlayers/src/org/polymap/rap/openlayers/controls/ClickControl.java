@@ -27,8 +27,8 @@ public class ClickControl
 
     public static final String          EVENT_CLICK = "cclick";
     
-    public ClickControl(OpenLayersWidget widget) {
-    	super(widget);
+    public ClickControl() {
+//    	super(widget);
         create( "new OpenLayers.Control();" );
         addObjModCode( "OpenLayers.Util.extend(" + getJSObjRef() + ", {"
                 //+ "EVENT_TYPES: [\"" + EVENT_BOX + "\"]"

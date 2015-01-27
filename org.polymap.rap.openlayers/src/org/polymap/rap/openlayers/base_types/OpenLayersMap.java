@@ -92,7 +92,7 @@ public class OpenLayersMap extends OpenLayersObject {
 	/** triggered after the base layer changes **/
 	public final static String EVENT_CHANGEBASELAYER = "changebaselayer";
 
-//	private OpenLayersWidget widget;
+	private OpenLayersWidget widget;
 
 	private Projection projection;
 
@@ -115,16 +115,16 @@ public class OpenLayersMap extends OpenLayersObject {
 	public OpenLayersMap(final OpenLayersWidget widget, Projection projection,
 			Projection display_projection, String units, Bounds maxExtent,
 			float maxResolution) {
-		super(widget);
-		widget.setMap(this);
-//		this.widget = widget;
+		
+		
+		this.widget = widget;
 		this.projection = projection;
 		this.display_projection = display_projection;
 		this.maxResolution = maxResolution;
 		this.units = units;
 		this.maxExtent = maxExtent;
-
-		create(
+		widget.setMap(this);
+		super.create_with_widget(
 				new Stringer("new OpenLayers.Map(this.element, {controls: [],", "projection: ", projection
 								.getJSObjRef(), ",", "displayProjection: ",
 						display_projection.getJSObjRef(), ",", "units: '",
@@ -132,10 +132,10 @@ public class OpenLayersMap extends OpenLayersObject {
 						",", "restrictedExtent: ", maxExtent.getJSObjRef(),
 						",", "maxResolution: "
 								+ (maxResolution > -1 ? maxResolution
-										: "'auto'") + "});").toString());
+										: "'auto'") + "});").toString(), widget);
 	}
-//	//
-//	public OpenLayersMap(OpenLayersWidget widget) {
+	//
+//	public OpenLayersMap(final OpenLayersWidget widget) {
 //		this.widget = widget;
 //		super.create_with_widget(
 //				"new OpenLayers.Map({div:document.getElementById(this._id), controls:[]});",
@@ -143,8 +143,6 @@ public class OpenLayersMap extends OpenLayersObject {
 //	}
 
 	public OpenLayersMap(final OpenLayersWidget widget) {
-		super(widget);
-		widget.setMap(this);
 //		this.controls = new ArrayList<Control>();
 //		this.layers = new LinkedHashMap<String, Layer>();
 		// this.popups = new ArrayList<IPopup>();
@@ -152,9 +150,11 @@ public class OpenLayersMap extends OpenLayersObject {
 
 		// remote.call("setCode",
 		// new JsonObject().add("code", Lang.en.getCodeString()));
-//		this.widget = widget;
-		create(
-				"new OpenLayers.Map(this.element, {numZoomLevels : 20});");
+		this.widget = widget;
+		widget.setMap(this);
+		super.create_with_widget(
+				"new OpenLayers.Map(this.element, {numZoomLevels : 20});",
+				widget);
 //		super.callObjFunction("updateSize()");
 	}
 //
@@ -163,6 +163,7 @@ public class OpenLayersMap extends OpenLayersObject {
 //	}
 
 	public void addLayer(Layer layer2add) {
+		layer2add.setWidget(widget);
 		super.addObjModCode("addLayer", layer2add);
 	}
 
@@ -210,7 +211,7 @@ public class OpenLayersMap extends OpenLayersObject {
 	}
 
 	public void setCenter(double center_lon, double center_lat) {
-		super.addObjModCode("setCenter", new LonLat(getWidget(), center_lon, center_lat));
+		super.addObjModCode("setCenter", new LonLat(center_lon, center_lat));
 	}
 
 	public void setBaseLayer(Layer layer) {
@@ -284,7 +285,7 @@ public class OpenLayersMap extends OpenLayersObject {
 
 	public void addEventListener(final String event_name,
 			OpenLayersEventListener listener, Map<String, String> payload) {
-		getWidget().registerEventHandler( event_name, listener);
+		widget.registerEventHandler( event_name, listener);
 		Stringer payloadStringer = new Stringer();
 		if (payload != null) {
             for (String key : payload.keySet()) {

@@ -21,7 +21,6 @@
  */
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 import org.polymap.rap.openlayers.layers.VectorLayer;
 
@@ -213,9 +212,8 @@ import org.polymap.rap.openlayers.layers.VectorLayer;
  */
 public class Style extends OpenLayersObject {
 
-    public Style(OpenLayersWidget widget) {
-		super(widget);
-        create("new OpenLayers.Style(OpenLayers.Util.extend({}, "
+    public Style() {
+        super.create("new OpenLayers.Style(OpenLayers.Util.extend({}, "
                 + "OpenLayers.Feature.Vector.style[ 'default']));");
     }
 

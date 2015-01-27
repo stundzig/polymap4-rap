@@ -54,7 +54,7 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				map2.addControl(new ScaleLineControl());
+				map1.addControl(new ScaleLineControl());
 			}
 
 			@Override
@@ -85,15 +85,15 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds, maxResolution);
 		// map.updateSize();
 
-		WMSLayer layer = new WMSLayer(olwidget1, "OSM",
+		WMSLayer layer = new WMSLayer( "OSM",
 				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
 		layer.setIsBaseLayer(true);
 		map1.addLayer(layer);
 		//
-		map1.addControl(new NavigationControl(olwidget1 true));
-		map1.addControl(new PanZoomBarControl(olwidget1 ));
-		map1.addControl(new LayerSwitcherControl(olwidget1 ));
-		map1.addControl(new MousePositionControl(olwidget1));
+		map1.addControl(new NavigationControl(true));
+		map1.addControl(new PanZoomBarControl( ));
+		map1.addControl(new LayerSwitcherControl( ));
+		map1.addControl(new MousePositionControl());
 //		map1.addControl(new ScaleLineControl());
 		// map.addControl(new OverviewMapControl(map, layer));
 
@@ -124,9 +124,9 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// button.setText("World");
 		olwidget2 = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP
 				| SWT.BORDER);
-		olwidget2.prepare();
+//		olwidget2.prepare();
 
-		map2 = olwidget2.getMap();
+		map2 = new OpenLayersMap(olwidget2);
 		// map.updateSize();
 
 		WMSLayer layer = new WMSLayer("OSM2",

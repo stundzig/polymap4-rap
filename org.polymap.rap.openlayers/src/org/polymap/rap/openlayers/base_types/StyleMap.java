@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
@@ -36,17 +35,15 @@ public class StyleMap extends OpenLayersObject {
     /**
      * all intents with default style
      */
-    public StyleMap(OpenLayersWidget widget) {
-		super(widget);
-        create("new OpenLayers.StyleMap( );");
+    public StyleMap() {
+        super.create("new OpenLayers.StyleMap( );");
     }
     
     /**
      * all intents get the style specified in style
      */
-	public StyleMap(OpenLayersWidget widget, Style style) {
-		super(widget);
-		create("new OpenLayers.StyleMap( " +  style.getJSObjRef()+ ");");
+	public StyleMap(Style style) {
+		super.create("new OpenLayers.StyleMap( " +  style.getJSObjRef()+ ");");
 	}
 	
 	/**

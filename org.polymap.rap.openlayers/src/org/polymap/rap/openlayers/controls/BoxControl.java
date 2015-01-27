@@ -14,8 +14,6 @@
  */
 package org.polymap.rap.openlayers.controls;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
-
 /**
  * 
  *
@@ -29,9 +27,8 @@ public class BoxControl
     public static final String          EVENT_BOX = "box";
 
     
-    public BoxControl(OpenLayersWidget widget) {
-    	super(widget);
-        create( "new OpenLayers.Control();" );
+    public BoxControl() {
+        super.create( "new OpenLayers.Control();" );
         addObjModCode( "OpenLayers.Util.extend(" + getJSObjRef() + ", {"
                 //+ "EVENT_TYPES: [\"" + EVENT_BOX + "\"]"
                 //+ ","

@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.controls;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 import org.polymap.rap.openlayers.base_types.ControlPosition;
 import org.polymap.rap.openlayers.base_types.OpenLayersMap;
@@ -44,13 +43,11 @@ public class Control extends OpenLayersObject {
     private OpenLayersMap   map;
 	
 	
-	public Control(OpenLayersWidget widget) {
-		super(widget);
+	public Control() {
 	}
 
-	public Control(OpenLayersWidget widget, String construct_code) {
-		super(widget);		
-		create(construct_code);
+	public Control(String construct_code) {
+		super.create(construct_code);
 		this.active = true;
 	}
 
@@ -78,7 +75,7 @@ public class Control extends OpenLayersObject {
     }
 
     public ControlPosition getPosition() {
-		return new ControlPosition(getWidget(), this);
+		return new ControlPosition(this);
 	}
 
 	public void setMap(OpenLayersMap map) {

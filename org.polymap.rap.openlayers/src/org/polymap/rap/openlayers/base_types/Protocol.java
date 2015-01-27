@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
@@ -31,34 +30,35 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  */
 public class Protocol extends OpenLayersObject {
 
-	public enum TYPE {
-		HTTP, WFS, Gears
-	}
+    public enum TYPE {
+        HTTP, WFS, Gears
+    }
+    
 
-	/**
-	 * 
-	 * @param type
-	 * @param url
-	 * @param format
-	 */
-	public Protocol(OpenLayersWidget widget, String type, String url,
-			String format) {
-		super(widget);
-		create("new OpenLayers.Protocol." + type + "({" + "url: '" + url + "',"
-				+ "format: new OpenLayers.Format." + format + "()" + "});");
-	}
+    /**
+     * 
+     * @param type
+     * @param url
+     * @param format
+     */
+    public Protocol( String type, String url, String format ) {
+        super.create( "new OpenLayers.Protocol." + type + "({" +
+                "url: '" + url +  "',"+
+                "format: new OpenLayers.Format." + format + "()" +
+                "});");
+    }
 
-	/**
-	 * 
-	 * @param type
-	 * @param url
-	 * @param format
-	 */
-	public Protocol(OpenLayersWidget widget, TYPE type, String url,
-			String format) {
-		super(widget);
-		create("new OpenLayers.Protocol." + type + "({" + "url: '" + url + "',"
-				+ "format: new OpenLayers.Format." + format + "()" + "});");
-	}
+    /**
+     * 
+     * @param type
+     * @param url
+     * @param format
+     */
+    public Protocol( TYPE type, String url, String format ) {
+        super.create( "new OpenLayers.Protocol." + type + "({" +
+                "url: '" + url +  "',"+
+                "format: new OpenLayers.Format." + format + "()" +
+                "});");
+    }
 
 }

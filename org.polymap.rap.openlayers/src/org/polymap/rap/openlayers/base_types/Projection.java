@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.base_types;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
@@ -33,9 +32,8 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 public class Projection extends OpenLayersObject {
 
-	public Projection(OpenLayersWidget widget, String code) {
-		super(widget);
-		create("new OpenLayers.Projection('" + code +  "');");
+	public Projection(String code) {
+		super.create("new OpenLayers.Projection('" + code +  "');");
 	}
 
 }

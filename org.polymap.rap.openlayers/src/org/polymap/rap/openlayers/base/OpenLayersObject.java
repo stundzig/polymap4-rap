@@ -26,20 +26,20 @@ import org.polymap.rap.openlayers.util.Stringer;
  */
 public class OpenLayersObject {
 
-	private final OpenLayersWidget widget;
+	private OpenLayersWidget widget = null;
 
-	public OpenLayersWidget getWidget() {
-		return widget;
+	public void setWidget(OpenLayersWidget widget) {
+		this.widget = widget;
 	}
-	
+
 	private String obj_ref;
 
 	private StringBuilder obj_mod_code;
 
 	// public OpenLayersEvents events;
 
-	public OpenLayersObject(OpenLayersWidget widget) {
-		this.widget = widget;
+	public OpenLayersObject() {
+		// events = new OpenLayersEvents( this );
 	}
 
 	public void addObjModCode(String code) {
@@ -172,25 +172,25 @@ public class OpenLayersObject {
 	public void create(String js_create_code) {
 		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
 		this.setObjRef(wp.generateObjectReference("o", this));
-		widget.executeCommand(
+		OpenLayersSessionHandler.getInstance().addCommand(
 				new OpenLayersCommand(getJSObjRef() + "=" + js_create_code));
 	}
-//
-//	public void create_with_widget(String js_create_code,
-//			OpenLayersWidget widget) {
-//		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
-//		this.setObjRef(wp.generateObjectReference("o", this));
-//		widget.executeCommand(
-//				new OpenLayersCommand(getJSObjRef() + "=" + js_create_code,
-//						widget));
-//	}
+
+	public void create_with_widget(String js_create_code,
+			OpenLayersWidget widget) {
+		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
+		this.setObjRef(wp.generateObjectReference("o", this));
+		OpenLayersSessionHandler.getInstance().addCommand(
+				new OpenLayersCommand(getJSObjRef() + "=" + js_create_code,
+						widget));
+	}
 
 	public void changes2widget() {
 		// if (getWidget() != null) {
 		if (obj_mod_code != null) {
-			widget.executeCommand(
+			OpenLayersSessionHandler.getInstance().addCommand(
 					new OpenLayersCommand(new Stringer("this.obj=",
-							getJSObjRef(), "; ", obj_mod_code).toString(), widget));
+							getJSObjRef(), "; ", obj_mod_code).toString()));
 			obj_mod_code = null;
 		}
 		// }

@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.rap.rwt.widgets.WidgetUtil;
 import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersEventListener;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
@@ -125,7 +126,8 @@ public class OpenLayersMap extends OpenLayersObject {
 		this.maxExtent = maxExtent;
 		widget.setMap(this);
 		super.create_with_widget(
-				new Stringer("new OpenLayers.Map(this.element, {controls: [],", "projection: ", projection
+				new Stringer("",
+						"new OpenLayers.Map(this.createDiv('"+WidgetUtil.getId(widget)+"'), {controls: [],", "projection: ", projection
 								.getJSObjRef(), ",", "displayProjection: ",
 						display_projection.getJSObjRef(), ",", "units: '",
 						units, "',", "maxExtent: ", maxExtent.getJSObjRef(),
@@ -152,8 +154,10 @@ public class OpenLayersMap extends OpenLayersObject {
 		// new JsonObject().add("code", Lang.en.getCodeString()));
 		this.widget = widget;
 		widget.setMap(this);
-		super.create_with_widget(
-				"new OpenLayers.Map(this.element, {numZoomLevels : 20});",
+		super.create_with_widget(new Stringer(//"console.log('create map in "+WidgetUtil.getId(widget)+"'); var parent = rap.getObject('" + WidgetUtil.getId(widget)+ "');",
+//				"var element = document.createElement('div');",
+//				"parent.append(element);",
+				"new OpenLayers.Map(this.createDiv('"+WidgetUtil.getId(widget)+"'), {numZoomLevels : 20});").toString(),
 				widget);
 //		super.callObjFunction("updateSize()");
 	}

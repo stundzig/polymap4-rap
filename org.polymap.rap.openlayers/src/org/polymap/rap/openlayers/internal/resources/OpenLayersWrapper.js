@@ -39,6 +39,7 @@
 	rap.registerTypeHandler("org.polymap.rap.openlayers.OpenLayersWidget", {
 
 		factory : function(properties) {
+			console.log("widget.factory()");
 			return new map.OpenLayersWidget(properties);
 		},
 
@@ -55,19 +56,23 @@
 	});
 
 	if (!window.map) {
+		console.log("window.map created()");
 		window.map = {};
 	}
 	if (!window.objs) {
+		console.log("window.objs created()");
 		window.objs = {};
 	}
 	map.OpenLayersWidget = function(properties) {
+		console.log("map.OpenLayersWidget created()");
+		this.objs={};
 		// this.base(arguments);
-		bindAll(this, [ "layout", "onRender" ]);
+		bindAll(this, [ /*"layout",*/ "onRender", "createDiv" ]);
 
-		this.parent = rap.getObject(properties.parent);
-		this.element = document.createElement("div");
-		this.parent.append(this.element);
-		this.parent.addListener("Resize", this.layout);
+//		this.parent = rap.getObject(properties.parent);
+//		this.element = document.createElement("div");
+//		this.parent.append(this.element);
+//		this.parent.addListener("Resize", this.layout);
 		rap.on("render", this.onRender);
 	};
 
@@ -75,16 +80,24 @@
 		ready : false,
 		repaint : false,
 
+		createDiv : function(id) {
+			console.log('create map in ' + id);
+			var parent = rap.getObject(id);
+			var element = document.createElement('div');
+			parent.append(element);
+			return element;
+		},
+		
 		onRender : function() {
-			this.objs=[];
+			
 			console.log("onRender");
 			// rwt.ui.core.Widget.flushGlobalQueues();
-			if (this.element.parentNode) {
+//			if (this.element.parentNode) {
 				rap.off("render", this.onRender);
-				if (this._map == null) {
-					console.log("onRender creating map");
+//				if (this._map == null) {
+//					console.log("onRender creating map");
 					this.ready = true;
-					this.layout();
+//					this.layout();
 ////					OpenLayers.ImgPath = "/rwt-resources/map/img/";
 //					this.objs=[];
 //					this.objs['map1'] = new OpenLayers.Map(this.element, {
@@ -136,11 +149,11 @@
 ////					this._map.addControl(click);
 ////					click.activate();
 					rap.getRemoteObject(this).call("handleOnRender", {});
-				}
+//				}
 //				this._map.updateSize();
 
 				// this._synchronizeResizeWithServer();
-			}
+//			}
 		},
 
 		/**
@@ -153,17 +166,17 @@
 		 * load_addin : function(lib_url) { loadScript(lib_url,
 		 * function(context) { // alert( 'Addin loaded: ' + lib_url ); }, this); },
 		 */
-		layout : function() {
-			// console.log("layout " + this.ready);
-			if (this.ready) {
-				var area = this.parent.getClientArea();
-				this.element.style.left = area[0] + "px";
-				this.element.style.top = area[1] + "px";
-				this.element.style.width = area[2] + "px";
-				this.element.style.height = area[3] + "px";
-				// this.editor.resize( area[ 2 ], area[ 3 ] );
-			}
-		},
+//		layout : function() {
+//			// console.log("layout " + this.ready);
+//			if (this.ready) {
+//				var area = this.parent.getClientArea();
+//				this.element.style.left = area[0] + "px";
+//				this.element.style.top = area[1] + "px";
+//				this.element.style.width = area[2] + "px";
+//				this.element.style.height = area[3] + "px";
+//				// this.editor.resize( area[ 2 ], area[ 3 ] );
+//			}
+//		},
 		destroy : function() {
 			this.element.parentNode.removeChild(this.element);
 		},

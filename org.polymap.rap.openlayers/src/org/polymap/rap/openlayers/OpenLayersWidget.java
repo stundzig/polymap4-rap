@@ -58,11 +58,11 @@ public class OpenLayersWidget extends Composite {
 
 	/** reference to the map object - every widget has exactly one Map **/
 	private OpenLayersMap map;
+//
+//	/** default external openlayers lib location **/
+//	public String js_location = "http://www.openlayers.org/api/OpenLayers.js";
 
-	/** default external openlayers lib location **/
-	public String js_location = "http://www.openlayers.org/api/OpenLayers.js";
-
-	private final RemoteObject remote;
+//	private final RemoteObject remote;
 
 	//
 	// public Object getAdapter( Class adapter ) {
@@ -79,19 +79,19 @@ public class OpenLayersWidget extends Composite {
 
 	public OpenLayersWidget(Composite parent, int style) {
 		super(parent, style);
-		Connection connection = RWT.getUISession().getConnection();
-		remote = connection
-				.createRemoteObject("org.polymap.rap.openlayers.OpenLayersWidget");
-		remote.set("parent", WidgetUtil.getId(this));
-		register(
-				"org/polymap/rap/openlayers/internal/resources/OpenLayersWrapper.js",
-				"OpenLayersWrapper.js");
-		loadJavaScript();
-		// map = new OpenLayersMap(this, remoteObject);
-
-		remote.setHandler(operationHandler);
-		remote.set("appearance", "composite");
-		remote.set("overflow", "hidden");
+//		Connection connection = RWT.getUISession().getConnection();
+//		remote = connection
+//				.createRemoteObject("org.polymap.rap.openlayers.OpenLayersWidget");
+//		remote.set("parent", WidgetUtil.getId(this));
+//		register(
+//				"org/polymap/rap/openlayers/internal/resources/OpenLayersWrapper.js",
+//				"OpenLayersWrapper.js");
+//		loadJavaScript();
+//		// map = new OpenLayersMap(this, remoteObject);
+//
+//		remote.setHandler(operationHandler);
+//		remote.set("appearance", "composite");
+//		remote.set("overflow", "hidden");
 		
 //		remote.
 
@@ -99,85 +99,85 @@ public class OpenLayersWidget extends Composite {
 
 		// hookContextMenu();
 	}
-
-	private final OperationHandler operationHandler = new AbstractOperationHandler() {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void handleCall(String method, JsonObject properties) {
-			log.warn(this + ".handleCall " + method + ";"
-					+ properties.toString());
-			if ("handleOnRender".equals(method)) {
-				isRendered = true;
-				for (RemoteCall call : calls) {
-					callRemote(call.method, call.json);
-				}
-				calls.clear();
-			}
-			if (eventListeners.get(method) != null) {
-				JsonValue objRef = properties.get("event_src_obj");
-				OpenLayersObject obj = null;
-				if (objRef != null) {
-					obj = OpenLayersSessionHandler.getInstance().getObj(
-							objRef.asString());
-				}
-				for (OpenLayersEventListener l : eventListeners.get(method)) {
-					l.handleEvent(obj, method,
-							properties);
-				}
-			}
-		}
-	};
-
-	private void register(String resourceName, String fileName) {
-		ClassLoader classLoader = OpenLayersWidget.class.getClassLoader();
-		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
-		if (inputStream == null) {
-			throw new IllegalStateException(resourceName
-					+ " could not be found");
-		}
-		try {
-			RWT.getResourceManager()
-					.register("ol_res/" + fileName, inputStream);
-		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void loadJavaScript() {
-		JavaScriptLoader jsLoader = RWT.getClient().getService(
-				JavaScriptLoader.class);
-		jsLoader.require(js_location);
-		jsLoader.require(RWT.getResourceManager().getLocation(
-				"ol_res/" + "OpenLayersWrapper.js"));
-	}
-
-	//
-	// public OpenLayersWidget(Composite parent, int style, String lib_location)
-	// {
-	// this(parent, style);
-	// js_location = lib_location;
-	// }
-
-	// protected void hookContextMenu() {
-	// final MenuManager contextMenu = new MenuManager();
-	// contextMenu.setRemoveAllWhenShown( true );
-	// contextMenu.addMenuListener( new IMenuListener() {
-	// public void menuAboutToShow( IMenuManager manager ) {
-	// contextMenu.add( new Action( "Text" ) {
-	// public void run() {
-	// }
-	// });
-	// }
-	// } );
-	// Menu menu = contextMenu.createContextMenu( this );
-	// setMenu( menu );
-	// }
+//
+//	private final OperationHandler operationHandler = new AbstractOperationHandler() {
+//
+//		private static final long serialVersionUID = 1L;
+//
+//		@Override
+//		public void handleCall(String method, JsonObject properties) {
+//			log.warn(this + ".handleCall " + method + ";"
+//					+ properties.toString());
+//			if ("handleOnRender".equals(method)) {
+//				isRendered = true;
+//				for (RemoteCall call : calls) {
+//					callRemote(call.method, call.json);
+//				}
+//				calls.clear();
+//			}
+//			if (eventListeners.get(method) != null) {
+//				JsonValue objRef = properties.get("event_src_obj");
+//				OpenLayersObject obj = null;
+//				if (objRef != null) {
+//					obj = OpenLayersSessionHandler.getInstance().getObj(
+//							objRef.asString());
+//				}
+//				for (OpenLayersEventListener l : eventListeners.get(method)) {
+//					l.handleEvent(obj, method,
+//							properties);
+//				}
+//			}
+//		}
+//	};
+//
+//	private void register(String resourceName, String fileName) {
+//		ClassLoader classLoader = OpenLayersWidget.class.getClassLoader();
+//		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
+//		if (inputStream == null) {
+//			throw new IllegalStateException(resourceName
+//					+ " could not be found");
+//		}
+//		try {
+//			RWT.getResourceManager()
+//					.register("ol_res/" + fileName, inputStream);
+//		} finally {
+//			try {
+//				inputStream.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+//
+//	private void loadJavaScript() {
+//		JavaScriptLoader jsLoader = RWT.getClient().getService(
+//				JavaScriptLoader.class);
+//		jsLoader.require(js_location);
+//		jsLoader.require(RWT.getResourceManager().getLocation(
+//				"ol_res/" + "OpenLayersWrapper.js"));
+//	}
+//
+//	//
+//	// public OpenLayersWidget(Composite parent, int style, String lib_location)
+//	// {
+//	// this(parent, style);
+//	// js_location = lib_location;
+//	// }
+//
+//	// protected void hookContextMenu() {
+//	// final MenuManager contextMenu = new MenuManager();
+//	// contextMenu.setRemoveAllWhenShown( true );
+//	// contextMenu.addMenuListener( new IMenuListener() {
+//	// public void menuAboutToShow( IMenuManager manager ) {
+//	// contextMenu.add( new Action( "Text" ) {
+//	// public void run() {
+//	// }
+//	// });
+//	// }
+//	// } );
+//	// Menu menu = contextMenu.createContextMenu( this );
+//	// setMenu( menu );
+//	// }
 
 	public OpenLayersMap getMap() {
 		return map;
@@ -213,41 +213,41 @@ public class OpenLayersWidget extends Composite {
 //			map = new OpenLayersMap(this);
 //		}
 //	}
-
-	//
-	// public String getJSLocation() {
-	// return js_location;
-	// }
-
-	// remote call
-
-	public void executeCommand(OpenLayersCommand command) {
-		// log.info("eval: " + command.getJson().toString());
-		callRemote("eval", command.getJson());
-	}
-
-	private class RemoteCall {
-		String method;
-		JsonObject json;
-
-		public RemoteCall(String method, JsonObject json) {
-			this.method = method;
-			this.json = json;
-		}
-	}
-
-	private List<RemoteCall> calls = new ArrayList<RemoteCall>();
-
-	private boolean isRendered = false;
-
-	private void callRemote(String method, JsonObject json) {
-		if (isRendered) {
-			log.info("callRemote: " + method + " with " + json.toString());
-			remote.call(method, json);
-		} else {
-			calls.add(new RemoteCall(method, json));
-		}
-	}
+//
+//	//
+//	// public String getJSLocation() {
+//	// return js_location;
+//	// }
+//
+//	// remote call
+//
+//	public void executeCommand(OpenLayersCommand command) {
+//		// log.info("eval: " + command.getJson().toString());
+//		callRemote("eval", command.getJson());
+//	}
+//
+//	private class RemoteCall {
+//		String method;
+//		JsonObject json;
+//
+//		public RemoteCall(String method, JsonObject json) {
+//			this.method = method;
+//			this.json = json;
+//		}
+//	}
+//
+//	private List<RemoteCall> calls = new ArrayList<RemoteCall>();
+//
+//	private boolean isRendered = false;
+//
+//	private void callRemote(String method, JsonObject json) {
+//		if (isRendered) {
+//			log.info("callRemote: " + method + " with " + json.toString());
+//			remote.call(method, json);
+//		} else {
+//			calls.add(new RemoteCall(method, json));
+//		}
+//	}
 
 	// no layout
 	@Override
@@ -255,14 +255,14 @@ public class OpenLayersWidget extends Composite {
 		throw new UnsupportedOperationException(
 				"Cannot change internal layout of OpenLayersMap");
 	}
-
-	@Override
-	public void dispose() {
-		if (remote != null) {
-			remote.destroy();
-		}
-		super.dispose();
-	}
+//
+//	@Override
+//	public void dispose() {
+//		if (remote != null) {
+//			remote.destroy();
+//		}
+//		super.dispose();
+//	}
 
 	private Map<String, Set<OpenLayersEventListener>> eventListeners = new HashMap<String, Set<OpenLayersEventListener>>();
 

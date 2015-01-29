@@ -49,7 +49,7 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 	private void createButtons(Composite parent) {
 		parent.setLayout(new FillLayout());
 		 Button button = new Button(parent, SWT.PUSH);
-		 button.setText("World");
+		 button.setText("addScaleLineControlToLeftMap");
 		 button.addSelectionListener(new SelectionListener() {
 
 			@Override

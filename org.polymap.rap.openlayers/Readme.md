@@ -6,6 +6,8 @@ This plugin adds a openlayers 2 based map widget to the eclipse RAP framework.
 
 See /org.polymap.rap.openlayers/src/org/polymap/rap/openlayers/demo/DemoEntryPoint.java
 
+You can also start the launch config *Openlayers Sample* and point your browser to http://localhost:10080/ol
+
 ## Todos
 
 * openlayers 3

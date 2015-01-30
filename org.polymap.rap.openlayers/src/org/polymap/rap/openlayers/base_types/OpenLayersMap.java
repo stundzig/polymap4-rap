@@ -161,10 +161,10 @@ public class OpenLayersMap extends OpenLayersObject {
 				widget);
 //		super.callObjFunction("updateSize()");
 	}
-//
-//	public OpenLayersWidget getWidget() {
-//		return widget;
-//	}
+
+	public OpenLayersWidget getWidget() {
+		return widget;
+	}
 
 	public void addLayer(Layer layer2add) {
 		layer2add.setWidget(widget);

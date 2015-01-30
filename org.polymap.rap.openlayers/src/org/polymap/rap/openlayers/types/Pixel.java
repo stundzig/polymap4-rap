@@ -20,10 +20,9 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
  * 
@@ -31,15 +30,9 @@ import org.polymap.rap.openlayers.types.LonLat;
  * 
  */
 
-public class IconMarker extends Marker {
+public class Pixel extends OpenLayersObject {
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
-	}
-
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+	public Pixel(int x, int y) {
+		super.create("  new OpenLayers.Pixel( " + x + "," + y + ");");
 	}
 }

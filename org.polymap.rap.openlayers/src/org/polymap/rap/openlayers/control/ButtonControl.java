@@ -20,26 +20,31 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
-
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+package org.polymap.rap.openlayers.control;
 
 /**
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  * 
  */
+public class ButtonControl extends Control {
 
-public class IconMarker extends Marker {
-
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+    private String display_class="";
+    
+	public ButtonControl(String display_class) {
+	    this.display_class=display_class;
+		super.create("new OpenLayers.Control.Button( {  displayClass: '" + display_class + "' } );");
 	}
-
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
-	}
+	
+	  public ButtonControl(String display_class,String js_code) {
+	        this.display_class=display_class;
+	        super.create("new OpenLayers.Control.Button( {  displayClass: '" + display_class + "'  , trigger: function() { " + js_code + "}} );");
+	    }
+	
+	
+	public void setStyle(String css) {
+	    super.createCSS( "." + display_class+"ItemActive" , css);
+        super.createCSS( "." + display_class+"ItemInactive" , css);
+	  }
 }

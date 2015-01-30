@@ -32,7 +32,6 @@
  * script.src = url;
  * document.getElementsByTagName("head")[0].appendChild(script); }
  */
-
 (function() {
 	'use strict';
 
@@ -59,20 +58,11 @@
 		console.log("window.map created()");
 		window.map = {};
 	}
-	if (!window.objs) {
-		console.log("window.objs created()");
-		window.objs = {};
-	}
+
 	map.OpenLayersWidget = function(properties) {
 		console.log("map.OpenLayersWidget created()");
 		this.objs={};
-		// this.base(arguments);
 		bindAll(this, [ /*"layout",*/ "onRender", "createDiv" ]);
-
-//		this.parent = rap.getObject(properties.parent);
-//		this.element = document.createElement("div");
-//		this.parent.append(this.element);
-//		this.parent.addListener("Resize", this.layout);
 		rap.on("render", this.onRender);
 	};
 
@@ -84,8 +74,11 @@
 			console.log('create map in ' + id);
 			var parent = rap.getObject(id);
 			var element = document.createElement('div');
+			element.setAttribute("id", id + id);
 			parent.append(element);
-			return element;
+			
+			console.log('element id is ' + element.getAttribute("id"));
+			return element.getAttribute("id");
 		},
 		
 		onRender : function() {

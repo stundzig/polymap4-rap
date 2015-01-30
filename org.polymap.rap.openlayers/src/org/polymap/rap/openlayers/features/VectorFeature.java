@@ -22,8 +22,8 @@
 
 package org.polymap.rap.openlayers.features;
 
-import org.polymap.rap.openlayers.base_types.Style;
 import org.polymap.rap.openlayers.geometry.Geometry;
+import org.polymap.rap.openlayers.types.Style;
 
 /**
  * 

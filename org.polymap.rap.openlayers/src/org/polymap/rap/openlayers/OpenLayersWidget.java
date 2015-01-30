@@ -39,9 +39,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.polymap.rap.openlayers.base.OpenLayersCommand;
 import org.polymap.rap.openlayers.base.OpenLayersEventListener;
+import org.polymap.rap.openlayers.base.OpenLayersMap;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
 import org.polymap.rap.openlayers.base.OpenLayersSessionHandler;
-import org.polymap.rap.openlayers.base_types.OpenLayersMap;
 
 /**
  * 

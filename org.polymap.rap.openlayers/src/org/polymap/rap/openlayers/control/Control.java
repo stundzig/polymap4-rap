@@ -20,26 +20,22 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.control;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.base.OpenLayersMap;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
 
-/**
- * 
- * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
- */
+public abstract class Control extends OpenLayersObject {
 
-public class IconMarker extends Marker {
-
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+    private OpenLayersMap   map;	
+	
+	public Control() {
 	}
 
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+	public void setMap(OpenLayersMap map) {
+	    this.map = map;
+	    if (map != null) {
+	        super.execute("setMap",map);
+	    }
 	}
 }

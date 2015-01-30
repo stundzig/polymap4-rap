@@ -27,12 +27,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.json.JsonObject;
-import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.SingletonUtil;
 import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
@@ -55,36 +55,23 @@ public class OpenLayersSessionHandler {
 	private final static Log log = LogFactory.getLog(OpenLayersWidget.class);
 	
 	/** default external openlayers lib location **/
-	public String js_location = "http://www.openlayers.org/api/OpenLayers.js";
-
-	
-	/**
-	 * flag to determine if the openlayers lib ( client side js ) is loaded for
-	 * this session to block executing js commands before this
-	 */
-	// public boolean lib_init_done=false;
+	public String js_location = "http://openlayers.org/en/v3.1.0/build/ol.js";
 
 	/**
 	 * HashMap to hold references to created objects as value with the client
 	 * side id as key
 	 */
-	public HashMap<String, OpenLayersObject> obj_ref2obj;
+	private Map<String, OpenLayersObject> ref2obj;
 
-	/**
-	 * javascript command stack
-	 */
-	public Vector<OpenLayersCommand> cmdsBeforeWidgetWasPresent;
-
-	private OpenLayersWidget widget;
+	public Vector<OpenLayersCommand> cmdsBeforeRemoteWasPresent;
 
 	private int obj_ref = 0;
 
-//	private OpenLayersMap map;
 	private final RemoteObject remote;
 
 	private OpenLayersSessionHandler() {
-		obj_ref2obj = new HashMap<String, OpenLayersObject>();
-		cmdsBeforeWidgetWasPresent = new Vector<OpenLayersCommand>();
+		ref2obj = new HashMap<String, OpenLayersObject>();
+		cmdsBeforeRemoteWasPresent = new Vector<OpenLayersCommand>();
 		
 		Connection connection = RWT.getUISession().getConnection();
 		remote = connection
@@ -158,15 +145,9 @@ public class OpenLayersSessionHandler {
 				"ol_res/" + "OpenLayersWrapper.js"));
 	}
 
-	//
-	// public String getJSLocation() {
-	// return js_location;
-	// }
-
 	// remote call
 
 	public void executeCommand(OpenLayersCommand command) {
-		// log.info("eval: " + command.getJson().toString());
 		callRemote("eval", command.getJson());
 	}
 
@@ -192,100 +173,22 @@ public class OpenLayersSessionHandler {
 			calls.add(new RemoteCall(method, json));
 		}
 	}
-	//
-	// public OpenLayersWidget(Composite parent, int style, String lib_location)
-	// {
-	// this(parent, style);
-	// js_location = lib_location;
-	// }
-
-	// protected void hookContextMenu() {
-	// final MenuManager contextMenu = new MenuManager();
-	// contextMenu.setRemoveAllWhenShown( true );
-	// contextMenu.addMenuListener( new IMenuListener() {
-	// public void menuAboutToShow( IMenuManager manager ) {
-	// contextMenu.add( new Action( "Text" ) {
-	// public void run() {
-	// }
-	// });
-	// }
-	// } );
-	// Menu menu = contextMenu.createContextMenu( this );
-	// setMenu( menu );
-	// }
-	//
-	// public OpenLayersWidget getWidget() {
-	// return widget;
-	// }
-	//
-	public void setWidget(OpenLayersWidget widget) {
-
-		this.widget = widget;
-//		// // create the initial object space ( hash )
-//		// addCommand( new OpenLayersCommand(
-//		// "if ( typeof objs == 'undefined' ) objs={};"));
-//		for (OpenLayersCommand cmd : cmdsBeforeWidgetWasPresent) {
-//			widget.executeCommand(cmd);
-//		}
-//		cmdsBeforeWidgetWasPresent.clear();
-	}
 
 	public synchronized static OpenLayersSessionHandler getInstance() {
 		return SingletonUtil.getSessionInstance(OpenLayersSessionHandler.class);
 	}
 
-	public String generateObjectReference(String prefix,
-			OpenLayersObject src_obj) {
-		obj_ref++;
-		obj_ref2obj.put(prefix + obj_ref, src_obj);
-		return prefix + obj_ref;
+	public synchronized void generateReference(OpenLayersObject src) {
+		String newRef = "ol" + obj_ref++;
+		ref2obj.put(newRef, src);
+		src.setObjRef(newRef);
 	}
 
-	/*
-	 * public Object[] getCommand() { Object[] res = cmd_stack.elementAt(0 );
-	 * OpenLayersWidgetProvider.getInstance().cmd_stack.removeElementAt(0);
-	 * return res; }
-	 */
-
-	public void addCommand(OpenLayersCommand command) {
-//		if (widget == null) {
-//			cmdsBeforeWidgetWasPresent.add(command);
-//		} else {
-//			widget.executeCommand(command);
-//		}
-		executeCommand(command);
+	public OpenLayersObject getObject(String objRef) {
+		return ref2obj.get(objRef);
 	}
 
-	public OpenLayersObject getObj(String objRef) {
-		return obj_ref2obj.get(objRef);
+	public void remove(String jsObjRef) {
+		ref2obj.remove(jsObjRef);
 	}
-
-	/*
-	 * // with a single parameter public void addCommand(String cmd, String
-	 * param) { Object[] param_arr = { param }; addCommand(cmd, param_arr); }
-	 */
-	//
-	// public boolean hasCommand(OpenLayersWidget for_widget) {
-	// if (cmd_stack.isEmpty())
-	// return false;
-	// else
-	// return (cmd_stack.get(0).isSuitableFor(for_widget ));
-	// }
-	//
-	// public OpenLayersCommand getCommand() {
-	// OpenLayersCommand res = cmd_stack.elementAt(0);
-	// cmd_stack.removeElementAt(0);
-	// return res;
-	// }
-//
-//	public void setMap(OpenLayersMap map) {
-//		this.map = map;
-//		// generateObjectReference("map", map);
-//		// addCommand( new OpenLayersCommand(
-//		// "this.objs=[];"));
-//		for (OpenLayersCommand cmd : cmdsBeforeWidgetWasPresent) {
-//			map.executeCommand(cmd);
-//		}
-//		cmdsBeforeWidgetWasPresent.clear();
-//	}
 }

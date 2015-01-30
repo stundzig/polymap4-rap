@@ -20,10 +20,7 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
-
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+package org.polymap.rap.openlayers.control;
 
 /**
  * 
@@ -31,15 +28,18 @@ import org.polymap.rap.openlayers.types.LonLat;
  * 
  */
 
-public class IconMarker extends Marker {
+public class PanelControl extends Control {
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+	public PanelControl() {
+		super("new OpenLayers.Control.Panel();");
 	}
 
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+	public void addControls(Control[] ctrls) {
+		super.execute("obj.addControls(" + getJSObj(ctrls)   +");"    );
+	}
+
+	public void setStyle(String class_css,String div_css) {
+	    super.createCSS(".olControlPanel",class_css );
+	    super.createCSS(".olControlPanel div ",div_css );
 	}
 }

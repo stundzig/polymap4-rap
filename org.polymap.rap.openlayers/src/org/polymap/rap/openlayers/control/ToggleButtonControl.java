@@ -20,10 +20,7 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
-
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+package org.polymap.rap.openlayers.control;
 
 /**
  * 
@@ -31,15 +28,17 @@ import org.polymap.rap.openlayers.types.LonLat;
  * 
  */
 
-public class IconMarker extends Marker {
+public class ToggleButtonControl extends Control {
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+    private String display_class="";
+    
+	public ToggleButtonControl(String display_class) {
+        this.display_class=display_class;
+    	super.create("new OpenLayers.Control( {  type: OpenLayers.Control.TYPE_TOGGLE, displayClass: '" + display_class + "' } );");
 	}
-
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+	
+	public void setStyle(String css_active , String css_inactive) {
+	    super.createCSS( "." + display_class+"ItemActive" , css_active );
+        super.createCSS( "." + display_class+"ItemInactive" , css_inactive );
 	}
 }

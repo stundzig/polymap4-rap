@@ -20,10 +20,9 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
  * 
@@ -31,15 +30,28 @@ import org.polymap.rap.openlayers.types.LonLat;
  * 
  */
 
-public class IconMarker extends Marker {
+public class StyleMap extends OpenLayersObject {
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+    /**
+     * all intents with default style
+     */
+    public StyleMap() {
+        super.create("new OpenLayers.StyleMap( );");
+    }
+    
+    /**
+     * all intents get the style specified in style
+     */
+	public StyleMap(Style style) {
+		super.create("new OpenLayers.StyleMap( " +  style.getJSObjRef()+ ");");
 	}
+	
+	/**
+	 * set the style for a sepcific intent ( e.g.  default / select / temporary / delete
+	 */
+	public void setIntentStyle(String intent, Style style) {
+	    super.execute("obj.styles['"+intent+"']="+style.getJSObjRef() +";");
+	}
+	
 
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
-	}
 }

@@ -10,8 +10,13 @@ import org.eclipse.rap.rwt.client.WebClient;
 public class DemoApplication implements ApplicationConfiguration {
 
 	public void configure(Application application) {
+//		application.addStyleSheet("ol3",
+//				"/theme/ol.css");
+
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put(WebClient.PAGE_TITLE, "Hello Openlayers");
+		properties.put(WebClient.HEAD_HTML, "<link rel='stylesheet' type='text/css' href='http://openlayers.org/en/v3.1.1/css/ol.css'>");
+//		properties.put(WebClient.THEME_ID, "ol3");
 		application.addEntryPoint("/ol", DemoEntryPoint.class, properties);
 	}
 }

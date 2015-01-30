@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.geometry;
 
-import org.polymap.rap.openlayers.base_types.Bounds;
+import org.polymap.rap.openlayers.types.Bounds;
 
 /**
  * 

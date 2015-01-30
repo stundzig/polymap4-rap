@@ -20,26 +20,13 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.layer;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.source.VectorSource;
 
-/**
- * 
- * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
- */
-
-public class IconMarker extends Marker {
-
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
-	}
-
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+public class VectorLayer extends Layer<VectorSource> {
+	
+	public VectorLayer() {
+		super.create("new ol.layer.Vector()");
 	}
 }

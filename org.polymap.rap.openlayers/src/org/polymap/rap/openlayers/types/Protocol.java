@@ -20,26 +20,45 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
 
 /**
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
  */
+public class Protocol extends OpenLayersObject {
 
-public class IconMarker extends Marker {
+    public enum TYPE {
+        HTTP, WFS, Gears
+    }
+    
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
-	}
+    /**
+     * 
+     * @param type
+     * @param url
+     * @param format
+     */
+    public Protocol( String type, String url, String format ) {
+        super.create( "new OpenLayers.Protocol." + type + "({" +
+                "url: '" + url +  "',"+
+                "format: new OpenLayers.Format." + format + "()" +
+                "});");
+    }
 
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
-	}
+    /**
+     * 
+     * @param type
+     * @param url
+     * @param format
+     */
+    public Protocol( TYPE type, String url, String format ) {
+        super.create( "new OpenLayers.Protocol." + type + "({" +
+                "url: '" + url +  "',"+
+                "format: new OpenLayers.Format." + format + "()" +
+                "});");
+    }
+
 }

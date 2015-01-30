@@ -20,10 +20,10 @@
  *
  */
 
-package org.polymap.rap.openlayers.marker;
+package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.types.Icon;
-import org.polymap.rap.openlayers.types.LonLat;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.control.Control;
 
 /**
  * 
@@ -31,15 +31,29 @@ import org.polymap.rap.openlayers.types.LonLat;
  * 
  */
 
-public class IconMarker extends Marker {
+public class ControlPosition extends OpenLayersObject {
 
-	public IconMarker(LonLat lon_lat, Icon icon) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef() + ","
-				+ icon.getJSObjRef() + ".clone());");
+	public ControlPosition(Control ctrl) {
+		super.create(ctrl.getJSObjRef() + ".div;");
 	}
 
-	public IconMarker(LonLat lon_lat) {
-		super.create("new OpenLayers.Marker(" + lon_lat.getJSObjRef()
-				+ ",null);");
+	public void setRight(int right) {
+		setStyleAttribute("right", "" + right + "px");
+	}
+
+	public void setLeft(int left) {
+		setStyleAttribute("left", "" + left + "px");
+	}
+
+	public void setTop(int top) {
+		setStyleAttribute("top", "" + top + "px");
+	}
+
+	public void setBottom(int bottom) {
+		setStyleAttribute("bottom", "" + bottom + "px");
+	}
+
+	public void setStyleAttribute(String attr_name, String attr_value) {
+		super.execute("obj.style." + attr_name + "='" + attr_value + "';");
 	}
 }

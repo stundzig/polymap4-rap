@@ -2,7 +2,6 @@ package org.polymap.rap.openlayers.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,17 +10,13 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.polymap.rap.openlayers.OpenLayersWidget;
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base_types.Bounds;
-import org.polymap.rap.openlayers.base_types.OpenLayersMap;
-import org.polymap.rap.openlayers.base_types.Projection;
-import org.polymap.rap.openlayers.controls.LayerSwitcherControl;
-import org.polymap.rap.openlayers.controls.MousePositionControl;
-import org.polymap.rap.openlayers.controls.NavigationControl;
-import org.polymap.rap.openlayers.controls.PanZoomBarControl;
-import org.polymap.rap.openlayers.controls.ScaleLineControl;
-import org.polymap.rap.openlayers.layers.WMSLayer;
+import org.polymap.rap.openlayers.base.OpenLayersMap;
+import org.polymap.rap.openlayers.control.ScaleLineControl;
+import org.polymap.rap.openlayers.control.ZoomSliderControl;
+import org.polymap.rap.openlayers.layer.ImageLayer;
+import org.polymap.rap.openlayers.layer.TileLayer;
+import org.polymap.rap.openlayers.source.ImageWMSSource;
+import org.polymap.rap.openlayers.source.MapQuestSource;
 
 public class DemoEntryPoint extends AbstractEntryPoint {
 
@@ -54,7 +49,7 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				map1.addControl(new ScaleLineControl());
+				map1.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.imperial, null));
 			}
 
 			@Override
@@ -73,36 +68,42 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		olwidget1 = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP
 				| SWT.BORDER);
 
-		String srs = "EPSG:4326";// Geometries.srs( getCRS() );
-		Projection proj = new Projection(srs);
-		String units = srs.equals("EPSG:4326") ? "degrees" : "m";
-		float maxResolution = srs.equals("EPSG:4326") ? (360 / 256) : 500000;
-		// Bounds maxExtent = new Bounds(12.80, 53.00, 14.30, 54.50);
-		Bounds bounds = new Bounds(11.0, 50.00, 17.30, 64.50);
-//		olwidget1.createMap(proj, proj, units, bounds, maxResolution);
-//		olwidget1.prepare();
-
-		map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds, maxResolution);
-		// map.updateSize();
-
-		WMSLayer layer = new WMSLayer( "OSM",
-				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
-		layer.setIsBaseLayer(true);
+//		String srs = "EPSG:4326";// Geometries.srs( getCRS() );
+//		Projection proj = new Projection(srs);
+//		String units = srs.equals("EPSG:4326") ? "degrees" : "m";
+//		float maxResolution = srs.equals("EPSG:4326") ? (360 / 256) : 500000;
+//		// Bounds maxExtent = new Bounds(12.80, 53.00, 14.30, 54.50);
+//		Bounds bounds = new Bounds(11.0, 50.00, 17.30, 64.50);
+////		olwidget1.createMap(proj, proj, units, bounds, maxResolution);
+////		olwidget1.prepare();
+//
+//		map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds, maxResolution);
+//		// map.updateSize();
+		map1 = new OpenLayersMap(olwidget1);
+		
+//		WMSLayer layer = new WMSLayer( "OSM",
+//				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
+//		layer.setIsBaseLayer(true);
+		TileLayer layer = new TileLayer(new MapQuestSource(MapQuestSource.Type.hyb));
 		map1.addLayer(layer);
-		//
-		map1.addControl(new NavigationControl(true));
-		map1.addControl(new PanZoomBarControl( ));
-		map1.addControl(new LayerSwitcherControl( ));
-		map1.addControl(new MousePositionControl());
-//		map1.addControl(new ScaleLineControl());
+		
+		ImageLayer ilayer = new ImageLayer(new ImageWMSSource("http://ows.terrestris.de/osm/service/", "OSM-WMS"));
+		ilayer.setOpacity(80.0);
+		map1.addLayer(ilayer);
+//		//
+//		map1.addControl(new NavigationControl(true));
+//		map1.addControl(new PanZoomBarControl( ));
+//		map1.addControl(new LayerSwitcherControl( ));
+//		map1.addControl(new MousePositionControl());
+////		map1.addControl(new ScaleLineControl());
 		// map.addControl(new OverviewMapControl(map, layer));
 
 		// map.addControl( new ScaleControl() );
 		// map.addControl( new LoadingPanelControl() );
 
 		// map.setRestrictedExtend( maxExtent );
-		map1.zoomToExtent(bounds, true);
-		map1.zoomTo(2);
+//		map1.zoomToExtent(bounds, true);
+//		map1.zoomTo(2);
 
 		// map events
 		// HashMap<String, String> payload = new HashMap<String, String>();
@@ -128,13 +129,16 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 
 		map2 = new OpenLayersMap(olwidget2);
 		// map.updateSize();
-
-		WMSLayer layer = new WMSLayer("OSM2",
-				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
-		layer.setIsBaseLayer(true);
-		map2.addLayer(layer);
-		//
-		map2.addControl(new NavigationControl(true));
+		map2.addLayer(new TileLayer(new MapQuestSource(MapQuestSource.Type.sat)));
+//		map2.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.degrees, null));
+		map2.addControl(new ZoomSliderControl());
+		
+//		WMSLayer layer = new WMSLayer("OSM2",
+//				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
+//		layer.setIsBaseLayer(true);
+//		map2.addLayer(layer);
+//		//
+//		map2.addControl(new NavigationControl(true));
 		// map.addControl(new LayerSwitcherControl());
 		// map.addControl(new ClickControl());
 		// map.addControl(new ButtonControl("foo"));
@@ -144,16 +148,16 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// HashMap<String, String> payload = new HashMap<String, String>();
 		// map.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
 
-		map2.addEventListener(OpenLayersMap.EVENT_MOVEEND,
-				new OpenLayersEventListener() {
-
-					@Override
-					public void handleEvent(OpenLayersObject src, String name,
-							JsonObject properties) {
-						log.info(this + ": " + name);
-					}
-
-				}, null);
+//		map2.addEventListener(OpenLayersMap.EVENT_MOVEEND,
+//				new OpenLayersEventListener() {
+//
+//					@Override
+//					public void handleEvent(OpenLayersObject src, String name,
+//							JsonObject properties) {
+//						log.info(this + ": " + name);
+//					}
+//
+//				}, null);
 
 	}
 }

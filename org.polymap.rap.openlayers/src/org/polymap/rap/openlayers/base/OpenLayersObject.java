@@ -23,18 +23,19 @@ import org.polymap.rap.openlayers.util.Stringer;
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public class OpenLayersObject {
+public abstract class OpenLayersObject {
 
-	private OpenLayersWidget widget = null;
+	// private OpenLayersWidget widget = null;
+	//
+	// public void setWidget(OpenLayersWidget widget) {
+	// this.widget = widget;
+	// }
 
-	public void setWidget(OpenLayersWidget widget) {
-		this.widget = widget;
-	}
+	private String objRef;
 
-	private String obj_ref;
-
-	private StringBuilder obj_mod_code;
+	// private StringBuilder executionCode;
 
 	// public OpenLayersEvents events;
 
@@ -42,12 +43,15 @@ public class OpenLayersObject {
 		// events = new OpenLayersEvents( this );
 	}
 
-	public void addObjModCode(String code) {
-		if (obj_mod_code == null) {
-			obj_mod_code = new StringBuilder(1024);
-		}
-		obj_mod_code.append(code);
-		changes2widget();
+	public void execute(String code) {
+		OpenLayersSessionHandler.getInstance().executeCommand(
+				new OpenLayersCommand(new Stringer("this.obj=", getJSObjRef(),
+						"; ", code).toString()));
+		// if (executionCode == null) {
+		// executionCode = new StringBuilder(1024);
+		// }
+		// executionCode.append(code);
+		// changes2widget();
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class OpenLayersObject {
 	 *            Can be: {@link String}, kind of {@link Number},
 	 *            {@link Boolean} or {@link OpenLayersObject}.
 	 */
-	public void callObjFunction(String function, Object... args) {
+	private void prepareExecutionCode(String function, Object... args) {
 		StringBuilder buf = new StringBuilder(128).append(getJSObjRef())
 				.append('.').append(function).append('(');
 
@@ -80,32 +84,31 @@ public class OpenLayersObject {
 				throw new IllegalArgumentException("Unknown arg type: " + arg);
 			}
 		}
-		addObjModCode(buf.append(");").toString());
+		execute(buf.append(");").toString());
 	}
 
-	public void addObjModCode(String function, OpenLayersObject obj) {
-		callObjFunction(function, obj);
+	public void execute(String function, OpenLayersObject obj) {
+		prepareExecutionCode(function, obj);
 	}
 
-	public void addObjModCode(String function, OpenLayersObject obj,
-			boolean bool) {
-		callObjFunction(function, obj, bool);
+	public void execute(String function, OpenLayersObject obj, boolean bool) {
+		prepareExecutionCode(function, obj, bool);
 	}
 
-	public void addObjModCode(String function, double dbl, boolean bool) {
-		callObjFunction(function, dbl, bool);
+	public void execute(String function, double dbl, boolean bool) {
+		prepareExecutionCode(function, dbl, bool);
 	}
 
-	public void addObjModCode(String function, int val) {
-		callObjFunction(function, val);
+	public void execute(String function, int val) {
+		prepareExecutionCode(function, val);
 	}
 
-	public void addObjModCode(String function, boolean val) {
-		callObjFunction(function, val);
+	public void execute(String function, boolean val) {
+		prepareExecutionCode(function, val);
 	}
 
-	public void addObjModCode(String function, double val) {
-		callObjFunction(function, val);
+	public void execute(String function, double val) {
+		prepareExecutionCode(function, val);
 	}
 
 	/**
@@ -117,7 +120,7 @@ public class OpenLayersObject {
 	 *            Can be: {@link String}, kind of {@link Number},
 	 *            {@link Boolean} or {@link OpenLayersObject}.
 	 */
-	public void setObjAttr(String attr, Object arg) {
+	public void setAttribute(String attr, Object arg) {
 		StringBuilder buf = new StringBuilder(128).append(getJSObjRef())
 				.append('.').append(attr).append('=');
 
@@ -132,7 +135,7 @@ public class OpenLayersObject {
 		} else {
 			throw new IllegalArgumentException("Unknown arg type: " + arg);
 		}
-		addObjModCode(buf.append(';').toString());
+		execute(buf.append(';').toString());
 	}
 
 	// public void setObjAttr( String attr, OpenLayersObject obj ) {
@@ -154,14 +157,15 @@ public class OpenLayersObject {
 	// public void setObjAttr( String attr, double val ) {
 	// addObjModCode( getJSObjRef() + "." + attr + "=" + val + ";" );
 	// }
-
-	public void createCSS(String name, String css) {
-		addObjModCode("  var css=\"  "
-				+ name
-				+ " { "
-				+ css
-				+ " } \" ; var p= document.getElementsByTagName('head')[0] ;   var el= document.createElement('style');  el.type= 'text/css';   el.media= 'screen';       if(el.styleSheet) el.styleSheet.cssText= css;  else el.appendChild(document.createTextNode(css));    p.appendChild(el); ");
-	}
+	//
+	// public void createCSS(String name, String css) {
+	// execute("  var css=\"  "
+	// + name
+	// + " { "
+	// + css
+	// +
+	// " } \" ; var p= document.getElementsByTagName('head')[0] ;   var el= document.createElement('style');  el.type= 'text/css';   el.media= 'screen';       if(el.styleSheet) el.styleSheet.cssText= css;  else el.appendChild(document.createTextNode(css));    p.appendChild(el); ");
+	// }
 
 	/*
 	 * public OpenLayersWidget getWidget() { if (widget == null) {
@@ -169,43 +173,43 @@ public class OpenLayersObject {
 	 * this.widget = wp.getWidget(); } return widget; }
 	 */
 
-	public void create(String js_create_code) {
+	public void create(String code) {
 		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
-		this.setObjRef(wp.generateObjectReference("o", this));
-		OpenLayersSessionHandler.getInstance().addCommand(
-				new OpenLayersCommand(getJSObjRef() + "=" + js_create_code));
+		wp.generateReference(this);
+		wp.executeCommand(new OpenLayersCommand(getJSObjRef() + "=" + code + ";"));
 	}
 
-	public void create_with_widget(String js_create_code,
-			OpenLayersWidget widget) {
-		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
-		this.setObjRef(wp.generateObjectReference("o", this));
-		OpenLayersSessionHandler.getInstance().addCommand(
-				new OpenLayersCommand(getJSObjRef() + "=" + js_create_code,
-						widget));
-	}
-
-	public void changes2widget() {
-		// if (getWidget() != null) {
-		if (obj_mod_code != null) {
-			OpenLayersSessionHandler.getInstance().addCommand(
-					new OpenLayersCommand(new Stringer("this.obj=",
-							getJSObjRef(), "; ", obj_mod_code).toString()));
-			obj_mod_code = null;
-		}
-		// }
-	}
+	//
+	// public void create_with_widget(String js_create_code,
+	// OpenLayersWidget widget) {
+	// OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
+	// this.setObjRef(wp.generateObjectReference("o", this));
+	// OpenLayersSessionHandler.getInstance().addCommand(
+	// new OpenLayersCommand(getJSObjRef() + "=" + js_create_code,
+	// widget));
+	// }
+	//
+	// public void changes2widget() {
+	// // if (getWidget() != null) {
+	// if (executionCode != null) {
+	// OpenLayersSessionHandler.getInstance().addCommand(
+	// new OpenLayersCommand(new Stringer("this.obj=",
+	// getJSObjRef(), "; ", executionCode).toString()));
+	// executionCode = null;
+	// }
+	// // }
+	// }
 
 	public void setObjRef(String obj_ref) {
-		this.obj_ref = obj_ref;
+		this.objRef = obj_ref;
 	}
 
 	public String getObjRef() {
-		return obj_ref;
+		return objRef;
 	}
 
 	public String getJSObjRef() {
-		return "this.objs['" + obj_ref + "']";
+		return "this.objs['" + objRef + "']";
 	}
 
 	public String getJSObj(OpenLayersObject object) {
@@ -236,8 +240,7 @@ public class OpenLayersObject {
 	 * 
 	 */
 	public void dispose() {
-		OpenLayersSessionHandler.getInstance().obj_ref2obj
-				.remove(getJSObjRef());
-		addObjModCode(getJSObjRef() + "=null;");
+		OpenLayersSessionHandler.getInstance().remove(getJSObjRef());
+		execute(getJSObjRef() + "=null;");
 	}
 }

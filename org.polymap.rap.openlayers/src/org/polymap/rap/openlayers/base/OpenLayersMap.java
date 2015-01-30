@@ -166,10 +166,10 @@ public class OpenLayersMap extends OpenLayersObject {
 		create(new Stringer("new ol.Map({view: new ol.View({center: [0, 0], zoom: 2}), target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
 //		callObjFunction("updateSize()");
 	}
-//
-//	public OpenLayersWidget getWidget() {
-//		return widget;
-//	}
+
+	public OpenLayersWidget getWidget() {
+		return widget;
+	}
 
 	public void addLayer(Layer<? extends Source> layer) {
 //		layer2add.setWidget(widget);

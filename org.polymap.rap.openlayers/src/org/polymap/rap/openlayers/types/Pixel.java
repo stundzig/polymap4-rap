@@ -33,6 +33,6 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
 public class Pixel extends OpenLayersObject {
 
 	public Pixel(int x, int y) {
-		super.create("  new OpenLayers.Pixel( " + x + "," + y + ");");
+		create("new ol.Pixel( " + x + "," + y + ")");
 	}
 }

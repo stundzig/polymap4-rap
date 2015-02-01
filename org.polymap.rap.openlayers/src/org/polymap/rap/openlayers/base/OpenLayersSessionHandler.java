@@ -26,21 +26,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.json.JsonObject;
+import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.SingletonUtil;
 import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
 import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
-import org.eclipse.rap.rwt.remote.OperationHandler;
 import org.eclipse.rap.rwt.remote.RemoteObject;
 import org.polymap.rap.openlayers.OpenLayersWidget;
+import org.polymap.rap.openlayers.util.Stringer;
 
 /**
  * Widget Provider holding a reference to the widget and generate client side
@@ -53,7 +56,7 @@ import org.polymap.rap.openlayers.OpenLayersWidget;
 public class OpenLayersSessionHandler {
 
 	private final static Log log = LogFactory.getLog(OpenLayersWidget.class);
-	
+
 	/** default external openlayers lib location **/
 	public String js_location = "http://openlayers.org/en/v3.1.0/build/ol.js";
 
@@ -65,18 +68,18 @@ public class OpenLayersSessionHandler {
 
 	public Vector<OpenLayersCommand> cmdsBeforeRemoteWasPresent;
 
-	private int obj_ref = 0;
+	private int referenceCounter = 0;
 
 	private final RemoteObject remote;
 
 	private OpenLayersSessionHandler() {
 		ref2obj = new HashMap<String, OpenLayersObject>();
 		cmdsBeforeRemoteWasPresent = new Vector<OpenLayersCommand>();
-		
+
 		Connection connection = RWT.getUISession().getConnection();
 		remote = connection
 				.createRemoteObject("org.polymap.rap.openlayers.OpenLayersWidget");
-//		remote.set("parent", WidgetUtil.getId(this));
+		// remote.set("parent", WidgetUtil.getId(this));
 		register(
 				"org/polymap/rap/openlayers/internal/resources/OpenLayersWrapper.js",
 				"OpenLayersWrapper.js");
@@ -88,33 +91,35 @@ public class OpenLayersSessionHandler {
 		remote.set("overflow", "hidden");
 	}
 
-	private final OperationHandler operationHandler = new AbstractOperationHandler() {
+	private final AbstractOperationHandler operationHandler = new AbstractOperationHandler() {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void handleCall(String method, JsonObject properties) {
-			log.warn(this + ".handleCall " + method + ";"
-					+ properties.toString());
+			// log.warn(this + ".handleCall " + method + ";"
+			// + properties.toString());
 			if ("handleOnRender".equals(method)) {
 				isRendered = true;
 				for (RemoteCall call : calls) {
 					callRemote(call.method, call.json);
 				}
 				calls.clear();
+			} else {
+				JsonValue objRefJS = properties.get("event_src_obj");
+				if (objRefJS != null) {
+					String objRef = objRefJS.asString();
+					properties.remove("event_src_obj");
+					OpenLayersObject obj = getObject(objRef);
+					if (obj != null) {
+						OpenLayersEvent event = new OpenLayersEvent(obj,
+								method, properties);
+						for (OpenLayersEventListener l : obj.getEventListener(method)) {
+							l.handleEvent(event);
+						}
+					}
+				}
 			}
-//			if (eventListeners.get(method) != null) {
-//				JsonValue objRef = properties.get("event_src_obj");
-//				OpenLayersObject obj = null;
-//				if (objRef != null) {
-//					obj = OpenLayersSessionHandler.getInstance().getObj(
-//							objRef.asString());
-//				}
-//				for (OpenLayersEventListener l : eventListeners.get(method)) {
-//					l.handleEvent(obj, method,
-//							properties);
-//				}
-//			}
 		}
 	};
 
@@ -148,7 +153,7 @@ public class OpenLayersSessionHandler {
 	// remote call
 
 	public void executeCommand(OpenLayersCommand command) {
-		callRemote("eval", command.getJson());
+		callRemote("execute", command.getJson());
 	}
 
 	private class RemoteCall {
@@ -179,7 +184,7 @@ public class OpenLayersSessionHandler {
 	}
 
 	public synchronized void generateReference(OpenLayersObject src) {
-		String newRef = "ol" + obj_ref++;
+		String newRef = "ol" + referenceCounter++;
 		ref2obj.put(newRef, src);
 		src.setObjRef(newRef);
 	}
@@ -188,7 +193,37 @@ public class OpenLayersSessionHandler {
 		return ref2obj.get(objRef);
 	}
 
-	public void remove(String jsObjRef) {
-		ref2obj.remove(jsObjRef);
+	public void remove(String objRef) {
+		ref2obj.remove(objRef);
+	}
+
+	public void registerEventListener(OpenLayersObject src, String event,
+			OpenLayersEventListener listener, Map<String, String> payload) {
+		Stringer payloadStringer = new Stringer();
+		if (payload != null) {
+			for (String key : payload.keySet()) {
+				payloadStringer.add("result['", key, "'] = ", payload.get(key),
+						";");
+			}
+		}
+		String command = new Stringer("console.log('", event,
+				"');var result = that.objs['", src.getObjRef(),
+				"'].getProperties();", "result['event_src_obj'] = '"
+						+ src.getObjRef() + "';", payloadStringer,
+				"rap.getRemoteObject(that).call( '", event, "', result);")
+				.toString();
+		callRemote(
+				"addListener",
+				new JsonObject().add("src", src.getObjRef())
+						.add("code", command).add("event", "change:" + event)
+						.add("hashCode", event + "_" + listener.hashCode()));
+	}
+
+	public void unregisterEventListener(OpenLayersObject src, String event,
+			OpenLayersEventListener listener) {
+		callRemote(
+				"removeListener",
+				new JsonObject().add("src", src.getObjRef()).add("hashCode",
+						event + "_" + listener.hashCode()));
 	}
 }

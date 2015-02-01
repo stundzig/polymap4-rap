@@ -14,6 +14,7 @@
  */
 package org.polymap.rap.openlayers.base;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -27,6 +28,8 @@ import org.polymap.rap.openlayers.types.Bounds;
 import org.polymap.rap.openlayers.types.LonLat;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.util.Stringer;
+import org.polymap.rap.openlayers.view.View;
+import org.polymap.rap.openlayers.view.View.EVENT;
 
 /**
  * <a href="http://www.polymap.de">Falko Bräutigam</a>
@@ -34,66 +37,66 @@ import org.polymap.rap.openlayers.util.Stringer;
 public class OpenLayersMap extends OpenLayersObject {
 
 	private final static Log log = LogFactory.getLog(OpenLayersMap.class);
-
-	/** Event: triggered after mouseover the map. */
-	public final static String EVENT_MOUSE_OVER = "mouseover";
-
-	/** Event: triggered after mouseout the map. */
-	public final static String EVENT_MOUSE_OUT = "mouseout";
-
-	/** Event: triggered after mousemove the map. */
-	public final static String EVENT_MOUSE_MOVE = "mousemove";
-
-	/**
-	 * triggered before a layer has been added. The event object will include a
-	 * layer property that references the layer to be added.
-	 **/
-	public final static String EVENT_PREADDLAYER = "preaddlayer";
-
-	/**
-	 * triggered after a layer has been added. The event object will include a
-	 * layer property that references the added layer.
-	 **/
-	public final static String EVENT_ADDLAYER = "addlayer";
-
-	/**
-	 * triggered after a layer has been removed. The event object will include a
-	 * layer property that references the removed layer.
-	 **/
-	public final static String EVENT_REMOVELAYER = "removelayer";
-
-	/**
-	 * triggered after a layer name change, order change, or visibility change
-	 * (due to resolution thresholds). Listeners will receive an event object
-	 * with layer and property properties. The layer property will be a reference
-	 * to the changed layer. The property property will be a key to the changed
-	 * property (name, visibility, or order).
-	 **/
-	public final static String EVENT_CHANGELAYER = "changelayer";
-
-	/** triggered after the start of a drag, pan, or zoom **/
-	public final static String EVENT_MOVESTART = "movestart";
-
-	/** triggered after each drag, pan, or zoom **/
-	public final static String EVENT_MOVE = "move";
-
-	/** triggered after a drag, pan, or zoom completes **/
-	public final static String EVENT_MOVEEND = "moveend";
-
-	/** triggered after a zoom completes **/
-	public final static String EVENT_ZOOMEND = "zoomend";
-
-	/** triggered after a marker has been added **/
-	public final static String EVENT_ADDMARKER = "addmarker";
-
-	/** triggered after a marker has been removed **/
-	public final static String EVENT_REMOVEMARKER = "removemarker";
-
-	/** triggered after markers have been cleared **/
-	public final static String EVENT_CLEARMARKERS = "clearmarkers";
-
-	/** triggered after the base layer changes **/
-	public final static String EVENT_CHANGEBASELAYER = "changebaselayer";
+//
+//	/** Event: triggered after mouseover the map. */
+//	public final static String EVENT_MOUSE_OVER = "mouseover";
+//
+//	/** Event: triggered after mouseout the map. */
+//	public final static String EVENT_MOUSE_OUT = "mouseout";
+//
+//	/** Event: triggered after mousemove the map. */
+//	public final static String EVENT_MOUSE_MOVE = "mousemove";
+//
+//	/**
+//	 * triggered before a layer has been added. The event object will include a
+//	 * layer property that references the layer to be added.
+//	 **/
+//	public final static String EVENT_PREADDLAYER = "preaddlayer";
+//
+//	/**
+//	 * triggered after a layer has been added. The event object will include a
+//	 * layer property that references the added layer.
+//	 **/
+//	public final static String EVENT_ADDLAYER = "addlayer";
+//
+//	/**
+//	 * triggered after a layer has been removed. The event object will include a
+//	 * layer property that references the removed layer.
+//	 **/
+//	public final static String EVENT_REMOVELAYER = "removelayer";
+//
+//	/**
+//	 * triggered after a layer name change, order change, or visibility change
+//	 * (due to resolution thresholds). Listeners will receive an event object
+//	 * with layer and property properties. The layer property will be a reference
+//	 * to the changed layer. The property property will be a key to the changed
+//	 * property (name, visibility, or order).
+//	 **/
+//	public final static String EVENT_CHANGELAYER = "changelayer";
+//
+//	/** triggered after the start of a drag, pan, or zoom **/
+//	public final static String EVENT_MOVESTART = "movestart";
+//
+//	/** triggered after each drag, pan, or zoom **/
+//	public final static String EVENT_MOVE = "move";
+//
+//	/** triggered after a drag, pan, or zoom completes **/
+//	public final static String EVENT_MOVEEND = "moveend";
+//
+//	/** triggered after a zoom completes **/
+//	public final static String EVENT_ZOOMEND = "zoomend";
+//
+//	/** triggered after a marker has been added **/
+//	public final static String EVENT_ADDMARKER = "addmarker";
+//
+//	/** triggered after a marker has been removed **/
+//	public final static String EVENT_REMOVEMARKER = "removemarker";
+//
+//	/** triggered after markers have been cleared **/
+//	public final static String EVENT_CLEARMARKERS = "clearmarkers";
+//
+//	/** triggered after the base layer changes **/
+//	public final static String EVENT_CHANGEBASELAYER = "changebaselayer";
 
 	private OpenLayersWidget widget;
 
@@ -146,7 +149,7 @@ public class OpenLayersMap extends OpenLayersObject {
 //				widget);
 //	}
 
-	public OpenLayersMap(final OpenLayersWidget widget) {
+	public OpenLayersMap(final OpenLayersWidget widget, final View view) {
 //		this.controls = new ArrayList<Control>();
 //		this.layers = new LinkedHashMap<String, Layer>();
 		// this.popups = new ArrayList<IPopup>();
@@ -163,7 +166,7 @@ public class OpenLayersMap extends OpenLayersObject {
 //				widget);
 		
 //		create_with_widget(new Stringer("new ol.Map({ view: new ol.View({center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'), zoom: 4}), target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString(), widget);
-		create(new Stringer("new ol.Map({view: new ol.View({center: [0, 0], zoom: 2}), target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
+		create(new Stringer("new ol.Map({view: " + view.getJSObjRef() + ", target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
 //		callObjFunction("updateSize()");
 	}
 
@@ -272,43 +275,43 @@ public class OpenLayersMap extends OpenLayersObject {
 	public String getUnits() {
 		return units;
 	}
-
+//
+//	/**
+//	 * This property is what allows OpenLayers to know what scale things are
+//	 * being rendered at, which is important for scale-based methods of zooming
+//	 * and the Scale display control.
+//	 * 
+//	 * @param units
+//	 *            The map units. Defaults to "degrees". Possible values are
+//	 *            "degrees" (or "dd"), "m", "ft", "km", "mi", "inches".
+//	 */
+//	public void setUnits(String units) {
+//		this.units = units;
+//		setAttribute("units", units);
+//	}
+//
+//	public void updateSize() {
+//		execute(new Stringer("setTimeout( function() {", getJSObjRef(),
+//				".updateSize();", "}, 500 );").toString());
+//	}	
+	
+	public enum EVENT {
+		layerGroup, size, target, view
+	}
+	
 	/**
-	 * This property is what allows OpenLayers to know what scale things are
-	 * being rendered at, which is important for scale-based methods of zooming
-	 * and the Scale display control.
-	 * 
-	 * @param units
-	 *            The map units. Defaults to "degrees". Possible values are
-	 *            "degrees" (or "dd"), "m", "ft", "km", "mi", "inches".
+	 * The event contains the new center, resolution and rotation
+	 * @param event
+	 * @param listener
 	 */
-	public void setUnits(String units) {
-		this.units = units;
-		setAttribute("units", units);
+	public void addEventListener(EVENT event,
+			OpenLayersEventListener listener) {
+		Map<String, String> props = new HashMap<String, String>();
+		addEventListener(event.name(), listener, props );
 	}
-
-	public void updateSize() {
-		execute(new Stringer("setTimeout( function() {", getJSObjRef(),
-				".updateSize();", "}, 500 );").toString());
-	}
-
-	public void addEventListener(final String event_name,
-			OpenLayersEventListener listener, Map<String, String> payload) {
-		widget.registerEventHandler( event_name, listener);
-		Stringer payloadStringer = new Stringer();
-		if (payload != null) {
-            for (String key : payload.keySet()) {
-            	payloadStringer.add( "'", key , "' : " , payload.get(key) , "," );
-            }
-        }
-		execute( new Stringer( "this.obj.events.register('", event_name, "', this, function( event ) {",
-                    "console.log( 'event from "+ listener.toString() + ":' + event );",
-                    "rap.getRemoteObject(this).call( '", event_name , "', {",
-                    	"'event_name' : event.type,",
-                        payloadStringer,                    	
-                    	"'event_src_obj' : '" + getObjRef() + "'",
-                    "});", 
-                "});" ).toString() );
-		
+	
+	public void removeEventListener(EVENT event,
+			OpenLayersEventListener listener) {
+		removeEventListener(event.name(), listener);
 	}
 }

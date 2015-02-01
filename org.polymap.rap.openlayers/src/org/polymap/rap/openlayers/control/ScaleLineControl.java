@@ -22,10 +22,15 @@
 
 package org.polymap.rap.openlayers.control;
 
-import org.polymap.rap.openlayers.util.Stringer;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.rap.json.JsonObject;
+import org.polymap.rap.openlayers.base.OpenLayersEventListener;
+import org.polymap.rap.openlayers.view.View.EVENT;
 
 /**
- * @see http://openlayers.org/en/v3.1.1/apidoc/ol.control.ScaleLine.html
+ * @see http://openlayers.org/en/master/apidoc/ol.control.ScaleLine.html
  * 
  * @author stundzig
  *
@@ -38,33 +43,33 @@ public class ScaleLineControl extends Control {
 
 	public ScaleLineControl(String cssName, String targetWidget, Units units,
 			Double minWidth) {
-		Stringer c = new Stringer("new ol.control.ScaleLine({");
-		boolean commaBefore = false;
+		JsonObject attributes = new JsonObject();
 		if (cssName != null) {
-			c.add("className : '", cssName, "'");
-			commaBefore = true;
+			attributes.add("className", cssName);
 		}
 		if (targetWidget != null) {
-			if (commaBefore) {
-				c.add(", ");
-			}
-			c.add("target : '", targetWidget, "'");
-			commaBefore = true;
+			attributes.add("target", targetWidget);
 		}
 		if (minWidth != null) {
-			if (commaBefore) {
-				c.add(", ");
-			}
-			c.add("minWidth : '", minWidth, "'");
-			commaBefore = true;
+			attributes.add("minWidth", minWidth);
 		}
 		if (units != null) {
-			if (commaBefore) {
-				c.add(", ");
-			}
-			c.add("units : '", units.name(), "'");
+			attributes.add("units", units.name());
 		}
- 		c.add("});");
-		super.create(c.toString());
+		create("new ol.control.ScaleLine(" + attributes + ")");
+	}
+
+	public enum EVENT {
+		units
+	}
+
+	public void addEventListener(EVENT event, OpenLayersEventListener listener) {
+		Map<String, String> props = new HashMap<String, String>();
+		addEventListener(event.name(), listener, props);
+	}
+
+	public void removeEventListener(EVENT event,
+			OpenLayersEventListener listener) {
+		removeEventListener(event.name(), listener);
 	}
 }

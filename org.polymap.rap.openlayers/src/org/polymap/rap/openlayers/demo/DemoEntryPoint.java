@@ -10,6 +10,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.polymap.rap.openlayers.OpenLayersWidget;
+import org.polymap.rap.openlayers.base.OpenLayersEvent;
+import org.polymap.rap.openlayers.base.OpenLayersEventListener;
 import org.polymap.rap.openlayers.base.OpenLayersMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.control.ZoomSliderControl;
@@ -17,6 +19,7 @@ import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.MapQuestSource;
+import org.polymap.rap.openlayers.view.View;
 
 public class DemoEntryPoint extends AbstractEntryPoint {
 
@@ -25,6 +28,8 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 	private OpenLayersMap map1;
 	private OpenLayersWidget olwidget2;
 	private OpenLayersMap map2;
+	private OpenLayersEventListener listener;
+	private View view2;
 
 	@Override
 	protected void createContents(Composite parent) {
@@ -49,7 +54,8 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				map1.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.imperial, null));
+				map1.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.metric, null));
+				view2.removeEventListener(View.EVENT.center, listener);
 			}
 
 			@Override
@@ -79,7 +85,7 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 //
 //		map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds, maxResolution);
 //		// map.updateSize();
-		map1 = new OpenLayersMap(olwidget1);
+		map1 = new OpenLayersMap(olwidget1, new View());
 		
 //		WMSLayer layer = new WMSLayer( "OSM",
 //				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
@@ -87,8 +93,8 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		TileLayer layer = new TileLayer(new MapQuestSource(MapQuestSource.Type.hyb));
 		map1.addLayer(layer);
 		
-		ImageLayer ilayer = new ImageLayer(new ImageWMSSource("http://ows.terrestris.de/osm/service/", "OSM-WMS"));
-		ilayer.setOpacity(80.0);
+		ImageLayer ilayer = new ImageLayer(new ImageWMSSource("http://ows.terrestris.de/osm/service/", "OSM-WMS", null));
+		ilayer.setOpacity(10.0);
 		map1.addLayer(ilayer);
 //		//
 //		map1.addControl(new NavigationControl(true));
@@ -126,8 +132,8 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		olwidget2 = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP
 				| SWT.BORDER);
 //		olwidget2.prepare();
-
-		map2 = new OpenLayersMap(olwidget2);
+		view2 = new View();
+		map2 = new OpenLayersMap(olwidget2, view2);
 		// map.updateSize();
 		map2.addLayer(new TileLayer(new MapQuestSource(MapQuestSource.Type.sat)));
 //		map2.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.degrees, null));
@@ -147,6 +153,24 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		//
 		// HashMap<String, String> payload = new HashMap<String, String>();
 		// map.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
+		listener = new OpenLayersEventListener() {
+			
+			@Override
+			public void handleEvent(OpenLayersEvent event) {
+				System.out.println(event.getProperties());
+			}
+		};
+		view2.addEventListener(View.EVENT.center, listener );
+//		view2.addEventListener(View.EVENT.resolution, listener);
+//				new OpenLayersEventListener() {
+//
+//					@Override
+//					public void handleEvent(OpenLayersObject src, String name,
+//							JsonObject properties) {
+//						log.info(this + ": " + name);
+//					}
+//
+//				}, null);
 
 //		map2.addEventListener(OpenLayersMap.EVENT_MOVEEND,
 //				new OpenLayersEventListener() {

@@ -14,7 +14,11 @@
  */
 package org.polymap.rap.openlayers.base;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
@@ -176,7 +180,8 @@ public abstract class OpenLayersObject {
 	public void create(String code) {
 		OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
 		wp.generateReference(this);
-		wp.executeCommand(new OpenLayersCommand(getJSObjRef() + "=" + code + ";"));
+		wp.executeCommand(new OpenLayersCommand(getJSObjRef() + "=" + code
+				+ ";"));
 	}
 
 	//
@@ -234,13 +239,39 @@ public abstract class OpenLayersObject {
 
 	}
 
-	/**
-	 * 
-	 * dispose the object
-	 * 
-	 */
 	public void dispose() {
-		OpenLayersSessionHandler.getInstance().remove(getJSObjRef());
+		OpenLayersSessionHandler.getInstance().remove(getObjRef());
 		execute(getJSObjRef() + "=null;");
 	}
+
+	private Map<String, Set<OpenLayersEventListener>> eventListeners = new HashMap<String, Set<OpenLayersEventListener>>();
+
+	protected void addEventListener(final String event,
+			OpenLayersEventListener listener, Map<String, String> payload) {
+
+		Set<OpenLayersEventListener> listeners = eventListeners.get(event);
+		if (listeners == null) {
+			listeners = new HashSet<OpenLayersEventListener>();
+			eventListeners.put(event, listeners);
+		}
+		listeners.add(listener);
+
+		OpenLayersSessionHandler.getInstance().registerEventListener(this,
+				event, listener, payload);
+	}
+
+	protected void removeEventListener(final String event,
+			OpenLayersEventListener listener) {
+		Set<OpenLayersEventListener> listeners = eventListeners.get(event);
+		if (listeners != null) {
+			listeners.remove(listener);
+		}
+		OpenLayersSessionHandler.getInstance().unregisterEventListener(this, event,
+				listener);
+	}
+
+	public Set<OpenLayersEventListener> getEventListener(String method) {
+		return eventListeners.get(method);
+	};
+
 }

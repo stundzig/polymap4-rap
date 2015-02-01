@@ -22,17 +22,7 @@
 
 package org.polymap.rap.openlayers.base;
 
-import org.eclipse.rap.json.JsonObject;
-
-/**
- * Client Side OpenLayers Object Base Class holding a reference to the widget
- * and keeps track of changes to the object
- * 
- * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
- */
-
 public interface OpenLayersEventListener {
 
-	void handleEvent(OpenLayersObject src, String name, JsonObject properties);
+	void handleEvent(OpenLayersEvent event);
 }

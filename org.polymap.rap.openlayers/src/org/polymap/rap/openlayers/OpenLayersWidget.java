@@ -15,33 +15,11 @@
  */
 package org.polymap.rap.openlayers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.rap.json.JsonObject;
-import org.eclipse.rap.json.JsonValue;
-import org.eclipse.rap.rwt.RWT;
-import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
-import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
-import org.eclipse.rap.rwt.remote.Connection;
-import org.eclipse.rap.rwt.remote.OperationHandler;
-import org.eclipse.rap.rwt.remote.RemoteObject;
-import org.eclipse.rap.rwt.widgets.WidgetUtil;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
-import org.polymap.rap.openlayers.base.OpenLayersCommand;
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
 import org.polymap.rap.openlayers.base.OpenLayersMap;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base.OpenLayersSessionHandler;
 
 /**
  * 
@@ -51,6 +29,8 @@ import org.polymap.rap.openlayers.base.OpenLayersSessionHandler;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class OpenLayersWidget extends Composite {
+
+	private static final long serialVersionUID = 1L;
 
 	private final static Log log = LogFactory.getLog(OpenLayersWidget.class);
 
@@ -95,7 +75,7 @@ public class OpenLayersWidget extends Composite {
 		
 //		remote.
 
-		OpenLayersSessionHandler.getInstance().setWidget(this);
+//		OpenLayersSessionHandler.getInstance().setWidget(this);
 
 		// hookContextMenu();
 	}
@@ -264,16 +244,5 @@ public class OpenLayersWidget extends Composite {
 //		super.dispose();
 //	}
 
-	private Map<String, Set<OpenLayersEventListener>> eventListeners = new HashMap<String, Set<OpenLayersEventListener>>();
-
-	public void registerEventHandler(String event,
-			OpenLayersEventListener listener) {
-		Set<OpenLayersEventListener> listeners = eventListeners.get(event);
-		if (listeners == null) {
-			listeners = new HashSet<OpenLayersEventListener>();
-			eventListeners.put(event, listeners);
-		}
-		listeners.add(listener);
-	}
 
 }

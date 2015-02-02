@@ -14,38 +14,30 @@
  */
 package org.polymap.rap.openlayers.style;
 
-import org.eclipse.rap.json.JsonObject;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.util.JSonBuilder;
 
 public class ImageStyle extends OpenLayersObject {
 
-	public ImageStyle(StrokeOptions options) {
-		create("new ol.style.Stroke(" + options.asJson() + ")");
+	public ImageStyle(Options options) {
+		create("new ol.style.Image(" + options.asJson() + ")");
 	}
 
-	public static class StrokeOptions {
-		private String color;
-		private Double width;
+	public static Options builder() {
+		return new Options();
+	}
 
-		public StrokeOptions withColor(String color) {
-			this.color = color;
-			return this;
-		}
+	public static class Options {
+		// TODO more options here
+		// http://openlayers.org/en/v3.1.1/apidoc/ol.style.Image.html?unstable=true
+		private JSonBuilder asJson() {
+			JSonBuilder json = new JSonBuilder();
 
-		public StrokeOptions withUrl(Double width) {
-			this.width = width;
-			return this;
-		}
-
-		public JsonObject asJson() {
-			JsonObject json = new JsonObject();
-			if (color != null) {
-				json.add("color", color);
-			}
-			if (width != null) {
-				json.add("width", width);
-			}
 			return json;
+		}
+
+		public ImageStyle build() {
+			return new ImageStyle(this);
 		}
 	}
 }

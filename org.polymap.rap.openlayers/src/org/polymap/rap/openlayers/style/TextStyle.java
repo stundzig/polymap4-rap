@@ -16,36 +16,27 @@ package org.polymap.rap.openlayers.style;
 
 import org.eclipse.rap.json.JsonObject;
 import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.style.StrokeStyle.Options;
+import org.polymap.rap.openlayers.util.JSonBuilder;
 
 public class TextStyle extends OpenLayersObject {
 
-	public TextStyle(StrokeOptions options) {
-		create("new ol.style.Stroke(" + options.asJson() + ")");
+	public TextStyle(Options options) {
+		create("new ol.style.Text(" + options.asJson() + ")");
 	}
-
-	public static class StrokeOptions {
-		private String color;
-		private Double width;
-
-		public StrokeOptions withColor(String color) {
-			this.color = color;
-			return this;
-		}
-
-		public StrokeOptions withUrl(Double width) {
-			this.width = width;
-			return this;
-		}
-
-		public JsonObject asJson() {
-			JsonObject json = new JsonObject();
-			if (color != null) {
-				json.add("color", color);
-			}
-			if (width != null) {
-				json.add("width", width);
-			}
+	public static Options builder() {
+		return new Options();
+	}
+	public static class Options {
+		// TODO more options here http://openlayers.org/en/v3.1.1/apidoc/ol.style.Text.html?unstable=true
+		private JSonBuilder asJson() {
+			JSonBuilder json = new JSonBuilder();
+			
 			return json;
+		}
+		
+		public TextStyle build() {
+			return new TextStyle(this);
 		}
 	}
 }

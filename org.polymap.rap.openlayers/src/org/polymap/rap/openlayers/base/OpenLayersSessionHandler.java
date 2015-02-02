@@ -115,7 +115,8 @@ public class OpenLayersSessionHandler {
 					if (obj != null) {
 						OpenLayersEvent event = new OpenLayersEvent(obj,
 								method, properties);
-						for (OpenLayersEventListener l : obj.getEventListener(method)) {
+						for (OpenLayersEventListener l : obj
+								.getEventListener(method)) {
 							l.handleEvent(event);
 						}
 					}
@@ -202,12 +203,13 @@ public class OpenLayersSessionHandler {
 			OpenLayersEventListener listener, PayLoad payload) {
 		Stringer payloadStringer = new Stringer();
 		if (payload != null) {
-			payload.values().forEach(value -> 
-				payloadStringer.add("result.", value.key, " = ", value.value, ";"));
-			
+			payload.values().forEach(
+					value -> payloadStringer.add("result.", value.key, " = ",
+							value.value, ";"));
 		}
-		String command = new Stringer("console.log('", event,
-				"');var result = that.objs['", src.getObjRef(),
+		String command = new Stringer(
+				// "console.log('", event, "');",
+				"var result = that.objs['", src.getObjRef(),
 				"'].getProperties();", "result['event_src_obj'] = '"
 						+ src.getObjRef() + "';", payloadStringer,
 				"rap.getRemoteObject(that).call( '", event, "', result);")

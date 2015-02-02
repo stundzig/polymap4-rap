@@ -17,7 +17,7 @@ import org.polymap.rap.openlayers.types.Projection;
 public class View extends OpenLayersObject {
 
 	public View() {
-		create("new ol.View({center: [0, 0], zoom: 2})");
+		create("new ol.View({ center: [-8161939, 6095025], zoom: 8})");
 	}
 
 	public void rotate(Double rotation, Coordinate anchor) {

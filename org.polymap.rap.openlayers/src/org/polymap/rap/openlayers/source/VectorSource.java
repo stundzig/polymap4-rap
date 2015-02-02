@@ -14,12 +14,16 @@
  */
 package org.polymap.rap.openlayers.source;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.rap.json.JsonArray;
 import org.polymap.rap.openlayers.base.OpenLayersEventListener;
+import org.polymap.rap.openlayers.source.GeoJSONSource.GeoJSONSourceOptions;
+import org.polymap.rap.openlayers.types.Attribution;
+import org.polymap.rap.openlayers.util.JSonBuilder;
 
-public abstract class VectorSource extends Source {
+public class VectorSource extends Source {
 
 	public enum EVENT {
 		/**
@@ -30,22 +34,35 @@ public abstract class VectorSource extends Source {
 		/**
 		 * Triggered when the state of the source changes.
 		 */
-		change, 
+		change,
 		/**
-		 * Triggered when a feature is removed from the source. See source.clear() for exceptions.
+		 * Triggered when a feature is updated.
+		 */
+		changefeature,
+		/**
+		 * Triggered when the clear method is called on the source.
+		 */
+		clear,
+		/**
+		 * Triggered when a feature is removed from the source. See
+		 * source.clear() for exceptions.
 		 */
 		removefeature;
 	}
-//
-//	public VectorSource() {
-//		create("new ol.source.Vector()");
-//	}
+
+	protected String getJSClass() {
+		return "ol.source.Vector";
+	}
+
+	public VectorSource(VectorSourceOptions options) {
+		create("new " + getJSClass() + "(" + options.asJson().toString() + ")");
+	}
 
 	public void addEventListener(EVENT event, OpenLayersEventListener listener) {
-//		Map<String, String> props = new HashMap<String, String>();
-//		if (event == EVENT.addfeature || event == EVENT.removefeature) {
-//			props.put("feature", "event.feature");
-//		}
+		// Map<String, String> props = new HashMap<String, String>();
+		// if (event == EVENT.addfeature || event == EVENT.removefeature) {
+		// props.put("feature", "event.feature");
+		// }
 		addEventListener(event.name(), listener, null);
 	}
 
@@ -53,8 +70,59 @@ public abstract class VectorSource extends Source {
 			OpenLayersEventListener listener) {
 		removeEventListener(event.name(), listener);
 	}
-	
-	public class VectorSourceOptions {
-		 
+
+	public static VectorSourceOptions builder() {
+		return new VectorSourceOptions();
+	}
+
+	public static class VectorSourceOptions {
+
+		private List<String> attributions = new ArrayList<String>();/*-{ this.attributions=attributions; }-*/;
+		private String logo; /*-{  this.logo=logo; }-*/;
+
+		/**
+		 * Destination projection. If provided, features will be transformed to
+		 * this projection. If not provided, features will not be transformed
+		 *
+		 * @param projection
+		 */
+		private String projectionLike; /*-{ this.projection=projection;  }-*/
+
+		public VectorSourceOptions withAttribution(String html) {
+			return withAttribution(new Attribution(html));
+		}
+
+		public VectorSourceOptions withAttribution(Attribution attribution) {
+			attributions.add(attribution.asJson());
+			return this;
+		}
+
+		public VectorSourceOptions withLogo(String logo) {
+			this.logo = logo;
+			return this;
+		}
+
+		public VectorSourceOptions withProjection(String projection) {
+			this.projectionLike = projection;
+			return this;
+		}
+
+		public JSonBuilder asJson() {
+			JSonBuilder json = new JSonBuilder();
+			if (logo != null) {
+				json.addQuoted("logo", logo);
+			}
+			if (projectionLike != null) {
+				json.addQuoted("projection", projectionLike);
+			}
+			if (!attributions.isEmpty()) {
+				json.add("attributions", attributions);
+			}
+			return json;
+		}
+
+		public VectorSource build() {
+			return new VectorSource(this);
+		}
 	}
 }

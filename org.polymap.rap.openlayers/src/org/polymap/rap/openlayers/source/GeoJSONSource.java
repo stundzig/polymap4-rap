@@ -14,10 +14,92 @@
  */
 package org.polymap.rap.openlayers.source;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.polymap.rap.openlayers.types.Attribution;
+import org.polymap.rap.openlayers.util.JSonBuilder;
 
 public class GeoJSONSource extends StaticVectorSource {
 
-	public GeoJSONSource() {
-		
+	@Override
+	protected String getJSClass() {
+		return "ol.source.GeoJSON";
+	}
+
+	public GeoJSONSource(GeoJSONSourceOptions options) {
+		super(options);
+	}
+
+	public static GeoJSONSourceOptions builder() {
+		return new GeoJSONSourceOptions();
+	}
+
+	public static class GeoJSONSourceOptions extends VectorSourceOptions {
+		private List<String> urls = new ArrayList<String>();
+		private String defaultProjectionLike;
+		private String text;
+
+		@Override
+		public GeoJSONSourceOptions withAttribution(Attribution attribution) {
+			super.withAttribution(attribution);
+			return this;
+		}
+
+		@Override
+		public GeoJSONSourceOptions withAttribution(String html) {
+			super.withAttribution(html);
+			return this;
+		}
+
+		@Override
+		public GeoJSONSourceOptions withLogo(String logo) {
+			super.withLogo(logo);
+			return this;
+		}
+
+		@Override
+		public GeoJSONSourceOptions withProjection(String projection) {
+			super.withProjection(projection);
+			return this;
+		}
+
+		public GeoJSONSourceOptions withUrl(String url) {
+			urls.add(url);
+			return this;
+		}
+
+		public GeoJSONSourceOptions withDefaultProjection(String projection) {
+			this.defaultProjectionLike = projection;
+			return this;
+		}
+
+		public GeoJSONSourceOptions withText(String text) {
+			this.text = text;
+			return this;
+		}
+
+		@Override
+		public JSonBuilder asJson() {
+			JSonBuilder json = super.asJson();
+			if (text != null) {
+				json.addQuoted("text", text);
+			}
+			if (defaultProjectionLike != null) {
+				json.addQuoted("defaultProjection", defaultProjectionLike);
+			}
+			if (!urls.isEmpty()) {
+				if (urls.size() == 1) {
+					json.addQuoted("url", urls.get(0));
+				} else {
+					json.addQuoted("urls", urls);
+				}
+			}
+			return json;
+		}
+
+		public GeoJSONSource build() {
+			return new GeoJSONSource(this);
+		}
 	}
 }

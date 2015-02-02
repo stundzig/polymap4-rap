@@ -64,8 +64,7 @@ public class ScaleLineControl extends Control {
 	}
 
 	public void addEventListener(EVENT event, OpenLayersEventListener listener) {
-		Map<String, String> props = new HashMap<String, String>();
-		addEventListener("change:" + event.name(), listener, props);
+		addEventListener("change:" + event.name(), listener, null);
 	}
 
 	public void removeEventListener(EVENT event,

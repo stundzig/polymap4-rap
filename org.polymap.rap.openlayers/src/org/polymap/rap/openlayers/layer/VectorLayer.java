@@ -23,15 +23,53 @@
 package org.polymap.rap.openlayers.layer;
 
 import org.polymap.rap.openlayers.source.VectorSource;
+import org.polymap.rap.openlayers.style.Style;
+import org.polymap.rap.openlayers.util.JSonBuilder;
 
 public class VectorLayer extends Layer<VectorSource> {
 
 	public VectorLayer() {
-		super.create("new ol.layer.Vector()");
+		this(null);
 	}
 
-	public VectorLayer(VectorSource source) {
-		this();
-		setSource(source);
+	public VectorLayer(Options options) {
+		create("new ol.layer.Vector("
+				+ (options != null ? options.asJson() : "") + ")");
+	}
+
+	public static Options builder() {
+		return new Options();
+	}
+
+	public static class Options {
+		// TODO add more options
+		// http://openlayers.org/en/v3.1.1/apidoc/ol.layer.Vector.html?unstable=true
+		private VectorSource source;
+		private Style style;
+
+		public Options withSource(VectorSource source) {
+			this.source = source;
+			return this;
+		}
+
+		public Options withStyle(Style style) {
+			this.style = style;
+			return this;
+		}
+
+		public JSonBuilder asJson() {
+			JSonBuilder json = new JSonBuilder();
+			if (style != null) {
+				json.add("style", style.getJSObjRef());
+			}
+			if (source != null) {
+				json.add("source", source.getJSObjRef());
+			}
+			return json;
+		}
+
+		public VectorLayer build() {
+			return new VectorLayer(this);
+		}
 	}
 }

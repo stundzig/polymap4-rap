@@ -20,35 +20,14 @@
  *
  */
 
-package org.polymap.rap.openlayers.base;
+package org.polymap.rap.openlayers.types;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.polymap.rap.openlayers.base.OpenLayersObject;
 
-public interface OpenLayersEventListener {
+public class Extent extends OpenLayersObject {
 
-	void handleEvent(OpenLayersEvent event);
-
-	public class PayLoad {
-		List<Value> values = new ArrayList<Value>();
-
-		public void add(String key, String value) {
-			values.add(new Value(key, value));
-		}
-
-		public List<Value> values() {
-			return values;
-		}
-	}
-
-	public class Value {
-
-		String key;
-		String value;
-
-		public Value(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
+	public Extent(double minx, double miny, double maxx, double maxy) {
+		create("new ol.Extent[ " + minx + "," + miny + "," + maxx + "," + maxy
+				+ "];");
 	}
 }

@@ -15,10 +15,14 @@ import org.polymap.rap.openlayers.base.OpenLayersEventListener;
 import org.polymap.rap.openlayers.base.OpenLayersMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.control.ZoomSliderControl;
+import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
+import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.MapQuestSource;
+import org.polymap.rap.openlayers.source.VectorSource;
+import org.polymap.rap.openlayers.types.GeometryType;
 import org.polymap.rap.openlayers.view.View;
 
 public class DemoEntryPoint extends AbstractEntryPoint {
@@ -139,6 +143,15 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 //		map2.addControl(new ScaleLineControl(null, null, ScaleLineControl.Units.degrees, null));
 		map2.addControl(new ZoomSliderControl());
 		
+		
+		VectorSource vector = new VectorSource();
+		map2.addLayer(new VectorLayer(vector));
+//		vector.addEventListener(VectorSource.EVENT.addfeature, event -> System.out.println(event.getProperties()));
+		
+		DrawInteraction di = new DrawInteraction(vector, GeometryType.LineString);
+//		di.addEventListener(DrawInteraction.EVENT.drawstart, event -> System.out.println(event.getProperties()));
+		di.addEventListener(DrawInteraction.EVENT.drawend, event -> System.out.println(event.getProperties()));
+		map2.addInteraction(di);
 //		WMSLayer layer = new WMSLayer("OSM2",
 //				"http://ows.terrestris.de/osm/service/", "OSM-WMS");
 //		layer.setIsBaseLayer(true);

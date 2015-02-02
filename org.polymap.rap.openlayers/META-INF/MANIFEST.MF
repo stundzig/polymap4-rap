@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: OpenLayers RAP Widget
 Bundle-SymbolicName: org.polymap.rap.openlayers;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: polymap.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.servlet;version="2.5.0",
@@ -12,7 +12,6 @@ Export-Package: org.polymap.rap.openlayers,
  org.polymap.rap.openlayers.control,
  org.polymap.rap.openlayers.features,
  org.polymap.rap.openlayers.geometry,
- org.polymap.rap.openlayers.internal.openlayerswidgetkit,
  org.polymap.rap.openlayers.internal.resources,
  org.polymap.rap.openlayers.layer,
  org.polymap.rap.openlayers.marker,

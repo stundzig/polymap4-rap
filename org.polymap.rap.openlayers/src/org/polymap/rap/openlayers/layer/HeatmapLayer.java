@@ -20,35 +20,12 @@
  *
  */
 
-package org.polymap.rap.openlayers.base;
+package org.polymap.rap.openlayers.layer;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public interface OpenLayersEventListener {
-
-	void handleEvent(OpenLayersEvent event);
-
-	public class PayLoad {
-		List<Value> values = new ArrayList<Value>();
-
-		public void add(String key, String value) {
-			values.add(new Value(key, value));
-		}
-
-		public List<Value> values() {
-			return values;
-		}
-	}
-
-	public class Value {
-
-		String key;
-		String value;
-
-		public Value(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
+public class HeatmapLayer extends VectorLayer {
+	
+	public HeatmapLayer() {
+		super.create("new ol.layer.Heatmap()");
 	}
 }

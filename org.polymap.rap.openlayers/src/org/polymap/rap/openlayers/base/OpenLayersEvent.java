@@ -22,33 +22,43 @@
 
 package org.polymap.rap.openlayers.base;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.eclipse.rap.json.JsonObject;
 
-public interface OpenLayersEventListener {
+public class OpenLayersEvent {
 
-	void handleEvent(OpenLayersEvent event);
+	
+	private OpenLayersObject src;
+	private String name;
+	private JsonObject properties;
 
-	public class PayLoad {
-		List<Value> values = new ArrayList<Value>();
-
-		public void add(String key, String value) {
-			values.add(new Value(key, value));
-		}
-
-		public List<Value> values() {
-			return values;
-		}
+	public OpenLayersEvent(OpenLayersObject src, String name, JsonObject properties) {
+		this.src = src;
+		this.name = name;
+		this.properties = properties;
+		
 	}
 
-	public class Value {
+	public OpenLayersObject getSrc() {
+		return src;
+	}
 
-		String key;
-		String value;
+	public void setSrc(OpenLayersObject src) {
+		this.src = src;
+	}
 
-		public Value(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public JsonObject getProperties() {
+		return properties;
+	}
+
+	public void setProperties(JsonObject properties) {
+		this.properties = properties;
 	}
 }

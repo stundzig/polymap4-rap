@@ -197,16 +197,17 @@
 //			console.log('addListener:  ', properties);
 //			console.log('obj', this.objs[properties.src]);
 			var key = this.objs[properties.src].on(properties.event, function(
-					event) {
+					theEvent) {
 //				console.log(this.objs[properties.src].getProperties());
-				var oldTimeOut = this.events[event];
+				console.log(theEvent);
+				var oldTimeOut = this.events[theEvent];
 				if (oldTimeOut) {
 					window.clearTimeout(oldTimeOut);
 				}
 				var that = this;
 				// wait 100ms for sending the event, newer events will remove this call
 				var newTimeOut = window.setTimeout(function() {eval(properties.code)},100);
-				this.events[event] = newTimeOut;
+				this.events[theEvent] = newTimeOut;
 			}, this);
 //			console.log('key:  ', key);
 			// listeners stored by key, do later remove them from the global goog context

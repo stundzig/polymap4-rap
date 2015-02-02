@@ -20,35 +20,20 @@
  *
  */
 
-package org.polymap.rap.openlayers.base;
+package org.polymap.rap.openlayers.control;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.polymap.rap.openlayers.util.Stringer;
 
-public interface OpenLayersEventListener {
+/**
+ * @see http://openlayers.org/en/master/apidoc/ol.control.ZoomSlider.html
+ * 
+ * @author stundzig
+ *
+ */
+public class ZoomSliderControl extends Control {
 
-	void handleEvent(OpenLayersEvent event);
-
-	public class PayLoad {
-		List<Value> values = new ArrayList<Value>();
-
-		public void add(String key, String value) {
-			values.add(new Value(key, value));
-		}
-
-		public List<Value> values() {
-			return values;
-		}
-	}
-
-	public class Value {
-
-		String key;
-		String value;
-
-		public Value(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
+	public ZoomSliderControl() {
+		Stringer c = new Stringer("new ol.control.ZoomSlider();");
+		super.create(c.toString());
 	}
 }

@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
 import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.control.Control;
+import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.Layer;
 import org.polymap.rap.openlayers.source.Source;
 import org.polymap.rap.openlayers.types.Bounds;
@@ -200,81 +201,89 @@ public class OpenLayersMap extends OpenLayersObject {
 		control.setMap(this);
 		execute("addControl", control);
 	}
-
-	public void setProxy(String proxy) {
-		execute("OpenLayers.ProxyHost='" + proxy + "';");
-	}
+//
+//	public void setProxy(String proxy) {
+//		execute("OpenLayers.ProxyHost='" + proxy + "';");
+//	}
 
 	public void removeControl(Control control2rm) {
 		control2rm.setMap(null);
 		execute("removeControl", control2rm);
 	}
-
-	public void zoomTo(int zoom) {
-		execute("zoomTo", zoom);
+	
+	public void addInteraction(DrawInteraction di) {
+		execute("addInteraction", di);
 	}
-
-	public void zoomToExtent(Bounds extent, boolean closest) {
-		execute("zoomToExtent", extent, closest);
+	
+	public void removeInteraction(DrawInteraction di) {
+		execute("removeInteraction", di);
 	}
-
-	public void zoomToScale(double scale, boolean closest) {
-		execute("zoomToScale", scale, closest);
-	}
-
-	public void setCenter(double center_lon, double center_lat) {
-		execute("setCenter", new LonLat(center_lon, center_lat));
-	}
-
-	public void setBaseLayer(Layer layer) {
-		execute("setBaseLayer", layer);
-	}
-
-	public Projection getProjection() {
-		return projection;
-	}
-
-	public void setProjection(Projection projection) {
-		setAttribute("projection", projection);
-	}
-
-	public Projection getDisplayProjection() {
-		return display_projection;
-	}
-
-	public float getMaxResolution() {
-		return maxResolution;
-	}
-
-	public void setMaxScale(float scale) {
-		setAttribute("maxScale", scale);
-	}
-
-	public void setMinScale(float scale) {
-		setAttribute("minScale", scale);
-	}
-
-	public void setNumZoomLevels(int num) {
-		setAttribute("numZoomLevels", num);
-	}
-
-	public void setDisplayProjection(Projection projection) {
-		this.display_projection = projection;
-		setAttribute("displayProjection", projection);
-	}
-
-	public Bounds getMaxExtent() {
-		return maxExtent;
-	}
-
-	public void setMaxExtent(Bounds extent) {
-		this.maxExtent = extent;
-		setAttribute("maxExtent", extent);
-	}
-
-	public String getUnits() {
-		return units;
-	}
+//
+//	public void zoomTo(int zoom) {
+//		execute("zoomTo", zoom);
+//	}
+//
+//	public void zoomToExtent(Bounds extent, boolean closest) {
+//		execute("zoomToExtent", extent, closest);
+//	}
+//
+//	public void zoomToScale(double scale, boolean closest) {
+//		execute("zoomToScale", scale, closest);
+//	}
+//
+//	public void setCenter(double center_lon, double center_lat) {
+//		execute("setCenter", new LonLat(center_lon, center_lat));
+//	}
+//
+//	public void setBaseLayer(Layer layer) {
+//		execute("setBaseLayer", layer);
+//	}
+//
+//	public Projection getProjection() {
+//		return projection;
+//	}
+//
+//	public void setProjection(Projection projection) {
+//		setAttribute("projection", projection);
+//	}
+//
+//	public Projection getDisplayProjection() {
+//		return display_projection;
+//	}
+//
+//	public float getMaxResolution() {
+//		return maxResolution;
+//	}
+//
+//	public void setMaxScale(float scale) {
+//		setAttribute("maxScale", scale);
+//	}
+//
+//	public void setMinScale(float scale) {
+//		setAttribute("minScale", scale);
+//	}
+//
+//	public void setNumZoomLevels(int num) {
+//		setAttribute("numZoomLevels", num);
+//	}
+//
+//	public void setDisplayProjection(Projection projection) {
+//		this.display_projection = projection;
+//		setAttribute("displayProjection", projection);
+//	}
+//
+//	public Bounds getMaxExtent() {
+//		return maxExtent;
+//	}
+//
+//	public void setMaxExtent(Bounds extent) {
+//		this.maxExtent = extent;
+//		setAttribute("maxExtent", extent);
+//	}
+//
+//	public String getUnits() {
+//		return units;
+//	}
 //
 //	/**
 //	 * This property is what allows OpenLayers to know what scale things are
@@ -306,12 +315,12 @@ public class OpenLayersMap extends OpenLayersObject {
 	 */
 	public void addEventListener(EVENT event,
 			OpenLayersEventListener listener) {
-		Map<String, String> props = new HashMap<String, String>();
-		addEventListener(event.name(), listener, props );
+		addEventListener("change:" + event.name(), listener, null );
 	}
 	
 	public void removeEventListener(EVENT event,
 			OpenLayersEventListener listener) {
-		removeEventListener(event.name(), listener);
+		removeEventListener("change:" + event.name(), listener);
 	}
+
 }

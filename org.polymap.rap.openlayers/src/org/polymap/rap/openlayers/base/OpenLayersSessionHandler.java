@@ -43,6 +43,7 @@ import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
 import org.eclipse.rap.rwt.remote.RemoteObject;
 import org.polymap.rap.openlayers.OpenLayersWidget;
+import org.polymap.rap.openlayers.base.OpenLayersEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
@@ -198,13 +199,12 @@ public class OpenLayersSessionHandler {
 	}
 
 	public void registerEventListener(OpenLayersObject src, String event,
-			OpenLayersEventListener listener, Map<String, String> payload) {
+			OpenLayersEventListener listener, PayLoad payload) {
 		Stringer payloadStringer = new Stringer();
 		if (payload != null) {
-			for (String key : payload.keySet()) {
-				payloadStringer.add("result['", key, "'] = ", payload.get(key),
-						";");
-			}
+			payload.values().forEach(value -> 
+				payloadStringer.add("result.", value.key, " = ", value.value, ";"));
+			
 		}
 		String command = new Stringer("console.log('", event,
 				"');var result = that.objs['", src.getObjRef(),
@@ -215,7 +215,7 @@ public class OpenLayersSessionHandler {
 		callRemote(
 				"addListener",
 				new JsonObject().add("src", src.getObjRef())
-						.add("code", command).add("event", "change:" + event)
+						.add("code", command).add("event", event)
 						.add("hashCode", event + "_" + listener.hashCode()));
 	}
 

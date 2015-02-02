@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.polymap.rap.openlayers.base.OpenLayersEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
@@ -247,7 +248,7 @@ public abstract class OpenLayersObject {
 	private Map<String, Set<OpenLayersEventListener>> eventListeners = new HashMap<String, Set<OpenLayersEventListener>>();
 
 	protected void addEventListener(final String event,
-			OpenLayersEventListener listener, Map<String, String> payload) {
+			OpenLayersEventListener listener, PayLoad payload) {
 
 		Set<OpenLayersEventListener> listeners = eventListeners.get(event);
 		if (listeners == null) {

@@ -1,7 +1,6 @@
 /*
  * polymap.org
- * Copyright 2009, Polymap GmbH, and individual contributors as indicated
- * by the @authors tag.
+ * Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,25 +11,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
  */
-
 package org.polymap.rap.openlayers.layer;
 
-import org.polymap.rap.openlayers.source.VectorSource;
+import org.polymap.rap.openlayers.source.TileSource;
 
-public class VectorLayer extends Layer<VectorSource> {
+public class TileLayer extends Layer<TileSource> {
 
-	public VectorLayer() {
-		super.create("new ol.layer.Vector()");
+	public TileLayer() {
+		super.create("new ol.layer.Tile();");
 	}
-
-	public VectorLayer(VectorSource source) {
+	
+	public TileLayer(TileSource source) {
 		this();
 		setSource(source);
 	}

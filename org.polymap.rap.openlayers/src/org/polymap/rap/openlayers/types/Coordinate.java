@@ -20,35 +20,31 @@
  *
  */
 
-package org.polymap.rap.openlayers.base;
+package org.polymap.rap.openlayers.types;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public interface OpenLayersEventListener {
+/**
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
+ */
+public class Coordinate {// extends OpenLayersObject {
 
-	void handleEvent(OpenLayersEvent event);
+	private int x;
 
-	public class PayLoad {
-		List<Value> values = new ArrayList<Value>();
+	private int y;
 
-		public void add(String key, String value) {
-			values.add(new Value(key, value));
-		}
-
-		public List<Value> values() {
-			return values;
-		}
+	public Coordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+		// create("new ol.Coordinate( " + x + "," + y + ")");
 	}
 
-	public class Value {
+	public int getX() {
+		return x;
+	}
 
-		String key;
-		String value;
-
-		public Value(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
+	public int getY() {
+		return y;
 	}
 }

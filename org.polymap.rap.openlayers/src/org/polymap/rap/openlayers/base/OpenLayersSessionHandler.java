@@ -204,8 +204,7 @@ public class OpenLayersSessionHandler {
 		Stringer payloadStringer = new Stringer();
 		if (payload != null) {
 			payload.values().forEach(
-					value -> payloadStringer.add("result.", value.key, " = ",
-							value.value, ";"));
+					value -> payloadStringer.add("result.", value.key, " = ", value.value, ";"));
 		}
 		String command = new Stringer(
 				// "console.log('", event, "');",

@@ -2,11 +2,12 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="org.polymap.rap.openlayers"
-         point="org.eclipse.rap.ui.resources">
-      <resource
-            class="org.polymap.rap.openlayers.internal.resources.OpenLayersResource">
-      </resource>
+         point="org.eclipse.rap.ui.entrypoint">
+      <entrypoint
+            class="org.polymap.rap.openlayers.demo.DemoEntryPoint"
+            id="org.polymap.rap.openlayers.entrypoint3"
+            path="/ol">
+      </entrypoint>
    </extension>
    
 </plugin>

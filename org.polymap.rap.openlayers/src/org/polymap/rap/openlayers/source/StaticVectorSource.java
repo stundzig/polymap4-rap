@@ -15,10 +15,11 @@
 package org.polymap.rap.openlayers.source;
 
 
-public abstract class StaticVectorSource extends VectorSource {
+public abstract class StaticVectorSource 
+        extends VectorSource {
 
-	public StaticVectorSource(VectorSourceOptions options) {
-		super(options);
+	public StaticVectorSource( String jsClassname ) {
+		super( jsClassname );
 	}
 
 }

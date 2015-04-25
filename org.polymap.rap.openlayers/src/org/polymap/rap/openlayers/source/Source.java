@@ -21,6 +21,11 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public abstract class Source extends OpenLayersObject {
+public abstract class Source
+        extends OpenLayersObject {
+
+    public Source( String jsClassname ) {
+        super( jsClassname );
+    }
 
 }

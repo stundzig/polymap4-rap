@@ -14,16 +14,28 @@
  */
 package org.polymap.rap.openlayers.layer;
 
+import java.util.Arrays;
+import java.util.function.Consumer;
+
 import org.polymap.rap.openlayers.source.TileSource;
 
-public class TileLayer extends Layer<TileSource> {
+/**
+ * For layer sources that provide pre-rendered, tiled images in grids that are
+ * organized by zoom levels for specific resolutions.
+ * 
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.layer.Tile.html">OpenLayers Doc</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public class TileLayer
+        extends Layer<TileSource> {
 
-	public TileLayer() {
-		super.create("new ol.layer.Tile();");
-	}
-	
-	public TileLayer(TileSource source) {
-		this();
-		setSource(source);
+    /**
+     * Constructs a new instance.
+     *
+     * @param initializers Initialize at least all {@link Mandatory} properties.
+     */
+	public TileLayer( Consumer<TileLayer>... initializers ) {
+        super( "ol.layer.Tile" );
+        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
 	}
 }

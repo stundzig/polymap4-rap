@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,58 +14,45 @@
  */
 package org.polymap.rap.openlayers.style;
 
-import org.eclipse.rap.json.JsonObject;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.core.runtime.config.Property2;
+
 import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.util.JSonBuilder;
-import org.polymap.rap.openlayers.util.Stringer;
+import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.types.Color;
 
+/**
+ * Set stroke style for vector features. Note that the defaults given are the Canvas
+ * defaults, which will be used if option is not defined. The get functions return
+ * whatever was entered in the options; they will not return the default.
+ * 
+ * @see <a
+ *      href="http://openlayers.org/en/master/apidoc/ol.style.Stroke.html">OpenLayers
+ *      Doc</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public class StrokeStyle 
+        extends OpenLayersObject {
 
-public class StrokeStyle extends OpenLayersObject {
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<StrokeStyle,Float>     width;
 
-	public StrokeStyle(Options options) {
-		create("new ol.style.Stroke(" + options.asJson() + ")");
-	}
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<StrokeStyle,Color>     color;
 
-	public static Options builder() {
-		return new Options();
-	}
-	
-	public static class Options {
-		// TODO more options here http://openlayers.org/en/v3.1.1/apidoc/ol.style.Stroke.html?unstable=true
-		private String color;
-		private Double width;
+    
+    /**
+     * Constructs a new instance.
+     *
+     * @param initializers Initialize at least all {@link Mandatory} properties.
+     */
+    public StrokeStyle( Consumer<StrokeStyle>... initializers ) {
+        super( "ol.style.Stroke" );
+        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
+    }
 
-		public Options withColor(String color) {
-			this.color = color;
-			return this;
-		}
-
-		public Options withColor(int red, int green, int blue, double alpha) {
-			if (red < 0 || red > 255 || green < 0 || green > 255 ||blue < 0 || blue > 255 ||alpha < 0 || alpha > 1 ) {
-				throw new IllegalStateException("colors must be between 0..255, and alpha between 0.0..1.0");
-			}
-			this.color = "rgba(" + red + "," + green + "," + blue + "," + alpha +")";
-			return this;
-		}
-
-		public Options withWidth(Double width) {
-			this.width = width;
-			return this;
-		}
-
-		private JSonBuilder asJson() {
-			JSonBuilder json = new JSonBuilder();
-			if (color != null) {
-				json.addQuoted("color", color);
-			}
-			if (width != null) {
-				json.add("width", width);
-			}
-			return json;
-		}
-		
-		public StrokeStyle build() {
-			return new StrokeStyle(this);
-		}
-	}
 }

@@ -1,7 +1,6 @@
 /*
  * polymap.org
- * Copyright 2009, Polymap GmbH, and individual contributors as indicated
- * by the @authors tag.
+ * Copyright 2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,23 +11,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
  */
-
 package org.polymap.rap.openlayers.types;
 
+import org.json.JSONArray;
+import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
  * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
- *
  */
-public class Coordinate {// extends OpenLayersObject {
+public class Coordinate
+        implements Jsonable {
 
 	private int x;
 
@@ -37,7 +31,6 @@ public class Coordinate {// extends OpenLayersObject {
 	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
-		// create("new ol.Coordinate( " + x + "," + y + ")");
 	}
 
 	public int getX() {
@@ -47,4 +40,10 @@ public class Coordinate {// extends OpenLayersObject {
 	public int getY() {
 		return y;
 	}
+
+    @Override
+    public Object toJson() {
+        return new JSONArray().put( x ).put( y );
+    }
+	
 }

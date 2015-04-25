@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,7 +14,16 @@
  */
 package org.polymap.rap.openlayers.source;
 
+/**
+ * 
+ * 
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public abstract class ImageSource 
+        extends Source {
 
-public abstract class ImageSource extends Source {
+    public ImageSource( String jsClassname ) {
+        super( jsClassname );
+    }
 
 }

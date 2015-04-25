@@ -14,10 +14,14 @@
  */
 package org.polymap.rap.openlayers.source;
 
-
 /**
  * 
  */
-public abstract class TileSource extends Source {
+public abstract class TileSource 
+        extends Source {
+
+    public TileSource( String jsClassname ) {
+        super( jsClassname );
+    }
 
 }

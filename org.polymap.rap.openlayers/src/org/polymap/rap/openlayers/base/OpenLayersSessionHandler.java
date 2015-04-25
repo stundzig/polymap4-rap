@@ -19,21 +19,20 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *
  */
-
 package org.polymap.rap.openlayers.base;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
@@ -42,6 +41,7 @@ import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
 import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
 import org.eclipse.rap.rwt.remote.RemoteObject;
+
 import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
@@ -51,12 +51,10 @@ import org.polymap.rap.openlayers.util.Stringer;
  * object hash / id's
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
  */
-
 public class OpenLayersSessionHandler {
 
-	private final static Log log = LogFactory.getLog(OpenLayersWidget.class);
+	private final static Log log = LogFactory.getLog( OpenLayersSessionHandler.class );
 
 	/** default external openlayers lib location **/
 	public String js_location = "http://openlayers.org/en/v3.1.0/build/ol.js";
@@ -65,13 +63,18 @@ public class OpenLayersSessionHandler {
 	 * HashMap to hold references to created objects as value with the client
 	 * side id as key
 	 */
-	private Map<String, OpenLayersObject> ref2obj;
+    private Map<String,OpenLayersObject> ref2obj;
 
-	public Vector<OpenLayersCommand> cmdsBeforeRemoteWasPresent;
+    public Vector<OpenLayersCommand>     cmdsBeforeRemoteWasPresent;
 
-	private int referenceCounter = 0;
+    private int                          referenceCounter = 0;
 
-	private final RemoteObject remote;
+    private final RemoteObject           remote;
+
+    private List<RemoteCall>             calls = new ArrayList<RemoteCall>();
+
+    private boolean                      isRendered = false;
+
 
 	private OpenLayersSessionHandler() {
 		ref2obj = new HashMap<String, OpenLayersObject>();
@@ -168,10 +171,6 @@ public class OpenLayersSessionHandler {
 		}
 	}
 
-	private List<RemoteCall> calls = new ArrayList<RemoteCall>();
-
-	private boolean isRendered = false;
-
 	private void callRemote(String method, JsonObject json) {
 		if (isRendered) {
 			log.info("callRemote: " + method + " with " + json.toString());
@@ -185,10 +184,12 @@ public class OpenLayersSessionHandler {
 		return SingletonUtil.getSessionInstance(OpenLayersSessionHandler.class);
 	}
 
-	public synchronized void generateReference(OpenLayersObject src) {
+	public synchronized String generateReference(OpenLayersObject src) {
 		String newRef = "ol" + referenceCounter++;
-		ref2obj.put(newRef, src);
-		src.setObjRef(newRef);
+		if (ref2obj.put( newRef, src ) != null) {
+		    throw new IllegalStateException( "objRef already added: " + newRef );
+		}
+		return newRef;
 	}
 
 	public OpenLayersObject getObject(String objRef) {

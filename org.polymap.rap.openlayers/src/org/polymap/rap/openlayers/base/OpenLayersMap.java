@@ -14,26 +14,30 @@
  */
 package org.polymap.rap.openlayers.base;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
+
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.core.runtime.config.Property2;
+
 import org.polymap.rap.openlayers.OpenLayersWidget;
+import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.Layer;
 import org.polymap.rap.openlayers.source.Source;
-import org.polymap.rap.openlayers.types.Bounds;
-import org.polymap.rap.openlayers.types.LonLat;
-import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.util.Stringer;
 import org.polymap.rap.openlayers.view.View;
-import org.polymap.rap.openlayers.view.View.EVENT;
 
 /**
- * <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * 
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">OpenLayers Doc</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class OpenLayersMap extends OpenLayersObject {
 
@@ -98,83 +102,44 @@ public class OpenLayersMap extends OpenLayersObject {
 //
 //	/** triggered after the base layer changes **/
 //	public final static String EVENT_CHANGEBASELAYER = "changebaselayer";
+//
+//  private ArrayList<Control> controls;
 
-	private OpenLayersWidget widget;
+//  private LinkedHashMap<String, Layer> layers;
 
-	private Projection projection;
-
-	private Projection display_projection;
-
-	private String units;
-
-	private Bounds maxExtent;
-
-	private float maxResolution;
+    // private int[] scales;
 
 
-//	private ArrayList<Control> controls;
+	private OpenLayersWidget               widget;
+	
+    @Mandatory
+    @Immutable
+    public Property2<OpenLayersMap,View>   view;
 
-//	private LinkedHashMap<String, Layer> layers;
 
-	// private int[] scales;
-
-	//
-	public OpenLayersMap(final OpenLayersWidget widget, Projection projection,
-			Projection display_projection, String units, Bounds maxExtent,
-			float maxResolution) {
-		
-		
+	public OpenLayersMap( OpenLayersWidget widget, View view ) {
+	    super( "ol.Map" );
 		this.widget = widget;
-		this.projection = projection;
-		this.display_projection = display_projection;
-		this.maxResolution = maxResolution;
-		this.units = units;
-		this.maxExtent = maxExtent;
-		widget.setMap(this);
-//		create_with_widget(
-//				new Stringer("",
-//						"new OpenLayers.Map(this.createDiv('"+WidgetUtil.getId(widget)+"'), {controls: [],", "projection: ", projection
-//								.getJSObjRef(), ",", "displayProjection: ",
-//						display_projection.getJSObjRef(), ",", "units: '",
-//						units, "',", "maxExtent: ", maxExtent.getJSObjRef(),
-//						",", "restrictedExtent: ", maxExtent.getJSObjRef(),
-//						",", "maxResolution: "
-//								+ (maxResolution > -1 ? maxResolution
-//										: "'auto'") + "});").toString(), widget);
-	}
-	//
-//	public OpenLayersMap(final OpenLayersWidget widget) {
-//		this.widget = widget;
-//		create_with_widget(
-//				"new OpenLayers.Map({div:document.getElementById(this._id), controls:[]});",
-//				widget);
-//	}
-
-	public OpenLayersMap(final OpenLayersWidget widget, final View view) {
-//		this.controls = new ArrayList<Control>();
-//		this.layers = new LinkedHashMap<String, Layer>();
-		// this.popups = new ArrayList<IPopup>();
-		// this.mapOptions = null;
-
-		// remote.call("setCode",
-		// new JsonObject().add("code", Lang.en.getCodeString()));
-		this.widget = widget;
-		widget.setMap(this);
-//		create_with_widget(new Stringer(//"console.log('create map in "+WidgetUtil.getId(widget)+"'); var parent = rap.getObject('" + WidgetUtil.getId(widget)+ "');",
-////				"var element = document.createElement('div');",
-////				"parent.append(element);",
-//				"new OpenLayers.Map(this.createDiv('"+WidgetUtil.getId(widget)+"'), {numZoomLevels : 20});").toString(),
-//				widget);
+		this.view.set( view );
+		widget.setMap( this );
 		
 //		create_with_widget(new Stringer("new ol.Map({ view: new ol.View({center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'), zoom: 4}), target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString(), widget);
-		create(new Stringer("new ol.Map({view: " + view.getJSObjRef() + ", target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
+	
+		JSONObject options = new JSONObject();
+        options.put( "view", new Unquoted( view.getJSObjRef() ) );
+        options.put( "target", new Unquoted( "this.createDiv('" + WidgetUtil.getId(widget) + "')" ) );
+        create( new Stringer( "new ", jsClassname, "(", options.toString(), ");" ).toString() );
+
+//		create(new Stringer("new ol.Map({view: " + view.getJSObjRef() + ", target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
 //		callObjFunction("updateSize()");
 	}
 
-	public OpenLayersWidget getWidget() {
+
+	public OpenLayersWidget widget() {
 		return widget;
 	}
 
+	
 	public void addLayer(Layer<? extends Source> layer) {
 //		layer2add.setWidget(widget);
 		execute("addLayer", layer);
@@ -218,73 +183,7 @@ public class OpenLayersMap extends OpenLayersObject {
 	public void removeInteraction(DrawInteraction di) {
 		execute("removeInteraction", di);
 	}
-//
-//	public void zoomTo(int zoom) {
-//		execute("zoomTo", zoom);
-//	}
-//
-//	public void zoomToExtent(Bounds extent, boolean closest) {
-//		execute("zoomToExtent", extent, closest);
-//	}
-//
-//	public void zoomToScale(double scale, boolean closest) {
-//		execute("zoomToScale", scale, closest);
-//	}
-//
-//	public void setCenter(double center_lon, double center_lat) {
-//		execute("setCenter", new LonLat(center_lon, center_lat));
-//	}
-//
-//	public void setBaseLayer(Layer layer) {
-//		execute("setBaseLayer", layer);
-//	}
-//
-//	public Projection getProjection() {
-//		return projection;
-//	}
-//
-//	public void setProjection(Projection projection) {
-//		setAttribute("projection", projection);
-//	}
-//
-//	public Projection getDisplayProjection() {
-//		return display_projection;
-//	}
-//
-//	public float getMaxResolution() {
-//		return maxResolution;
-//	}
-//
-//	public void setMaxScale(float scale) {
-//		setAttribute("maxScale", scale);
-//	}
-//
-//	public void setMinScale(float scale) {
-//		setAttribute("minScale", scale);
-//	}
-//
-//	public void setNumZoomLevels(int num) {
-//		setAttribute("numZoomLevels", num);
-//	}
-//
-//	public void setDisplayProjection(Projection projection) {
-//		this.display_projection = projection;
-//		setAttribute("displayProjection", projection);
-//	}
-//
-//	public Bounds getMaxExtent() {
-//		return maxExtent;
-//	}
-//
-//	public void setMaxExtent(Bounds extent) {
-//		this.maxExtent = extent;
-//		setAttribute("maxExtent", extent);
-//	}
-//
-//	public String getUnits() {
-//		return units;
-//	}
-//
+	
 //	/**
 //	 * This property is what allows OpenLayers to know what scale things are
 //	 * being rendered at, which is important for scale-based methods of zooming

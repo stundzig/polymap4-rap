@@ -1,7 +1,6 @@
 /*
  * polymap.org
- * Copyright 2009, Polymap GmbH, and individual contributors as indicated
- * by the @authors tag.
+ * Copyright 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,34 +11,31 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
  */
-
 package org.polymap.rap.openlayers.types;
 
-import org.eclipse.swt.graphics.Rectangle;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.json.JSONArray;
+
+import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
- * 
  */
+public class Size
+        implements Jsonable {
 
-public class Size extends OpenLayersObject {
+	private int width;
+    private int height;
 
-	public Size(int width, int height) {
-		super.create("  new OpenLayers.Size( " + width + "," + height + ");");
+    public Size(int width, int height) {
+	    this.width= width;
+	    this.height = height;
 	}
 
-	public Size(Rectangle rect) {
-		super.create("  new OpenLayers.Size( " + rect.width + "," + rect.height
-				+ ");");
-	}
+    @Override
+    public Object toJson() {
+        return new JSONArray().put( width ).put( height );
+    }
 
 }

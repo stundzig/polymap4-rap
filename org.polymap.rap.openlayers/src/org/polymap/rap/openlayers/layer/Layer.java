@@ -14,14 +14,43 @@
  */
 package org.polymap.rap.openlayers.layer;
 
+import org.polymap.core.runtime.config.Check;
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.core.runtime.config.NumberRangeValidator;
+import org.polymap.core.runtime.config.Property2;
+
+import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
 import org.polymap.rap.openlayers.source.Source;
 
-public abstract class Layer<S extends Source> extends Base {
+/**
+ * Abstract base class; normally only used for creating subclasses and not
+ * instantiated in apps. A visual representation of raster or vector map data. Layers
+ * group together those properties that pertain to how the data is to be displayed,
+ * irrespective of the source of that data.
+ *
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.layer.Layer.html">OpenLayers Doc</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public abstract class Layer<S extends Source> 
+        extends Base {
 
-	private S source;
+    @Immutable
+    @Mandatory
+    @Concern( OpenLayersPropertyConcern.class )
+    public Property2<Layer,S>       source;
 
-	public void setSource(S source) {
-		this.source = source;
-		execute("setSource", source);
-	}
+    @Check( value=NumberRangeValidator.class, args={"0","1"} )
+    @Concern( OpenLayersPropertyConcern.class )
+    public Property2<Layer,Float>   opacity;
+
+    @Concern( OpenLayersPropertyConcern.class )
+    public Property2<Layer,Boolean> visible;
+
+
+    public Layer( String jsClassname ) {
+        super( jsClassname );
+    }
+
 }

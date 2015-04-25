@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,15 +14,36 @@
  */
 package org.polymap.rap.openlayers.source;
 
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Property;
+
+import org.polymap.rap.openlayers.base.OpenLayersProperty;
+import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+
 /**
+ * Layer source for the MapQuest tile server.
  * 
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.MapQuest.html">OpenLayers Doc</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MapQuestSource extends XYZSource {
-	public enum Type {
+public class MapQuestSource
+        extends XYZSource {
+	
+    public enum Type {
 		osm, sat, hyb
 	}
 
-	public MapQuestSource(Type type) {
-		super.create("new ol.source.MapQuest({layer: '" + type.name() + "'})");
+    @Immutable
+    @OpenLayersProperty( "layer" )
+    @Concern( OpenLayersPropertyConcern.class )
+    public Property<Type>       type;
+    
+    
+	public MapQuestSource( Type type ) {
+	    super( "ol.source.MapQuest" );
+	    this.type.set( type );
 	}
+	
 }

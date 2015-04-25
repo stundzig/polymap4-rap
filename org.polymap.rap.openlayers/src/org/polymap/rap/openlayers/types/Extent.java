@@ -1,7 +1,6 @@
 /*
  * polymap.org
- * Copyright 2009, Polymap GmbH, and individual contributors as indicated
- * by the @authors tag.
+ * Copyright 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,22 +11,40 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
  */
-
 package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.json.JSONArray;
 
-public class Extent extends OpenLayersObject {
+import org.polymap.rap.openlayers.base.Jsonable;
 
-	public Extent(double minx, double miny, double maxx, double maxy) {
-		create("new ol.Extent[ " + minx + "," + miny + "," + maxx + "," + maxy
-				+ "];");
+/**
+ * 
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public class Extent 
+        implements Jsonable {
+
+    private double minx;
+
+    private double miny;
+
+    private double maxx;
+
+    private double maxy;
+
+
+    public Extent(double minx, double miny, double maxx, double maxy) {
+	    this.minx = minx;
+	    this.miny = miny;
+	    this.maxx = maxx;
+	    this.maxy = maxy;
 	}
+
+
+    @Override
+    public Object toJson() {
+        return new JSONArray().put( minx ).put( miny ).put( maxx ).put( maxy );
+    }
+    
 }

@@ -14,17 +14,29 @@
  */
 package org.polymap.rap.openlayers.layer;
 
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rap.openlayers.source.ImageSource;
 
+/**
+ * Server-rendered images that are available for arbitrary extents and resolutions.
+ * 
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.layer.Image.html">OpenLayers Doc</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
+public class ImageLayer 
+        extends Layer<ImageSource> {
 
-public class ImageLayer extends Layer<ImageSource> {
+    /**
+     * Constructs a new instance.
+     *
+     * @param initializers Initialize at least all {@link Mandatory} properties.
+     */
+    public ImageLayer( Consumer<ImageLayer>... initializers ) {
+        super( "ol.layer.Image" );
+        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
+    }
 
-	public ImageLayer() {
-		super.create("new ol.layer.Image();");
-	}
-	
-	public ImageLayer(ImageSource source) {
-		this();
-		setSource(source);
-	}
 }

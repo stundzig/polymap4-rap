@@ -2,43 +2,37 @@ package org.polymap.rap.openlayers.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+
 import org.polymap.rap.openlayers.OpenLayersWidget;
 import org.polymap.rap.openlayers.base.OpenLayersEvent;
 import org.polymap.rap.openlayers.base.OpenLayersEventListener;
 import org.polymap.rap.openlayers.base.OpenLayersMap;
-import org.polymap.rap.openlayers.control.ScaleLineControl;
-import org.polymap.rap.openlayers.control.ZoomSliderControl;
-import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.GeoJSONSource;
 import org.polymap.rap.openlayers.source.GeoJSONSource.GeoJSONSourceOptions;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
+import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.source.VectorSource;
 import org.polymap.rap.openlayers.style.FillStyle;
 import org.polymap.rap.openlayers.style.StrokeStyle;
 import org.polymap.rap.openlayers.style.Style;
-import org.polymap.rap.openlayers.types.GeometryType;
+import org.polymap.rap.openlayers.types.Color;
+import org.polymap.rap.openlayers.types.Coordinate;
+import org.polymap.rap.openlayers.types.Projection;
+import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
 
 public class DemoEntryPoint extends AbstractEntryPoint {
 
 	private final static Log log = LogFactory.getLog(DemoEntryPoint.class);
-	private OpenLayersWidget olwidget1;
-	private OpenLayersMap map1;
-	private OpenLayersWidget olwidget2;
-	private OpenLayersMap map2;
-	private OpenLayersEventListener listener;
-	private View view2;
 
 	@Override
 	protected void createContents(Composite parent) {
@@ -51,39 +45,33 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		Composite buttons = new Composite(parent, SWT.BORDER);
 
 		createMap(left);
-		createMap2(right);
-		createButtons(buttons);
+//      createMap2(right);
+//      createButtons(buttons);
 	}
 
-	private void createButtons(Composite parent) {
-		parent.setLayout(new FillLayout());
-		Button button = new Button(parent, SWT.PUSH);
-		button.setText("addScaleLineControlToLeftMap");
-		button.addSelectionListener(new SelectionListener() {
 
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				map1.addControl(new ScaleLineControl(null, null,
-						ScaleLineControl.Units.metric, null));
-				view2.removeEventListener(View.EVENT.center, listener);
-			}
+//    private void createButtons( Composite parent ) {
+//        parent.setLayout( new FillLayout() );
+//        Button button = new Button( parent, SWT.PUSH );
+//        button.setText( "addScaleLineControlToLeftMap" );
+//        button.addSelectionListener( new SelectionListener() {
+//            @Override
+//            public void widgetSelected( SelectionEvent e ) {
+//                map.addControl( new ScaleLineControl( null, null, ScaleLineControl.Units.metric, null ) );
+//                view.removeEventListener( View.EVENT.center, listener );
+//            }
+//            @Override
+//            public void widgetDefaultSelected( SelectionEvent e ) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
+//    }
 
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
-			}
-		});
-	}
-
-	private void createMap(Composite parent) {
-		parent.setLayout(new FillLayout());
-		// // Button checkbox = new Button(parent, SWT.CHECK);
-		// // checkbox.setText("Hello");
-		// // Button button = new Button(parent, SWT.PUSH);
-		// // button.setText("World");
-		olwidget1 = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP
-				| SWT.BORDER);
+	private OpenLayersWidget createMap( Composite parent ) {
+		parent.setLayout( new FillLayout() );
+		OpenLayersWidget olwidget = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 
 		// String srs = "EPSG:4326";// Geometries.srs( getCRS() );
 		// Projection proj = new Projection(srs);
@@ -97,19 +85,28 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds,
 		// maxResolution);
 		// // map.updateSize();
-		map1 = new OpenLayersMap(olwidget1, new View());
+		
+		OpenLayersMap map = new OpenLayersMap( olwidget, 
+		        new View( newView -> {
+		                newView.projection.set( new Projection( "EPSG:3857", Units.m ) );
+		                //newView.projection.set( new Projection( "EPSG:4326", Units.degrees ) );
+		                //newView.extent.set( new Extent( 12.80, 53.00, 14.30, 54.50 ) ); 
+		                newView.zoom.set( 3 ); 
+		                newView.center.set( new Coordinate( 0, 0 ) ); } ) );
 
-		// WMSLayer layer = new WMSLayer( "OSM",
-		// "http://ows.terrestris.de/osm/service/", "OSM-WMS");
-		// layer.setIsBaseLayer(true);
-		TileLayer layer = new TileLayer(new MapQuestSource(
-				MapQuestSource.Type.hyb));
-		map1.addLayer(layer);
+//        map.addLayer( new TileLayer( newLayer ->
+//                newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
 
-		ImageLayer ilayer = new ImageLayer(new ImageWMSSource(
-				"http://ows.terrestris.de/osm/service/", "OSM-WMS", null));
-		ilayer.setOpacity(10.0);
-		map1.addLayer(ilayer);
+        map.addLayer( new ImageLayer( newLayer -> {
+                newLayer.source.set( new ImageWMSSource( source -> {
+                        source.url.set( "http://ows.terrestris.de/osm/service/" );
+                        source.params.set( new RequestParams( newParams -> {
+                                newParams.layers.set( "OSM-WMS" );
+                        }));
+                }));
+                newLayer.opacity.set( 0.5f );
+        }));
+        
 		// //
 		// map1.addControl(new NavigationControl(true));
 		// map1.addControl(new PanZoomBarControl( ));
@@ -134,45 +131,37 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// payload.put( "scale", map1.getJSObjRef() + ".getScale()" );
 		// map1.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
 		// map1.events.register( this, OpenLayersMap.EVENT_ZOOMEND, payload );
-
+        return olwidget;
 	}
 
 	private void createMap2(Composite parent) {
-		parent.setLayout(new FillLayout());
-		// Button checkbox = new Button(parent, SWT.CHECK);
-		// checkbox.setText("Hello");
-		// Button button = new Button(parent, SWT.PUSH);
-		// button.setText("World");
-		olwidget2 = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP
-				| SWT.BORDER);
-		// olwidget2.prepare();
-		view2 = new View();
-		map2 = new OpenLayersMap(olwidget2, view2);
-		// map.updateSize();
-		map2.addLayer(new TileLayer(new MapQuestSource(MapQuestSource.Type.osm)));
-		// map2.addControl(new ScaleLineControl(null, null,
-		// ScaleLineControl.Units.degrees, null));
-		map2.addControl(new ZoomSliderControl());
+        parent.setLayout( new FillLayout() );
+        OpenLayersWidget olwidget2 = new OpenLayersWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 
-		// VectorSource vector = new VectorSource();
+        OpenLayersMap map = new OpenLayersMap( olwidget2, new View()
+                .projection.fset( new Projection( "EPSG:3857", Units.m ) )
+                .center.fset( new Coordinate( 0, 0 ) )
+                .zoom.fset( 1 ) );
+        
+        map.addLayer( new TileLayer()
+                .source.fset( new MapQuestSource( MapQuestSource.Type.osm ) ) );
+        
 		GeoJSONSource source = new GeoJSONSource(
 				new GeoJSONSourceOptions()
 						.withProjection("EPSG:3857")
 						.withUrl(
 								"/rwt-resources/demo/polygon-samples.geojson")
 						.withAttribution("Steffen Stundzig"));
-		map2.addLayer(VectorLayer
-				.builder()
-				.withSource(source)
-				.withStyle(
-						Style.builder()
-								.withFill(
-										FillStyle.builder().withColor(0, 0, 255, 0.1)
-												.build())
-								.withStroke(
-										StrokeStyle.builder().withWidth(1.0)
-												.withColor("red").build())
-								.build()).build());
+		
+		VectorLayer vector = (VectorLayer)new VectorLayer()
+		        .style.fset( new Style()
+                        .stroke.fset( new StrokeStyle()
+                                .color.fset( new Color( 0, 0, 0, 0.5f ) )
+                                .width.fset( 2f ) ) )
+		        .source.fset( source );
+		
+		map.addLayer( vector );
+
 		// vector.addEventListener(VectorSource.EVENT.addfeature, event ->
 		// System.out.println(event.getProperties()));
 
@@ -197,14 +186,13 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		//
 		// HashMap<String, String> payload = new HashMap<String, String>();
 		// map.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
-		listener = new OpenLayersEventListener() {
-
-			@Override
-			public void handleEvent(OpenLayersEvent event) {
-				System.out.println(event.getProperties());
-			}
-		};
-		view2.addEventListener(View.EVENT.center, listener);
+        OpenLayersEventListener listener = new OpenLayersEventListener() {
+            @Override
+            public void handleEvent( OpenLayersEvent event ) {
+                System.out.println( event.getProperties() );
+            }
+        };
+        map.view.get().addEventListener( View.EVENT.center, listener );
 		// view2.addEventListener(View.EVENT.resolution, listener);
 		// new OpenLayersEventListener() {
 		//

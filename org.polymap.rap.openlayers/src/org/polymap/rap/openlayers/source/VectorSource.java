@@ -79,7 +79,7 @@ public abstract class VectorSource
      * download of all features from that URL. Requires format to be set as well.
      */
     @Concern(OpenLayersPropertyConcern.class)
-    public Property2<VectorSource,Projection>  url;
+    public Property2<VectorSource,String>       url;
 
 
     /**

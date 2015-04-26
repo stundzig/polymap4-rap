@@ -17,13 +17,12 @@ import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.GeoJSONSource;
-import org.polymap.rap.openlayers.source.GeoJSONSource.GeoJSONSourceOptions;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.style.FillStyle;
 import org.polymap.rap.openlayers.style.StrokeStyle;
 import org.polymap.rap.openlayers.style.Style;
+import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Color;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Projection;
@@ -138,27 +137,24 @@ public class DemoEntryPoint extends AbstractEntryPoint {
         parent.setLayout( new FillLayout() );
         OpenLayersWidget olwidget2 = new OpenLayersWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 
+        Projection epsg3857 = new Projection( "EPSG:3857", Units.m );
         OpenLayersMap map = new OpenLayersMap( olwidget2, new View()
-                .projection.fset( new Projection( "EPSG:3857", Units.m ) )
-                .center.fset( new Coordinate( 0, 0 ) )
-                .zoom.fset( 1 ) );
+                .projection.put( epsg3857 )
+                .center.put( new Coordinate( 0, 0 ) )
+                .zoom.put( 1 ) );
         
         map.addLayer( new TileLayer()
-                .source.fset( new MapQuestSource( MapQuestSource.Type.osm ) ) );
+                .source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
         
-		GeoJSONSource source = new GeoJSONSource(
-				new GeoJSONSourceOptions()
-						.withProjection("EPSG:3857")
-						.withUrl(
-								"/rwt-resources/demo/polygon-samples.geojson")
-						.withAttribution("Steffen Stundzig"));
-		
 		VectorLayer vector = (VectorLayer)new VectorLayer()
-		        .style.fset( new Style()
-                        .stroke.fset( new StrokeStyle()
-                                .color.fset( new Color( 0, 0, 0, 0.5f ) )
-                                .width.fset( 2f ) ) )
-		        .source.fset( source );
+		        .style.put( new Style()
+                        .stroke.put( new StrokeStyle()
+                                .color.put( new Color( 0, 0, 0, 0.5f ) )
+                                .width.put( 2f ) ) )
+		        .source.put( new GeoJSONSource()
+                        .projection.put( epsg3857 )
+                        .url.put( "/rwt-resources/demo/polygon-samples.geojson" )
+                        .attribution.put( new Attribution( "Steffen Stundzig" ) ) );
 		
 		map.addLayer( vector );
 

@@ -22,7 +22,6 @@ import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.DefaultValue;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property;
 import org.polymap.core.runtime.config.Property2;
 
 import org.polymap.rap.openlayers.base.Jsonable;
@@ -35,7 +34,7 @@ import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
  * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.ImageWMS.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class ImageWMSSource 
+public class ImageWMSSource
         extends ImageSource {
 
     /**
@@ -56,15 +55,15 @@ public class ImageWMSSource
 
         @Mandatory
         @OpenLayersProperty( "LAYERS" )
-        public Property<String>     layers;
+        public Property2<RequestParams,String>  layers;
         
         @DefaultValue( "" )
         @OpenLayersProperty( "STYLES" )
-        public Property<String>     styles;
+        public Property2<RequestParams,String>  styles;
         
         @DefaultValue( "1.3.0" )
         @OpenLayersProperty( "VERSION" )
-        public Property<String>     version;
+        public Property2<RequestParams,String>  version;
 
         @Override
         public Object toJson() {
@@ -75,10 +74,10 @@ public class ImageWMSSource
     @Mandatory
     @Immutable
     @Concern( OpenLayersPropertyConcern.class )
-    public Property<String>         url;
+    public Property2<ImageWMSSource,String>     url;
 
     @Concern( OpenLayersPropertyConcern.class )
-    public Property<String>         crossOrigin;
+    public Property2<ImageWMSSource,String>     crossOrigin;
 
     @Mandatory
     @Immutable

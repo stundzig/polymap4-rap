@@ -37,10 +37,9 @@ public class OpenLayersPropertyConcern
         extends DefaultPropertyConcern {
 
     private static Log log = LogFactory.getLog( OpenLayersPropertyConcern.class );
-
+    
     @Override
-    public void postSet( Object obj, Property prop ) {
-        Object value = prop.get();
+    public Object doSet( Object obj, Property prop, Object value ) {
         log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() + " = " + value );
 
         // is the object created as JS on the client already?
@@ -52,6 +51,7 @@ public class OpenLayersPropertyConcern
             Object jsonValue = propertyAsJson( prop, value );
             ((OpenLayersObject)obj).setAttribute( propName, jsonValue );
         }
+        return value;
     }
     
     

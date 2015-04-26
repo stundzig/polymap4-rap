@@ -20,16 +20,16 @@ import java.util.function.Consumer;
 import org.polymap.core.runtime.config.Mandatory;
 
 /**
- * Server-rendered images that are available for arbitrary extents and resolutions.
+ * Static vector source in GeoJSON format
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.GeoJSON.html">OpenLayers Doc</a>
+ * @see <a href="http://openlayers.org/en/v3.4.0/apidoc/ol.source.GeoJSON.html">OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class GeoJSONSource 
         extends StaticVectorSource {
 
     /**
-     * Static vector source in GeoJSON format
+     * Consruct a new instance.
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */

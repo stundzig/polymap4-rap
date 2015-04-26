@@ -45,7 +45,7 @@ public class View
 
     @Mandatory
     @Concern(OpenLayersPropertyConcern.class)
-    public Property2<View,Projection>   projection;
+    public Property2<View,Projection> projection;
 
     @OpenLayersProperty("center")
     @Concern(OpenLayersPropertyConcern.class)

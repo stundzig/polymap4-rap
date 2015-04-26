@@ -54,14 +54,14 @@ public class ImageWMSSource
         }
 
         @Mandatory
-        @OpenLayersProperty( "LAYERS" )
+        @OpenLayersProperty("LAYERS")
         public Property2<RequestParams,String>  layers;
         
-        @DefaultValue( "" )
-        @OpenLayersProperty( "STYLES" )
+        @DefaultValue("")
+        @OpenLayersProperty("STYLES")
         public Property2<RequestParams,String>  styles;
         
-        @DefaultValue( "1.3.0" )
+        @DefaultValue("1.3.0")
         @OpenLayersProperty( "VERSION" )
         public Property2<RequestParams,String>  version;
 
@@ -73,10 +73,10 @@ public class ImageWMSSource
     
     @Mandatory
     @Immutable
-    @Concern( OpenLayersPropertyConcern.class )
+    @Concern(OpenLayersPropertyConcern.class)
     public Property2<ImageWMSSource,String>     url;
 
-    @Concern( OpenLayersPropertyConcern.class )
+    @Concern(OpenLayersPropertyConcern.class)
     public Property2<ImageWMSSource,String>     crossOrigin;
 
     @Mandatory

@@ -14,34 +14,59 @@
  */
 package org.polymap.rap.openlayers.layer;
 
+import org.polymap.core.runtime.config.Check;
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.NumberRangeValidator;
+import org.polymap.core.runtime.config.Property2;
+
 import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.types.Extent;
 
-
+/**
+ * Abstract base class; normally only used for creating subclasses and not
+ * instantiated in apps.
+ * 
+ * @see <a
+ *      href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">OpenLayers</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ */
 public class Base
         extends OpenLayersObject {
 
+    @Check(value=NumberRangeValidator.class, args={"0","1"})
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<Base,Float>        opacity;
+
+    /**
+     * The visibility flag for the layer and hide/show & redraw accordingly. Fire
+     * event unless otherwise specified.
+     */
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<Base,Boolean>      visible;
+
+    /** 
+     * The minimum resolution (inclusive) at which this layer will be visible. 
+     */
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<Base,Float>        minResolution;
+
+    /** 
+     * The maximun resolution (exclusive) below which this layer will be visible. 
+     */
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<Base,Float>        maxResolution;
+
+    /**
+     * The bounding extent for layer rendering. The layer will not be rendered
+     * outside of this extent.
+     */
+    @Concern(OpenLayersPropertyConcern.class)
+    public Property2<Base,Extent>       extent;
+
+    
 	public Base( String jsClassname ) {
         super( jsClassname );
     }
-
-    /**
-	 * Set the visibility flag for the layer and hide/show & redraw accordingly.
-	 * Fire event unless otherwise specified.
-	 */
-	public void setVisibe(Boolean visible) {
-		execute("setVisible", visible);
-	}
-
-	public void setOpacity(double newOpacity) {
-		execute("setOpacity", newOpacity);
-	}
-
-	public void setMaxResolution(double resolution) {
-		execute("setMaxResolution", resolution);
-	}
-
-	public void setMinResolution(double resolution) {
-		execute("setMinResolution", resolution);
-	}
 
 }

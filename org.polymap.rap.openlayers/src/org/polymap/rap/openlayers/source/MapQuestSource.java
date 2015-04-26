@@ -36,8 +36,8 @@ public class MapQuestSource
 	}
 
     @Immutable
-    @OpenLayersProperty( "layer" )
-    @Concern( OpenLayersPropertyConcern.class )
+    @OpenLayersProperty("layer")
+    @Concern(OpenLayersPropertyConcern.class)
     public Property<Type>       type;
     
     

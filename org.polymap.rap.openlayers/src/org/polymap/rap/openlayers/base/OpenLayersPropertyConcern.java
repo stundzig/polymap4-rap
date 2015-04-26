@@ -29,6 +29,9 @@ import org.polymap.core.runtime.config.Property;
 /**
  * Synchronizes the value of a {@link Property} of an {@link OpenLayersObject} with
  * the property of the JavaScript object.
+ * <p/>
+ * Provides static methods the build JSON representation of the properties of an
+ * {@link OpenLayersObject}.
  * 
  * @see OpenLayersProperty
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
@@ -37,6 +40,7 @@ public class OpenLayersPropertyConcern
         extends DefaultPropertyConcern {
 
     private static Log log = LogFactory.getLog( OpenLayersPropertyConcern.class );
+    
     
     @Override
     public Object doSet( Object obj, Property prop, Object value ) {
@@ -56,23 +60,8 @@ public class OpenLayersPropertyConcern
     
     
     /**
-     * 
-     */
-    public static Object propertyAsJson( Property prop, Object value ) {
-        if (value instanceof Jsonable) {
-            return new Unquoted( ((Jsonable)value).toJson().toString() );
-        }
-        else if (value instanceof OpenLayersObject) {
-            return new Unquoted( ((OpenLayersObject)value).getJSObjRef() );
-        }
-        else {
-            return value;
-        }
-    }
-    
-    
-    /**
-     * 
+     * Creates a JSON representation of the {@link Property} members of an
+     * {@link OpenLayersObject}.
      */
     public static String propertiesAsJson( Object obj ) {
         JSONObject json = new JSONObject();
@@ -100,6 +89,22 @@ public class OpenLayersPropertyConcern
     }
 
     
+    /**
+     * 
+     */
+    public static Object propertyAsJson( Property prop, Object value ) {
+        if (value instanceof Jsonable) {
+            return new Unquoted( ((Jsonable)value).toJson().toString() );
+        }
+        else if (value instanceof OpenLayersObject) {
+            return new Unquoted( ((OpenLayersObject)value).getJSObjRef() );
+        }
+        else {
+            return value;
+        }
+    }
+
+
     /**
      * 
      */

@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
@@ -30,7 +30,7 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * 
  */
 
-public class Icon extends OpenLayersObject {
+public class Icon extends OlObject {
 
 	public Icon(String url, Size size, Pixel offset) {
 		super.create("  new OpenLayers.Icon( '" + url + "',"

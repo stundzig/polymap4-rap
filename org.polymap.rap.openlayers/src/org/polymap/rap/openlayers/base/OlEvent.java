@@ -24,25 +24,25 @@ package org.polymap.rap.openlayers.base;
 
 import org.eclipse.rap.json.JsonObject;
 
-public class OpenLayersEvent {
+public class OlEvent {
 
 	
-	private OpenLayersObject src;
+	private OlObject src;
 	private String name;
 	private JsonObject properties;
 
-	public OpenLayersEvent(OpenLayersObject src, String name, JsonObject properties) {
+	public OlEvent(OlObject src, String name, JsonObject properties) {
 		this.src = src;
 		this.name = name;
 		this.properties = properties;
 		
 	}
 
-	public OpenLayersObject getSrc() {
+	public OlObject getSrc() {
 		return src;
 	}
 
-	public void setSrc(OpenLayersObject src) {
+	public void setSrc(OlObject src) {
 		this.src = src;
 	}
 

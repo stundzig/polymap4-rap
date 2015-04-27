@@ -1,7 +1,6 @@
 /*
  * polymap.org
- * Copyright 2009, Polymap GmbH, and individual contributors as indicated
- * by the @authors tag.
+ * Copyright 2009-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -19,55 +18,40 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
-import org.polymap.rap.openlayers.base.OpenLayersMap;
+import org.polymap.rap.openlayers.base.OlMap;
 
 /**
- * 
  * Composite part for the OpenLayers RAP Widget
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class OpenLayersWidget extends Composite {
+public class OlWidget extends Composite {
 
 	private static final long serialVersionUID = 1L;
 
-	private final static Log log = LogFactory.getLog(OpenLayersWidget.class);
+	private final static Log log = LogFactory.getLog(OlWidget.class);
 
 	public boolean lib_init_done = false;
 
 	/** reference to the map object - every widget has exactly one Map **/
-	private OpenLayersMap map;
+	private OlMap map;
 //
 //	/** default external openlayers lib location **/
 //	public String js_location = "http://www.openlayers.org/api/OpenLayers.js";
 
-//	private final RemoteObject remote;
 
-	//
-	// public Object getAdapter( Class adapter ) {
-	// Object result;
-	// if( adapter == IWidgetLifeCycleAdapter.class ) {
-	// result = new OpenLayersWidgetLCA();
-	// } else {
-	// result = super.getAdapter( adapter );
-	// }
-	// return result;
-	// }
-
-	// private final RemoteObject remoteObject;
-
-	public OpenLayersWidget(Composite parent, int style) {
+	public OlWidget(Composite parent, int style) {
 		super(parent, style);
 //		Connection connection = RWT.getUISession().getConnection();
 //		remote = connection
-//				.createRemoteObject("org.polymap.rap.openlayers.OpenLayersWidget");
+//				.createRemoteObject("org.polymap.rap.openlayers.OlWidget");
 //		remote.set("parent", WidgetUtil.getId(this));
 //		register(
 //				"org/polymap/rap/openlayers/internal/resources/OpenLayersWrapper.js",
 //				"OpenLayersWrapper.js");
 //		loadJavaScript();
-//		// map = new OpenLayersMap(this, remoteObject);
+//		// map = new OlMap(this, remoteObject);
 //
 //		remote.setHandler(operationHandler);
 //		remote.set("appearance", "composite");
@@ -75,7 +59,7 @@ public class OpenLayersWidget extends Composite {
 		
 //		remote.
 
-//		OpenLayersSessionHandler.getInstance().setWidget(this);
+//		OlSessionHandler.getInstance().setWidget(this);
 
 		// hookContextMenu();
 	}
@@ -99,10 +83,10 @@ public class OpenLayersWidget extends Composite {
 //				JsonValue objRef = properties.get("event_src_obj");
 //				OpenLayersObject obj = null;
 //				if (objRef != null) {
-//					obj = OpenLayersSessionHandler.getInstance().getObj(
+//					obj = OlSessionHandler.getInstance().getObj(
 //							objRef.asString());
 //				}
-//				for (OpenLayersEventListener l : eventListeners.get(method)) {
+//				for (OlEventListener l : eventListeners.get(method)) {
 //					l.handleEvent(obj, method,
 //							properties);
 //				}
@@ -111,7 +95,7 @@ public class OpenLayersWidget extends Composite {
 //	};
 //
 //	private void register(String resourceName, String fileName) {
-//		ClassLoader classLoader = OpenLayersWidget.class.getClassLoader();
+//		ClassLoader classLoader = OlWidget.class.getClassLoader();
 //		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
 //		if (inputStream == null) {
 //			throw new IllegalStateException(resourceName
@@ -138,7 +122,7 @@ public class OpenLayersWidget extends Composite {
 //	}
 //
 //	//
-//	// public OpenLayersWidget(Composite parent, int style, String lib_location)
+//	// public OlWidget(Composite parent, int style, String lib_location)
 //	// {
 //	// this(parent, style);
 //	// js_location = lib_location;
@@ -159,11 +143,11 @@ public class OpenLayersWidget extends Composite {
 //	// setMenu( menu );
 //	// }
 
-	public OpenLayersMap getMap() {
+	public OlMap getMap() {
 		return map;
 	}
 	
-	public void setMap(OpenLayersMap map) {
+	public void setMap(OlMap map) {
 		if (this.map != null) {
 			throw new IllegalStateException("only one map per widget is allowed");
 		}
@@ -177,7 +161,7 @@ public class OpenLayersWidget extends Composite {
 //	 **/
 //	public void createMap(Projection projection, Projection display_projection,
 //			String units, Bounds maxExtent, float maxResolution) {
-//		map = new OpenLayersMap(this, projection, display_projection, units,
+//		map = new OlMap(this, projection, display_projection, units,
 //				maxExtent, maxResolution);
 //	}
 //
@@ -190,7 +174,7 @@ public class OpenLayersWidget extends Composite {
 //		// .identityHashCode(this)));
 //		//
 //		if (map == null) {
-//			map = new OpenLayersMap(this);
+//			map = new OlMap(this);
 //		}
 //	}
 //
@@ -201,7 +185,7 @@ public class OpenLayersWidget extends Composite {
 //
 //	// remote call
 //
-//	public void executeCommand(OpenLayersCommand command) {
+//	public void executeCommand(OlCommand command) {
 //		// log.info("eval: " + command.getJson().toString());
 //		callRemote("eval", command.getJson());
 //	}
@@ -233,7 +217,7 @@ public class OpenLayersWidget extends Composite {
 	@Override
 	public void setLayout(final Layout layout) {
 		throw new UnsupportedOperationException(
-				"Cannot change internal layout of OpenLayersMap");
+				"Cannot change internal layout of OlMap");
 	}
 //
 //	@Override

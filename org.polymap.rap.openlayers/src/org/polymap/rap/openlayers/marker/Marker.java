@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.marker;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
@@ -30,6 +30,6 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * 
  */
 
-public class Marker extends OpenLayersObject {
+public class Marker extends OlObject {
 
 }

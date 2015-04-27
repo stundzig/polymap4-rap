@@ -14,11 +14,11 @@
  */
 package org.polymap.rap.openlayers.style;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.util.JSonBuilder;
 import org.polymap.rap.openlayers.util.Stringer;
 
-public class FillStyle extends OpenLayersObject {
+public class FillStyle extends OlObject {
 
 	public FillStyle(Options options) {
 		create("new ol.style.Fill(" + (options != null ? options.asJson() : "") + ")");

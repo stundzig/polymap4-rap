@@ -21,14 +21,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Denotes the name of the JavaScript property used by {@link OpenLayersPropertyConcern}.
+ * Denotes the name of the JavaScript property used by {@link OlPropertyConcern}.
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( { ElementType.FIELD } )
 @Documented
-public @interface OpenLayersProperty {
+public @interface OlProperty {
     
     public String value();
     

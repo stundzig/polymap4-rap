@@ -27,7 +27,7 @@ Require-Bundle: org.eclipse.rap.rwt;bundle-version="2.3.1",
  org.polymap.core;bundle-version="4.0.0",
  org.eclipse.rap.ui;bundle-version="2.3.1";resolution:=optional
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.polymap.rap.openlayers.OpenLayersPlugin
+Bundle-Activator: org.polymap.rap.openlayers.OlPlugin
 Bundle-ClassPath: .,
  lib/json-20141113.jar
 Service-Component: OSGI-INF/contribution.xml

@@ -21,8 +21,8 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.base.OlObject;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Color;
 
 /**
@@ -36,12 +36,12 @@ import org.polymap.rap.openlayers.types.Color;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class StrokeStyle 
-        extends OpenLayersObject {
+        extends OlObject {
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<StrokeStyle,Float>     width;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<StrokeStyle,Color>     color;
 
     

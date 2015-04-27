@@ -25,8 +25,8 @@ import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern.Unquoted;
+import org.polymap.rap.openlayers.OlWidget;
+import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.Layer;
@@ -39,10 +39,14 @@ import org.polymap.rap.openlayers.view.View;
  * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class OpenLayersMap extends OpenLayersObject {
+public class OlMap extends OlObject {
 
-	private final static Log log = LogFactory.getLog(OpenLayersMap.class);
-//
+	private final static Log log = LogFactory.getLog(OlMap.class);
+
+	public enum EVENT {
+	    layerGroup, size, target, view
+	}
+
 //	/** Event: triggered after mouseover the map. */
 //	public final static String EVENT_MOUSE_OVER = "mouseover";
 //
@@ -110,44 +114,41 @@ public class OpenLayersMap extends OpenLayersObject {
     // private int[] scales;
 
 
-	private OpenLayersWidget               widget;
+	private OlWidget               widget;
 	
     @Mandatory
     @Immutable
-    public Property2<OpenLayersMap,View>   view;
+    public Property2<OlMap,View>   view;
 
 
-	public OpenLayersMap( OpenLayersWidget widget, View view ) {
+	public OlMap( OlWidget widget, View view ) {
 	    super( "ol.Map" );
 		this.widget = widget;
 		this.view.set( view );
 		widget.setMap( this );
 		
-//		create_with_widget(new Stringer("new ol.Map({ view: new ol.View({center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'), zoom: 4}), target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString(), widget);
-	
 		JSONObject options = new JSONObject();
         options.put( "view", new Unquoted( view.getJSObjRef() ) );
         options.put( "target", new Unquoted( "this.createDiv('" + WidgetUtil.getId(widget) + "')" ) );
         create( new Stringer( "new ", jsClassname, "(", options.toString(), ");" ).toString() );
-
-//		create(new Stringer("new ol.Map({view: " + view.getJSObjRef() + ", target: this.createDiv('", WidgetUtil.getId(widget) + "')});").toString());
-//		callObjFunction("updateSize()");
 	}
 
 
-	public OpenLayersWidget widget() {
+	public OlWidget widget() {
 		return widget;
 	}
 
 	
-	public void addLayer(Layer<? extends Source> layer) {
-//		layer2add.setWidget(widget);
-		execute("addLayer", layer);
-	}
+    public void addLayer( Layer<? extends Source> layer ) {
+        // layer2add.setWidget(widget);
+        execute( "addLayer", layer );
+    }
 
-	public void removeLayer(Layer<? extends Source> layer) {
-		execute("removeLayer", layer);
-	}
+
+    public void removeLayer( Layer<? extends Source> layer ) {
+        execute( "removeLayer", layer );
+    }
+
 
 //	/**
 //	 * Move the given layer to the specified (zero-based) index in the layer
@@ -203,22 +204,18 @@ public class OpenLayersMap extends OpenLayersObject {
 //				".updateSize();", "}, 500 );").toString());
 //	}	
 	
-	public enum EVENT {
-		layerGroup, size, target, view
-	}
-	
 	/**
 	 * The event contains the new center, resolution and rotation
 	 * @param event
 	 * @param listener
 	 */
 	public void addEventListener(EVENT event,
-			OpenLayersEventListener listener) {
+			OlEventListener listener) {
 		addEventListener("change:" + event.name(), listener, null );
 	}
 	
 	public void removeEventListener(EVENT event,
-			OpenLayersEventListener listener) {
+			OlEventListener listener) {
 		removeEventListener("change:" + event.name(), listener);
 	}
 

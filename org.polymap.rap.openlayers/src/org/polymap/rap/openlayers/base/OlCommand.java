@@ -26,7 +26,7 @@ package org.polymap.rap.openlayers.base;
 import org.eclipse.rap.json.JsonObject;
 
 
-public class OpenLayersCommand {
+public class OlCommand {
     
     private String command;
   
@@ -34,14 +34,14 @@ public class OpenLayersCommand {
      * ( e.g. creation of a Map ) if this is null it can be executed on all widgets
      *  **/
     
-//    private OpenLayersWidget assigned_widget;
+//    private OlWidget assigned_widget;
     
-    public OpenLayersCommand(String cmd) {
+    public OlCommand(String cmd) {
         this.command=cmd;
 //        this.assigned_widget=null;
     }
 //    
-//    public OpenLayersCommand(String cmd, OpenLayersWidget widget) {
+//    public OlCommand(String cmd, OlWidget widget) {
 //        this.command=cmd;
 //        this.assigned_widget=widget;
 //    }
@@ -60,16 +60,16 @@ public class OpenLayersCommand {
 //    }
 //
 //       
-//    public OpenLayersWidget getAssigned_widget() {
+//    public OlWidget getAssigned_widget() {
 //        return assigned_widget;
 //    }
 //
 //    
-//    public void setAssigned_widget( OpenLayersWidget assignedWidget ) {
+//    public void setAssigned_widget( OlWidget assignedWidget ) {
 //        this.assigned_widget = assignedWidget;
 //    }
 //    
-//    public boolean isSuitableFor(OpenLayersWidget widget) {
+//    public boolean isSuitableFor(OlWidget widget) {
 //        return ((assigned_widget==null) || (assigned_widget==widget));
 //    }
 

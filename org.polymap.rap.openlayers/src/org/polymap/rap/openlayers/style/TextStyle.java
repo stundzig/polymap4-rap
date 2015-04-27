@@ -15,11 +15,11 @@
 package org.polymap.rap.openlayers.style;
 
 import org.eclipse.rap.json.JsonObject;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.style.StrokeStyle.Options;
 import org.polymap.rap.openlayers.util.JSonBuilder;
 
-public class TextStyle extends OpenLayersObject {
+public class TextStyle extends OlObject {
 
 	public TextStyle(Options options) {
 		create("new ol.style.Text(" + options.asJson() + ")");

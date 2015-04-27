@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.rap.json.JsonObject;
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
+import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.view.View.EVENT;
 
 /**
@@ -63,12 +63,12 @@ public class ScaleLineControl extends Control {
 		units
 	}
 
-	public void addEventListener(EVENT event, OpenLayersEventListener listener) {
+	public void addEventListener(EVENT event, OlEventListener listener) {
 		addEventListener("change:" + event.name(), listener, null);
 	}
 
 	public void removeEventListener(EVENT event,
-			OpenLayersEventListener listener) {
+			OlEventListener listener) {
 		removeEventListener("change:" + event.name(), listener);
 	}
 }

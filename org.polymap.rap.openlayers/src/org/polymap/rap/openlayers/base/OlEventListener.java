@@ -25,9 +25,9 @@ package org.polymap.rap.openlayers.base;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface OpenLayersEventListener {
+public interface OlEventListener {
 
-	void handleEvent(OpenLayersEvent event);
+	void handleEvent(OlEvent event);
 
 	public class PayLoad {
 		List<Value> values = new ArrayList<Value>();

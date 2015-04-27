@@ -22,13 +22,13 @@
 
 package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  */
-public class Protocol extends OpenLayersObject {
+public class Protocol extends OlObject {
 
     public enum TYPE {
         HTTP, WFS, Gears

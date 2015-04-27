@@ -14,10 +14,10 @@
  */
 package org.polymap.rap.openlayers.style;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.util.JSonBuilder;
 
-public class ImageStyle extends OpenLayersObject {
+public class ImageStyle extends OlObject {
 
 	public ImageStyle(Options options) {
 		create("new ol.style.Image(" + options.asJson() + ")");

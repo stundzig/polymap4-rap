@@ -14,7 +14,7 @@
  */
 package org.polymap.rap.openlayers.source;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
@@ -22,7 +22,7 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public abstract class Source
-        extends OpenLayersObject {
+        extends OlObject {
 
     public Source( String jsClassname ) {
         super( jsClassname );

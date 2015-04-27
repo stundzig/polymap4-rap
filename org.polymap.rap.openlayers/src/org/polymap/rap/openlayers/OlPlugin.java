@@ -1,3 +1,17 @@
+/*
+ * polymap.org
+ * Copyright 2009-2015, Polymap GmbH. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ */
 package org.polymap.rap.openlayers;
 
 import org.eclipse.core.runtime.Plugin;
@@ -10,23 +24,26 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class OpenLayersPlugin 
+public class OlPlugin 
         extends Plugin {
 
 	// The plug-in ID
 	public static final String         PLUGIN_ID = "org.polymap.rap.openlayers";
 
-	private static OpenLayersPlugin    plugin;
-
-    private ServiceTracker             httpServiceTracker;
+	private static OlPlugin            plugin;
 
 	
-	public OpenLayersPlugin() {
-	}
+	public static OlPlugin instance() {
+    	return plugin;
+    }
 
 
-    public void start( final BundleContext context )
-    throws Exception {
+	// instance *******************************************
+	
+	private ServiceTracker             httpServiceTracker;
+
+
+    public void start( final BundleContext context ) throws Exception {
         super.start( context );
 
         // register HTTP resource
@@ -51,18 +68,12 @@ public class OpenLayersPlugin
 	}
 
 
-    public void stop( BundleContext context )
-    throws Exception {
+    public void stop( BundleContext context ) throws Exception {
         httpServiceTracker.close();
         httpServiceTracker = null;
         
         plugin = null;
         super.stop( context );
     }
-
-    
-	public static OpenLayersPlugin getDefault() {
-		return plugin;
-	}
 	
 }

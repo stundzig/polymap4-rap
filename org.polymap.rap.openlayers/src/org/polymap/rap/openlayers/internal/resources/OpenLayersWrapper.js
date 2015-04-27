@@ -35,7 +35,7 @@
 (function() {
 	'use strict';
 
-	rap.registerTypeHandler("org.polymap.rap.openlayers.OpenLayersWidget", {
+	rap.registerTypeHandler("org.polymap.rap.openlayers.OlWidget", {
 
 		factory : function(properties) {
 			console.log("widget.factory()");

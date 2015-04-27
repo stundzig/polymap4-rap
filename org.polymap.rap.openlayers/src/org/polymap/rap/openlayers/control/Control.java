@@ -16,8 +16,8 @@ import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 
-import org.polymap.rap.openlayers.base.OpenLayersMap;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlMap;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * A control is a visible widget with a DOM element in a fixed position on the
@@ -31,11 +31,11 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public abstract class Control
-        extends OpenLayersObject {
+        extends OlObject {
 
     @Mandatory
     @Immutable
-    public Property2<OpenLayersMap,Control>     map;
+    public Property2<OlMap,Control>     map;
 
 
     public Control( String jsClassname ) {
@@ -43,7 +43,7 @@ public abstract class Control
     }
 
 
-//    public void setMap( OpenLayersMap map ) {
+//    public void setMap( OlMap map ) {
 //        this.map = map;
 //        if (map != null) {
 //            super.execute( "setMap", map );

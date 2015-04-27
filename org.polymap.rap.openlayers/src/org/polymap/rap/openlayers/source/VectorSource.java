@@ -18,8 +18,8 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Projection;
 
@@ -58,13 +58,13 @@ public abstract class VectorSource
         removefeature;
     }
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<VectorSource,Attribution> attribution;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<VectorSource,String>      logo;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<VectorSource,Projection>  projection;
 
     /**
@@ -78,7 +78,7 @@ public abstract class VectorSource
      * (see ol.featureloader.xhr) and an ol.loadingstrategy.all for a one-off
      * download of all features from that URL. Requires format to be set as well.
      */
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<VectorSource,String>       url;
 
 
@@ -92,7 +92,7 @@ public abstract class VectorSource
     }
 
 
-    public void addEventListener( EVENT event, OpenLayersEventListener listener ) {
+    public void addEventListener( EVENT event, OlEventListener listener ) {
         // Map<String, String> props = new HashMap<String, String>();
         // if (event == EVENT.addfeature || event == EVENT.removefeature) {
         // props.put("feature", "event.feature");
@@ -101,7 +101,7 @@ public abstract class VectorSource
     }
 
 
-    public void removeEventListener( EVENT event, OpenLayersEventListener listener ) {
+    public void removeEventListener( EVENT event, OlEventListener listener ) {
         removeEventListener( event.name(), listener );
     }
 

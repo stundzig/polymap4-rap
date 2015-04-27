@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.features;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 ;
 
@@ -32,6 +32,6 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * 
  */
 
-public class Feature extends OpenLayersObject {
+public class Feature extends OlObject {
 
 }

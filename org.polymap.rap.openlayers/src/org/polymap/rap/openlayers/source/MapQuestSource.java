@@ -18,8 +18,8 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Property;
 
-import org.polymap.rap.openlayers.base.OpenLayersProperty;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.base.OlProperty;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
  * Layer source for the MapQuest tile server.
@@ -36,8 +36,8 @@ public class MapQuestSource
 	}
 
     @Immutable
-    @OpenLayersProperty("layer")
-    @Concern(OpenLayersPropertyConcern.class)
+    @OlProperty("layer")
+    @Concern(OlPropertyConcern.class)
     public Property<Type>       type;
     
     

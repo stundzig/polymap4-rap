@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
@@ -30,7 +30,7 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * 
  */
 
-public class Pixel extends OpenLayersObject {
+public class Pixel extends OlObject {
 
 	public Pixel(int x, int y) {
 		create("new ol.Pixel( " + x + "," + y + ")");

@@ -18,15 +18,15 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Property;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.base.OlObject;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
  * 
- * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class Projection 
-        extends OpenLayersObject {
+        extends OlObject {
 
     /**
      * Projection units.
@@ -36,11 +36,11 @@ public class Projection
     }
     
     @Immutable
-    @Concern( OpenLayersPropertyConcern.class )
+    @Concern(OlPropertyConcern.class)
     public Property<String>         code;
-    
+
     @Immutable
-    @Concern( OpenLayersPropertyConcern.class )
+    @Concern(OlPropertyConcern.class)
     public Property<Units>          units;
     
 

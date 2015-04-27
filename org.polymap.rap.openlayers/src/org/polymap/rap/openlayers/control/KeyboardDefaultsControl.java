@@ -14,7 +14,7 @@
  */
 package org.polymap.rap.openlayers.control;
 
-import org.polymap.rap.openlayers.base.OpenLayersMap;
+import org.polymap.rap.openlayers.base.OlMap;
 
 
 /**
@@ -30,7 +30,7 @@ public class KeyboardDefaultsControl
 	}
 
     @Override
-    public void setMap( OpenLayersMap map ) {
+    public void setMap( OlMap map ) {
         super.setMap( map );
         if (map != null) {
 //            addObjModCode( "alert(" + map.getJSObjRef() + ".div);" );

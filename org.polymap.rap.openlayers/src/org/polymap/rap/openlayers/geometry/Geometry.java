@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.geometry;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
 /**
  * 
@@ -30,6 +30,6 @@ import org.polymap.rap.openlayers.base.OpenLayersObject;
  * 
  */
 
-public class Geometry extends OpenLayersObject {
+public class Geometry extends OlObject {
 
 }

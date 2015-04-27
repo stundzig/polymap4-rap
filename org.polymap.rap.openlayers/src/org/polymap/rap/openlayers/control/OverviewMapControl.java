@@ -25,7 +25,7 @@
 //import java.util.HashSet;
 //import java.util.Set;
 //
-//import org.polymap.rap.openlayers.base.OpenLayersMap;
+//import org.polymap.rap.openlayers.base.OlMap;
 //import org.polymap.rap.openlayers.layer.Layer;
 //
 ///**
@@ -43,7 +43,7 @@
 //        super.create( "new OpenLayers.Control.OverviewMap();" );
 //    }
 //
-//    public OverviewMapControl( OpenLayersMap map, Layer layer ) {
+//    public OverviewMapControl( OlMap map, Layer layer ) {
 ////  		"projection: " +projection.getJSObjRef() +
 ////  		" , displayProjection: " +display_projection.getJSObjRef() + 
 ////  		" , units: '" + units + "' , " +

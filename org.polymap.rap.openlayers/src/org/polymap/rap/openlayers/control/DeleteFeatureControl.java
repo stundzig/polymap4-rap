@@ -20,7 +20,7 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.polymap.rap.openlayers.OpenLayersPlugin;
+import org.polymap.rap.openlayers.OlPlugin;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 
 /**
@@ -38,7 +38,7 @@ public class DeleteFeatureControl
 	public DeleteFeatureControl(VectorLayer layer) {    
         super.create( "new OpenLayers.Control();" );
         try {
-            URL res = OpenLayersPlugin.getDefault().getBundle().getResource( "ol_js_addins/DeleteFeatureControl.js" );
+            URL res = OlPlugin.instance().getBundle().getResource( "ol_js_addins/DeleteFeatureControl.js" );
             String js = IOUtils.toString( res.openStream() );
             
             js = StringUtils.replace( js, "$0", getJSObjRef() );

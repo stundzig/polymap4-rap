@@ -27,19 +27,19 @@ import org.polymap.core.runtime.config.DefaultPropertyConcern;
 import org.polymap.core.runtime.config.Property;
 
 /**
- * Synchronizes the value of a {@link Property} of an {@link OpenLayersObject} with
+ * Synchronizes the value of a {@link Property} of an {@link OlObject} with
  * the property of the JavaScript object.
  * <p/>
  * Provides static methods the build JSON representation of the properties of an
- * {@link OpenLayersObject}.
+ * {@link OlObject}.
  * 
- * @see OpenLayersProperty
+ * @see OlProperty
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class OpenLayersPropertyConcern
+public class OlPropertyConcern
         extends DefaultPropertyConcern {
 
-    private static Log log = LogFactory.getLog( OpenLayersPropertyConcern.class );
+    private static Log log = LogFactory.getLog( OlPropertyConcern.class );
     
     
     @Override
@@ -47,13 +47,13 @@ public class OpenLayersPropertyConcern
         log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() + " = " + value );
 
         // is the object created as JS on the client already?
-        if (((OpenLayersObject)obj).getObjRef() != null) {
+        if (((OlObject)obj).getObjRef() != null) {
 
-            OpenLayersProperty a = prop.info().getAnnotation( OpenLayersProperty.class );
+            OlProperty a = prop.info().getAnnotation( OlProperty.class );
             String propName = a != null ? a.value() : prop.info().getName();
 
             Object jsonValue = propertyAsJson( prop, value );
-            ((OpenLayersObject)obj).setAttribute( propName, jsonValue );
+            ((OlObject)obj).setAttribute( propName, jsonValue );
         }
         return value;
     }
@@ -61,7 +61,7 @@ public class OpenLayersPropertyConcern
     
     /**
      * Creates a JSON representation of the {@link Property} members of an
-     * {@link OpenLayersObject}.
+     * {@link OlObject}.
      */
     public static String propertiesAsJson( Object obj ) {
         JSONObject json = new JSONObject();
@@ -74,7 +74,7 @@ public class OpenLayersPropertyConcern
                         Object value = prop.get();
                         Object jsonValue = propertyAsJson( prop, value );
 
-                        OpenLayersProperty a = f.getAnnotation( OpenLayersProperty.class );
+                        OlProperty a = f.getAnnotation( OlProperty.class );
                         String name = a != null ? a.value() : f.getName();
 
                         json.put( name, jsonValue );
@@ -96,8 +96,8 @@ public class OpenLayersPropertyConcern
         if (value instanceof Jsonable) {
             return new Unquoted( ((Jsonable)value).toJson().toString() );
         }
-        else if (value instanceof OpenLayersObject) {
-            return new Unquoted( ((OpenLayersObject)value).getJSObjRef() );
+        else if (value instanceof OlObject) {
+            return new Unquoted( ((OlObject)value).getJSObjRef() );
         }
         else {
             return value;

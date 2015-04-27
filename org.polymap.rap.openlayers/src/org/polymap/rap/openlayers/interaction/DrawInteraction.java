@@ -17,13 +17,13 @@ package org.polymap.rap.openlayers.interaction;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base.OpenLayersEventListener.PayLoad;
+import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlObject;
+import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.source.VectorSource;
 import org.polymap.rap.openlayers.types.GeometryType;
 
-public class DrawInteraction extends OpenLayersObject {
+public class DrawInteraction extends OlObject {
 	
 	public enum EVENT {
 	    active("change:active"), drawend("drawend"), drawstart("drawstart");
@@ -43,7 +43,7 @@ public class DrawInteraction extends OpenLayersObject {
 		create("new ol.interaction.Draw({source: "+ source.getJSObjRef() +", type: /** @type {ol.geom.GeometryType} */ '" + type.name() + "'})");
 	}
 	
-	public void addEventListener(EVENT event, OpenLayersEventListener listener) {
+	public void addEventListener(EVENT event, OlEventListener listener) {
 		PayLoad payload = new PayLoad();
 		if (event == EVENT.drawend) {
 			payload.add("feature", "{}");
@@ -55,7 +55,7 @@ public class DrawInteraction extends OpenLayersObject {
 	}
 
 	public void removeEventListener(EVENT event,
-			OpenLayersEventListener listener) {
+			OlEventListener listener) {
 		removeEventListener(event.getValue(), listener);
 	}
 }

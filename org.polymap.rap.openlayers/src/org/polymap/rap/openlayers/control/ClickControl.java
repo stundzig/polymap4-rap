@@ -14,7 +14,7 @@
  */
 package org.polymap.rap.openlayers.control;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
+import org.polymap.rap.openlayers.OlWidget;
 
 /**
  * 

@@ -9,10 +9,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import org.polymap.rap.openlayers.OpenLayersWidget;
-import org.polymap.rap.openlayers.base.OpenLayersEvent;
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
-import org.polymap.rap.openlayers.base.OpenLayersMap;
+import org.polymap.rap.openlayers.OlWidget;
+import org.polymap.rap.openlayers.base.OlEvent;
+import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.layer.VectorLayer;
@@ -68,9 +68,9 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 //    }
 
 
-	private OpenLayersWidget createMap( Composite parent ) {
+	private OlWidget createMap( Composite parent ) {
 		parent.setLayout( new FillLayout() );
-		OpenLayersWidget olwidget = new OpenLayersWidget(parent, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+		OlWidget olwidget = new OlWidget(parent, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 
 		// String srs = "EPSG:4326";// Geometries.srs( getCRS() );
 		// Projection proj = new Projection(srs);
@@ -81,11 +81,11 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// // olwidget1.createMap(proj, proj, units, bounds, maxResolution);
 		// // olwidget1.prepare();
 		//
-		// map1 = new OpenLayersMap(olwidget1, proj, proj, units, bounds,
+		// map1 = new OlMap(olwidget1, proj, proj, units, bounds,
 		// maxResolution);
 		// // map.updateSize();
 		
-		OpenLayersMap map = new OpenLayersMap( olwidget, 
+		OlMap map = new OlMap( olwidget, 
 		        new View( newView -> {
 		                newView.projection.set( new Projection( "EPSG:3857", Units.m ) );
 		                //newView.projection.set( new Projection( "EPSG:4326", Units.degrees ) );
@@ -128,17 +128,17 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		// payload.put( "right", "event.object.getExtent().toArray()[2]" );
 		// payload.put( "top", "event.object.getExtent().toArray()[3]" );
 		// payload.put( "scale", map1.getJSObjRef() + ".getScale()" );
-		// map1.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
-		// map1.events.register( this, OpenLayersMap.EVENT_ZOOMEND, payload );
+		// map1.events.register( this, OlMap.EVENT_MOVEEND, payload );
+		// map1.events.register( this, OlMap.EVENT_ZOOMEND, payload );
         return olwidget;
 	}
 
 	private void createMap2(Composite parent) {
         parent.setLayout( new FillLayout() );
-        OpenLayersWidget olwidget2 = new OpenLayersWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
+        OlWidget olwidget2 = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 
         Projection epsg3857 = new Projection( "EPSG:3857", Units.m );
-        OpenLayersMap map = new OpenLayersMap( olwidget2, new View()
+        OlMap map = new OlMap( olwidget2, new View()
                 .projection.put( epsg3857 )
                 .center.put( new Coordinate( 0, 0 ) )
                 .zoom.put( 1 ) );
@@ -181,16 +181,16 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 
 		//
 		// HashMap<String, String> payload = new HashMap<String, String>();
-		// map.events.register( this, OpenLayersMap.EVENT_MOVEEND, payload );
-        OpenLayersEventListener listener = new OpenLayersEventListener() {
+		// map.events.register( this, OlMap.EVENT_MOVEEND, payload );
+        OlEventListener listener = new OlEventListener() {
             @Override
-            public void handleEvent( OpenLayersEvent event ) {
+            public void handleEvent( OlEvent event ) {
                 System.out.println( event.getProperties() );
             }
         };
         map.view.get().addEventListener( View.EVENT.center, listener );
 		// view2.addEventListener(View.EVENT.resolution, listener);
-		// new OpenLayersEventListener() {
+		// new OlEventListener() {
 		//
 		// @Override
 		// public void handleEvent(OpenLayersObject src, String name,
@@ -200,8 +200,8 @@ public class DemoEntryPoint extends AbstractEntryPoint {
 		//
 		// }, null);
 
-		// map2.addEventListener(OpenLayersMap.EVENT_MOVEEND,
-		// new OpenLayersEventListener() {
+		// map2.addEventListener(OlMap.EVENT_MOVEEND,
+		// new OlEventListener() {
 		//
 		// @Override
 		// public void handleEvent(OpenLayersObject src, String name,

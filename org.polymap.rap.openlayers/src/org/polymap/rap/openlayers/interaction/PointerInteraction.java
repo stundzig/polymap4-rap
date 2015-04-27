@@ -14,7 +14,7 @@
  */
 package org.polymap.rap.openlayers.interaction;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 
-public abstract class PointerInteraction extends OpenLayersObject {
+public abstract class PointerInteraction extends OlObject {
 }

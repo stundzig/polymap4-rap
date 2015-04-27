@@ -19,10 +19,10 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 
-import org.polymap.rap.openlayers.base.OpenLayersEventListener;
-import org.polymap.rap.openlayers.base.OpenLayersObject;
-import org.polymap.rap.openlayers.base.OpenLayersProperty;
-import org.polymap.rap.openlayers.base.OpenLayersPropertyConcern;
+import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlObject;
+import org.polymap.rap.openlayers.base.OlProperty;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
@@ -37,44 +37,44 @@ import org.polymap.rap.openlayers.types.Projection;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class View
-        extends OpenLayersObject {
+        extends OlObject {
 
     public enum EVENT {
         center, resolution, rotation
     }
 
     @Mandatory
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Projection> projection;
 
-    @OpenLayersProperty("center")
-    @Concern(OpenLayersPropertyConcern.class)
+    @OlProperty("center")
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Coordinate> center;
 
     /**
      * The extent that constrains the {@link #center}, in other words, center cannot
      * be set outside this extent. Default is undefined.
      */
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Extent>     extent;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Double>     resolution;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Double>     minResolution;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Double>     maxResolution;
 
     /**
      * Only used if resolution is not defined. Zoom level used to calculate the
      * initial resolution for the view.
      */
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Integer>    zoom;
 
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Integer>    minZoom;
 
     /**
@@ -83,7 +83,7 @@ public class View
      * Default is 28. Note that if {@link #minResolution} is also provided, it is
      * given precedence over maxZoom.
      */
-    @Concern(OpenLayersPropertyConcern.class)
+    @Concern(OlPropertyConcern.class)
     public Property2<View,Integer>    maxZoom;
 
 
@@ -104,12 +104,12 @@ public class View
      * @param event
      * @param listener
      */
-    public void addEventListener( EVENT event, OpenLayersEventListener listener ) {
+    public void addEventListener( EVENT event, OlEventListener listener ) {
         addEventListener( "change:" + event.name(), listener, null );
     }
 
 
-    public void removeEventListener( EVENT event, OpenLayersEventListener listener ) {
+    public void removeEventListener( EVENT event, OlEventListener listener ) {
         removeEventListener( "change:" + event.name(), listener );
     }
 

@@ -21,7 +21,7 @@ import java.util.Set;
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.Property;
 
-import org.polymap.rap.openlayers.base.OpenLayersEventListener.PayLoad;
+import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
@@ -32,7 +32,7 @@ import org.polymap.rap.openlayers.util.Stringer;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public abstract class OpenLayersObject {
+public abstract class OlObject {
 
     public static final String  UNKNOWN_CLASSNAME = "_unknown_";
     
@@ -41,7 +41,7 @@ public abstract class OpenLayersObject {
     protected String            objRef;
 
 
-    public OpenLayersObject( String jsClassname ) {
+    public OlObject( String jsClassname ) {
         this.jsClassname = jsClassname;
         
         // initialize Property instances
@@ -56,15 +56,15 @@ public abstract class OpenLayersObject {
     protected void create() {
         assert jsClassname != null && !jsClassname.equals( UNKNOWN_CLASSNAME );
 
-        String options = OpenLayersPropertyConcern.propertiesAsJson( this );
+        String options = OlPropertyConcern.propertiesAsJson( this );
         create( new Stringer( "new ", jsClassname, "(", options, ");" ).toString() );
     }
 
 
     protected void create( String code ) {
-        OpenLayersSessionHandler wp = OpenLayersSessionHandler.getInstance();
+        OlSessionHandler wp = OlSessionHandler.getInstance();
         objRef = wp.generateReference( this );
-        wp.executeCommand( new OpenLayersCommand( getJSObjRef() + "=" + code + ";" ) );
+        wp.executeCommand( new OlCommand( getJSObjRef() + "=" + code + ";" ) );
     }
 
     
@@ -76,8 +76,8 @@ public abstract class OpenLayersObject {
 
     
     public void execute( String code ) {
-        OpenLayersSessionHandler.getInstance().executeCommand(
-                new OpenLayersCommand( new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
+        OlSessionHandler.getInstance().executeCommand(
+                new OlCommand( new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
     }
 
 
@@ -88,7 +88,7 @@ public abstract class OpenLayersObject {
 	 *            The name of the function.
 	 * @param args
 	 *            Can be: {@link String}, kind of {@link Number},
-	 *            {@link Boolean} or {@link OpenLayersObject}.
+	 *            {@link Boolean} or {@link OlObject}.
 	 */
 	private void prepareExecutionCode(String function, Object... args) {
 		StringBuilder buf = new StringBuilder(128).append(getJSObjRef())
@@ -99,8 +99,8 @@ public abstract class OpenLayersObject {
 				buf.append(',');
 			}
 			Object arg = args[i];
-			if (arg instanceof OpenLayersObject) {
-				buf.append(((OpenLayersObject) arg).getJSObjRef());
+			if (arg instanceof OlObject) {
+				buf.append(((OlObject) arg).getJSObjRef());
 			} else if (arg instanceof Number) {
 				buf.append(arg.toString());
 			} else if (arg instanceof Boolean) {
@@ -114,11 +114,11 @@ public abstract class OpenLayersObject {
 		execute(buf.append(");").toString());
 	}
 
-	public void execute(String function, OpenLayersObject obj) {
+	public void execute(String function, OlObject obj) {
 		prepareExecutionCode(function, obj);
 	}
 
-	public void execute(String function, OpenLayersObject obj, boolean bool) {
+	public void execute(String function, OlObject obj, boolean bool) {
 		prepareExecutionCode(function, obj, bool);
 	}
 
@@ -145,14 +145,14 @@ public abstract class OpenLayersObject {
 	 *            The name of the attribute.
 	 * @param args
 	 *            Can be: {@link String}, kind of {@link Number},
-	 *            {@link Boolean} or {@link OpenLayersObject}.
+	 *            {@link Boolean} or {@link OlObject}.
 	 */
 	public void setAttribute(String attr, Object arg) {
         StringBuilder buf = new StringBuilder( 128 )
                 .append( getJSObjRef() ).append( '.' ).append( attr ).append( '=' );
 
-        if (arg instanceof OpenLayersObject) {
-            buf.append( ((OpenLayersObject)arg).getJSObjRef() );
+        if (arg instanceof OlObject) {
+            buf.append( ((OlObject)arg).getJSObjRef() );
         }
         else if (arg instanceof Number) {
             buf.append( arg.toString() );
@@ -182,19 +182,19 @@ public abstract class OpenLayersObject {
 		return new Stringer().replaceNulls( "null" ).add( "this.objs['", objRef, "']" ).toString();
 	}
 
-	public String getJSObj(OpenLayersObject object) {
+	public String getJSObj(OlObject object) {
 		if (object == null)
 			return "null";
 		else
 			return object.getJSObjRef();
 	}
 
-	public String getJSObj(OpenLayersObject[] oa) {
+	public String getJSObj(OlObject[] oa) {
 		if (oa == null)
 			return "[null]";
 		else {
 			String res = "[";
-			for (OpenLayersObject obj : oa) {
+			for (OlObject obj : oa) {
 				if (!res.equals("["))
 					res += ",";
 				res += getJSObj(obj);
@@ -205,35 +205,35 @@ public abstract class OpenLayersObject {
 	}
 
 	public void dispose() {
-		OpenLayersSessionHandler.getInstance().remove(getObjRef());
+		OlSessionHandler.getInstance().remove(getObjRef());
 		execute(getJSObjRef() + "=null;");
 	}
 
-	private Map<String, Set<OpenLayersEventListener>> eventListeners = new HashMap<String, Set<OpenLayersEventListener>>();
+	private Map<String, Set<OlEventListener>> eventListeners = new HashMap<String, Set<OlEventListener>>();
 
 
-    protected void addEventListener( final String event, OpenLayersEventListener listener, PayLoad payload ) {
-        Set<OpenLayersEventListener> listeners = eventListeners.get( event );
+    protected void addEventListener( final String event, OlEventListener listener, PayLoad payload ) {
+        Set<OlEventListener> listeners = eventListeners.get( event );
         if (listeners == null) {
-            listeners = new HashSet<OpenLayersEventListener>();
+            listeners = new HashSet<OlEventListener>();
             eventListeners.put( event, listeners );
         }
         listeners.add( listener );
 
-        OpenLayersSessionHandler.getInstance().registerEventListener( this, event, listener, payload );
+        OlSessionHandler.getInstance().registerEventListener( this, event, listener, payload );
     }
 
 
-    protected void removeEventListener( final String event, OpenLayersEventListener listener ) {
-        Set<OpenLayersEventListener> listeners = eventListeners.get( event );
+    protected void removeEventListener( final String event, OlEventListener listener ) {
+        Set<OlEventListener> listeners = eventListeners.get( event );
         if (listeners != null) {
             listeners.remove( listener );
         }
-        OpenLayersSessionHandler.getInstance().unregisterEventListener( this, event, listener );
+        OlSessionHandler.getInstance().unregisterEventListener( this, event, listener );
     }
 
 
-	public Set<OpenLayersEventListener> getEventListener(String method) {
+	public Set<OlEventListener> getEventListener(String method) {
 		return eventListeners.get(method);
 	};
 

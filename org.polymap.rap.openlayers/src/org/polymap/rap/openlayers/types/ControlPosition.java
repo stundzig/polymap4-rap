@@ -22,7 +22,7 @@
 
 package org.polymap.rap.openlayers.types;
 
-import org.polymap.rap.openlayers.base.OpenLayersObject;
+import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.control.Control;
 
 /**
@@ -31,7 +31,7 @@ import org.polymap.rap.openlayers.control.Control;
  * 
  */
 
-public class ControlPosition extends OpenLayersObject {
+public class ControlPosition extends OlObject {
 
 	public ControlPosition(Control ctrl) {
 		super.create(ctrl.getJSObjRef() + ".div;");

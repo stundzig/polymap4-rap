@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.ConfigurationFactory;
-import org.polymap.core.runtime.config.DefaultValue;
+import org.polymap.core.runtime.config.DefaultString;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
@@ -57,11 +57,11 @@ public class ImageWMSSource
         @OlProperty("LAYERS")
         public Property2<RequestParams,String>  layers;
         
-        @DefaultValue("")
+        @DefaultString("")
         @OlProperty("STYLES")
         public Property2<RequestParams,String>  styles;
         
-        @DefaultValue("1.3.0")
+        @DefaultString("1.3.0")
         @OlProperty( "VERSION" )
         public Property2<RequestParams,String>  version;
 

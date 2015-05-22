@@ -57,7 +57,7 @@ public abstract class OlObject {
         assert jsClassname != null && !jsClassname.equals( UNKNOWN_CLASSNAME );
 
         String options = OlPropertyConcern.propertiesAsJson( this );
-        create( new Stringer( "new ", jsClassname, "(", options, ");" ).toString() );
+        create( new Stringer( "new ", jsClassname, "(", options, ")" ).toString() );
     }
 
 

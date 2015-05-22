@@ -22,7 +22,6 @@
 
 package org.polymap.rap.openlayers.control;
 
-import org.polymap.rap.openlayers.util.Stringer;
 
 /**
  * @see http://openlayers.org/en/master/apidoc/ol.control.Zoom.html
@@ -33,7 +32,6 @@ import org.polymap.rap.openlayers.util.Stringer;
 public class ZoomControl extends Control {
 
 	public ZoomControl() {
-		Stringer c = new Stringer("new ol.control.Zoom();");
-		super.create(c.toString());
+	    super("ol.control.Zoom");
 	}
 }

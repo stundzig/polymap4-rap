@@ -13,11 +13,10 @@
 package org.polymap.rap.openlayers.types;
 
 import org.json.JSONArray;
-
 import org.polymap.core.runtime.config.Check;
+import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.NumberRangeValidator;
 import org.polymap.core.runtime.config.Property2;
-
 import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
@@ -32,33 +31,37 @@ import org.polymap.rap.openlayers.base.Jsonable;
 public class Color
         implements Jsonable {
 
-    @Check(value=NumberRangeValidator.class, args={"0","255"})
+    @Check(value = NumberRangeValidator.class, args = { "0", "255" })
     public Property2<Color,Integer> red;
 
-    @Check(value=NumberRangeValidator.class, args={"0","255"})
-    public Property2<Color,Integer>        green;
+    @Check(value = NumberRangeValidator.class, args = { "0", "255" })
+    public Property2<Color,Integer> green;
 
-    @Check(value=NumberRangeValidator.class, args={"0","255"})
-    public Property2<Color,Integer>        blue;
+    @Check(value = NumberRangeValidator.class, args = { "0", "255" })
+    public Property2<Color,Integer> blue;
 
-    @Check(value=NumberRangeValidator.class, args={"0","1"})
-    public Property2<Color,Float>          alpha;
+    @Check(value = NumberRangeValidator.class, args = { "0", "1" })
+    public Property2<Color,Float>   alpha;
 
 
     public Color( int r, int g, int b ) {
         this( r, g, b, 1 );
     }
 
+
     public Color( int r, int g, int b, float a ) {
+        ConfigurationFactory.inject( this );
         this.red.set( r );
         this.green.set( g );
         this.blue.set( b );
         this.alpha.set( a );
     }
 
+
     @Override
     public Object toJson() {
-        return new JSONArray().put( red.get() ).put( green.get() ).put( blue.get() ).put( alpha.get() );
+        return new JSONArray().put( red.get() ).put( green.get() ).put( blue.get() )
+                .put( alpha.get() );
     }
 
 }

@@ -33,9 +33,12 @@ import org.polymap.rap.openlayers.base.OlObject;
 public abstract class Control
         extends OlObject {
 
-    @Mandatory
-    @Immutable
-    public Property2<OlMap,Control>     map;
+    //
+    // @Mandatory
+    // @Immutable
+    // public Property2<Control,OlMap> map;
+
+    private OlMap map;
 
 
     public Control( String jsClassname ) {
@@ -43,11 +46,11 @@ public abstract class Control
     }
 
 
-//    public void setMap( OlMap map ) {
-//        this.map = map;
-//        if (map != null) {
-//            super.execute( "setMap", map );
-//        }
-//    }
-    
+    public void setMap( OlMap map ) {
+        this.map = map;
+        if (map != null) {
+            execute( "setMap", map );
+        }
+    }
+
 }

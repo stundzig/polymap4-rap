@@ -30,7 +30,7 @@ package org.polymap.rap.openlayers.control;
 
 public class ScaleControl extends Control {
 
-	public ScaleControl() {
-		super.create("new OpenLayers.Control.Scale();");
-	}
+    public ScaleControl() {
+        super.create("new OpenLayers.Control.Scale();");
+    }
 }

@@ -12,13 +12,9 @@
  */
 package org.polymap.rap.openlayers.style;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
-
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
@@ -27,26 +23,28 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
  * its children will not take effect until the feature, layer or FeatureOverlay that
  * uses the style is re-rendered.
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.style.Style.html">OpenLayers
- *      Doc</a>
+ * @see href="http://openlayers.org/en/master/apidoc/ol.style.Style.html
+ * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class Style
         extends OlObject {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<Style,StrokeStyle>     stroke;
+    public Property2<Style,StrokeStyle> stroke;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<Style,ImageStyle>  image;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<Style,FillStyle>   fill;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<Style,TextStyle>   text;
 
 
-    /**
-     * Constructs a new instance.
-     *
-     * @param initializers Initialize at least all {@link Mandatory} properties.
-     */
-    public Style( Consumer<Style>... initializers ) {
+    public Style() {
         super( "ol.style.Style" );
-        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
     }
 
 }

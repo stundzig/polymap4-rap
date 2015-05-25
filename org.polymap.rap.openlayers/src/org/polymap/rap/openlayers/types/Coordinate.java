@@ -33,13 +33,15 @@ public class Coordinate
 		this.y = y;
 	}
 
-	public int getX() {
-		return x;
-	}
 
-	public int getY() {
-		return y;
-	}
+    //
+    // public int x() {
+    // return x;
+    // }
+    //
+    // public int y() {
+    // return y;
+    // }
 
     @Override
     public Object toJson() {

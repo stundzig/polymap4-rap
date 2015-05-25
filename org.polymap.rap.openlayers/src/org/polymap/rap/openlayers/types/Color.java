@@ -12,7 +12,6 @@
  */
 package org.polymap.rap.openlayers.types;
 
-import org.json.JSONArray;
 import org.polymap.core.runtime.config.Check;
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.NumberRangeValidator;
@@ -43,6 +42,14 @@ public class Color
     @Check(value = NumberRangeValidator.class, args = { "0", "1" })
     public Property2<Color,Float>   alpha;
 
+    public Property2<Color,String>  name;
+
+
+    public Color( String color ) {
+        ConfigurationFactory.inject( this );
+        this.name.set( color );
+    }
+
 
     public Color( int r, int g, int b ) {
         this( r, g, b, 1 );
@@ -60,8 +67,8 @@ public class Color
 
     @Override
     public Object toJson() {
-        return new JSONArray().put( red.get() ).put( green.get() ).put( blue.get() )
-                .put( alpha.get() );
+        return "'" + (name.get() != null ? name.get() : "rgba(" + red.get() + "," + green.get() + ","
+                + blue.get() + "," + alpha.get() + ")") + "'";
     }
 
 }

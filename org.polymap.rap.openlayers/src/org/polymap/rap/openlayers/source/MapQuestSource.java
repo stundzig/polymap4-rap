@@ -24,7 +24,8 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Layer source for the MapQuest tile server.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.MapQuest.html">OpenLayers Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.source.MapQuest.html
+ * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */

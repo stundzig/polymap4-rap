@@ -40,37 +40,37 @@ public class OlPlugin
 
 	// instance *******************************************
 	
-	private ServiceTracker             httpServiceTracker;
+//	private ServiceTracker             httpServiceTracker;
 
 
     public void start( final BundleContext context ) throws Exception {
         super.start( context );
 
-        // register HTTP resource
-        httpServiceTracker = new ServiceTracker( context, HttpService.class.getName(), null ) {
-            public Object addingService( ServiceReference reference ) {
-                HttpService httpService = (HttpService)super.addingService( reference );                
-                if (httpService != null) {
-                    try {
-                        httpService.registerResources( "/openlayers", "/openlayers", null );
-                        httpService.registerResources( "/ol_js_addins", "/ol_js_addins", null );
-                    }
-                    catch (NamespaceException e) {
-                        throw new RuntimeException( e );
-                    }
-                }
-                return httpService;
-            }
-        };
-        httpServiceTracker.open();
+//        // register HTTP resource
+//        httpServiceTracker = new ServiceTracker( context, HttpService.class.getName(), null ) {
+//            public Object addingService( ServiceReference reference ) {
+//                HttpService httpService = (HttpService)super.addingService( reference );                
+//                if (httpService != null) {
+//                    try {
+//                        httpService.registerResources( "/openlayers", "/openlayers", null );
+//                        httpService.registerResources( "/ol_js_addins", "/ol_js_addins", null );
+//                    }
+//                    catch (NamespaceException e) {
+//                        throw new RuntimeException( e );
+//                    }
+//                }
+//                return httpService;
+//            }
+//        };
+//        httpServiceTracker.open();
 
 		plugin = this;
 	}
 
 
     public void stop( BundleContext context ) throws Exception {
-        httpServiceTracker.close();
-        httpServiceTracker = null;
+//        httpServiceTracker.close();
+//        httpServiceTracker = null;
         
         plugin = null;
         super.stop( context );

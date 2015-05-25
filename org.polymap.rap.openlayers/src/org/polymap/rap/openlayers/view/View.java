@@ -43,7 +43,7 @@ public class View
         center, resolution, rotation
     }
 
-    @Mandatory
+//    @Mandatory
     @Concern(OlPropertyConcern.class)
     public Property2<View,Projection> projection;
 
@@ -92,9 +92,8 @@ public class View
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-    public View( Consumer<View>... initializers ) {
+    public View() {
         super( "ol.View" );
-        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
     }
 
 

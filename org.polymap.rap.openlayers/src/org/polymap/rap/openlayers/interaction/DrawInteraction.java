@@ -1,61 +1,74 @@
 /*
- * polymap.org
- * Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * polymap.org Copyright (C) 2009-2014, Polymap GmbH. All rights reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 package org.polymap.rap.openlayers.interaction;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Property;
 import org.polymap.rap.openlayers.base.OlEventListener;
-import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.source.VectorSource;
 import org.polymap.rap.openlayers.types.GeometryType;
 
-public class DrawInteraction extends OlObject {
-	
-	public enum EVENT {
-	    active("change:active"), drawend("drawend"), drawstart("drawstart");
+public class DrawInteraction
+        extends Interaction {
 
-	    private String value;
+    public enum EVENT {
+        active("change:active"), drawend("drawend"), drawstart("drawstart");
 
-	    private EVENT(String value) {
-	        this.value = value;
-	    }
+        private String value;
 
-	    public String getValue() {
-	        return this.value;
-	    }
-	}
-	
-	public DrawInteraction(VectorSource source, GeometryType type) {
-		create("new ol.interaction.Draw({source: "+ source.getJSObjRef() +", type: /** @type {ol.geom.GeometryType} */ '" + type.name() + "'})");
-	}
-	
-	public void addEventListener(EVENT event, OlEventListener listener) {
-		PayLoad payload = new PayLoad();
-		if (event == EVENT.drawend) {
-			payload.add("feature", "{}");
-			payload.add("feature.type", "theEvent.feature.getGeometry().getType()");
-			payload.add("feature.extent", "theEvent.feature.getGeometry().getExtent()");
-			payload.add("feature.coordinates", "theEvent.feature.getGeometry().getCoordinates()");
-		}
-		addEventListener(event.getValue(), listener, payload);
-	}
 
-	public void removeEventListener(EVENT event,
-			OlEventListener listener) {
-		removeEventListener(event.getValue(), listener);
-	}
+        private EVENT( String value ) {
+            this.value = value;
+        }
+
+
+        public String getValue() {
+            return this.value;
+        }
+    }
+
+    @Immutable
+    @Concern(OlPropertyConcern.class)
+    public Property<VectorSource> source;
+
+    @Immutable
+    @Concern(OlPropertyConcern.class)
+    public Property<GeometryType> type;
+
+
+    public DrawInteraction( VectorSource source, GeometryType type ) {
+        super( "ol.interaction.Draw" );
+        this.source.set( source );
+        this.type.set( type );
+    }
+
+
+    public void addEventListener( EVENT event, OlEventListener listener ) {
+        PayLoad payload = new PayLoad();
+        if (event == EVENT.drawend) {
+            payload.add( "feature", "{}" );
+            payload.add( "feature.type", "theEvent.feature.getGeometry().getType()" );
+            payload.add( "feature.extent", "theEvent.feature.getGeometry().getExtent()" );
+            payload.add( "feature.coordinates", "theEvent.feature.getGeometry().getCoordinates()" );
+        }
+        addEventListener( event.getValue(), listener, payload );
+    }
+
+
+    public void removeEventListener( EVENT event, OlEventListener listener ) {
+        removeEventListener( event.getValue(), listener );
+    }
 }

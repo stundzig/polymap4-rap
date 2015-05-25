@@ -39,7 +39,7 @@
 
 		factory : function(properties) {
 			console.log("widget.factory()");
-			return new map.OpenLayersWidget(properties);
+			return new map.OlWidget(properties);
 		},
 
 		destructor : "destroy",
@@ -67,8 +67,8 @@
 		window.map = {};
 	}
 
-	map.OpenLayersWidget = function(properties) {
-		console.log("map.OpenLayersWidget created()");
+	map.OlWidget = function(properties) {
+		console.log("map.OlWidget created()");
 		// console.log("window.map ", window.map);
 		this.objs = {};
 		this.listenerKeys = {};
@@ -78,7 +78,7 @@
 		this.remoteObject;
 	};
 
-	map.OpenLayersWidget.prototype = {
+	map.OlWidget.prototype = {
 		ready : false,
 		repaint : false,
 
@@ -89,7 +89,7 @@
 			element.setAttribute("id", id + id);
 			parent.append(element);
 
-			// console.log('element id is ' + element.getAttribute("id"));
+			console.log('element id is ' + element.getAttribute("id"));
 			// this.remoteObject = rap.getRemoteObject(this);
 			return element.getAttribute("id");
 		},

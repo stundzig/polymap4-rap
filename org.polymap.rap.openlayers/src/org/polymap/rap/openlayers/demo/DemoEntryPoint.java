@@ -1,220 +1,161 @@
 package org.polymap.rap.openlayers.demo;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
+import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.polymap.rap.openlayers.OlWidget;
-import org.polymap.rap.openlayers.base.OlMap;
-import org.polymap.rap.openlayers.control.ScaleLineControl;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.polymap.rap.openlayers.control.ZoomControl;
-import org.polymap.rap.openlayers.layer.ImageLayer;
-import org.polymap.rap.openlayers.layer.TileLayer;
-import org.polymap.rap.openlayers.layer.VectorLayer;
-import org.polymap.rap.openlayers.source.GeoJSONSource;
-import org.polymap.rap.openlayers.source.ImageWMSSource;
-import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
-import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.style.StrokeStyle;
-import org.polymap.rap.openlayers.style.Style;
-import org.polymap.rap.openlayers.types.Attribution;
-import org.polymap.rap.openlayers.types.Color;
-import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.types.Projection;
-import org.polymap.rap.openlayers.types.Projection.Units;
-import org.polymap.rap.openlayers.view.View;
 
 public class DemoEntryPoint
         extends AbstractEntryPoint {
 
-    private final static Log log = LogFactory.getLog( DemoEntryPoint.class );
-    private OlMap map;
+    final ServerPushSession pushSession = new ServerPushSession();
+
+    //
+    // @Override
+    // protected Shell createShell(Display display) {
+    // // display.setSynchronizer(new ClusteredSynchronizer(display));
+    // return super.createShell(display);
+    // }
+    private Tree            menu;
+
+    private Composite       content;
+
+    private DemoTab         currentTab;
 
 
     @Override
     protected void createContents( Composite parent ) {
-        parent.setLayout( new FillLayout() );
-        // Composite mainComposite = new Composite(parent, SWT.NONE);
-        // mainComposite.setLayout(new RowLayout());
-
-        Composite left = new Composite( parent, SWT.BORDER );
-        Composite right = new Composite( parent, SWT.BORDER );
-        Composite buttons = new Composite( parent, SWT.BORDER );
-
-        createMap( left );
-        createMap2( right );
-         createButtons(buttons);
-    }
-
-
-    private void createButtons( Composite parent ) {
-        parent.setLayout( new FillLayout() );
-        Button button = new Button( parent, SWT.PUSH );
-        button.setText( "addScaleLineControlToLeftMap" );
-        button.addSelectionListener( new SelectionListener() {
+        pushSession.start();
+        parent.addDisposeListener( new DisposeListener() {
 
             @Override
-            public void widgetSelected( SelectionEvent e ) {
-                map.addControl( new ScaleLineControl( null, null, ScaleLineControl.Units.metric,
-                        null ) );
-//                view.removeEventListener( View.EVENT.center, listener );
-            }
-
-
-            @Override
-            public void widgetDefaultSelected( SelectionEvent e ) {
-                // TODO Auto-generated method stub
-
+            public void widgetDisposed( DisposeEvent arg0 ) {
+                pushSession.stop();
             }
         } );
-    }
+        parent.setLayout( new GridLayout( 2, false ) );
+        Color backgroundColor = new Color( parent.getDisplay(), 0x31, 0x61, 0x9C );
+        Composite header = new Composite( parent, SWT.NONE );
+        header.setBackground( backgroundColor );
+        header.setBackgroundMode( SWT.INHERIT_DEFAULT );
+        header.setLayoutData( new GridData( SWT.FILL, SWT.NONE, true, false, 2, 1 ) );
+        Label label = new Label( header, SWT.NONE );
+        label.setText( "Polymap OpenLayers RAP Demo" );
+        label.setForeground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
+        label.setBounds( 40, 30, 250, 30 );
 
-    private OlWidget createMap( Composite parent ) {
-        parent.setLayout( new FillLayout() );
-        OlWidget olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
+        menu = new Tree( parent, SWT.FULL_SELECTION );
+        menu.setLayoutData( new GridData( SWT.NONE, SWT.FILL, false, false, 1, 1 ) );
+        content = new Composite( parent, SWT.NONE );
+        content.setLayout( new GridLayout( 1, false ) );
+        content.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 
-        // String srs = "EPSG:4326";// Geometries.srs( getCRS() );
-        // Projection proj = new Projection(srs);
-        // String units = srs.equals("EPSG:4326") ? "degrees" : "m";
-        // float maxResolution = srs.equals("EPSG:4326") ? (360 / 256) : 500000;
-        // // Bounds maxExtent = new Bounds(12.80, 53.00, 14.30, 54.50);
-        // Bounds bounds = new Bounds(11.0, 50.00, 17.30, 64.50);
-        // // olwidget1.createMap(proj, proj, units, bounds, maxResolution);
-        // // olwidget1.prepare();
-        //
-        // map1 = new OlMap(olwidget1, proj, proj, units, bounds,
-        // maxResolution);
-        // // map.updateSize();
+        StatusBar status = StatusBar.getInstance().create( parent, SWT.NONE );
+        status.addInfo( "Polymap RAP Openlayers Demo started..." );
+        // status.setLayoutData( new GridData( SWT.FILL, SWT.NONE, true, false, 2, 1
+        // ) );
+        status.setLayoutData( new GridData( SWT.FILL, SWT.NONE, true, false, 2, 1 ) );
 
-        this.map = new OlMap( olwidget, new View( newView -> {
-            newView.projection.set( new Projection( "EPSG:3857", Units.m ) );
-            // newView.projection.set( new Projection( "EPSG:4326", Units.degrees )
-            // );
-            // newView.extent.set( new Extent( 12.80, 53.00, 14.30, 54.50 ) );
-                newView.zoom.set( 3 );
-                newView.center.set( new Coordinate( 0, 0 ) );
-            } ) );
-
-        // map.addLayer( new TileLayer( newLayer ->
-        // newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
-
-        map.addLayer( new ImageLayer( newLayer -> {
-            newLayer.source.set( new ImageWMSSource( source -> {
-                source.url.set( "http://ows.terrestris.de/osm/service/" );
-                source.params.set( new RequestParams( newParams -> {
-                    newParams.layers.set( "OSM-WMS" );
-                } ) );
-            } ) );
-            newLayer.opacity.set( 0.5f );
-        } ) );
-
-        // //
-        // map1.addControl(new NavigationControl(true));
-        // map1.addControl(new PanZoomBarControl( ));
-        // map1.addControl(new LayerSwitcherControl( ));
-        // map1.addControl(new MousePositionControl());
-        // // map1.addControl(new ScaleLineControl());
-        // map.addControl(new OverviewMapControl(map, layer));
-
-        map.addControl( new ZoomControl() );
-        // map.addControl( new LoadingPanelControl() );
-
-        // map.setRestrictedExtend( maxExtent );
-        // map1.zoomToExtent(bounds, true);
-        // map1.zoomTo(2);
-
-        // map events
-        // HashMap<String, String> payload = new HashMap<String, String>();
-        // payload.put( "left", "event.object.getExtent().toArray()[0]" );
-        // payload.put( "bottom", "event.object.getExtent().toArray()[1]" );
-        // payload.put( "right", "event.object.getExtent().toArray()[2]" );
-        // payload.put( "top", "event.object.getExtent().toArray()[3]" );
-        // payload.put( "scale", map1.getJSObjRef() + ".getScale()" );
-        // map1.events.register( this, OlMap.EVENT_MOVEEND, payload );
-        // map1.events.register( this, OlMap.EVENT_ZOOMEND, payload );
-        return olwidget;
+        fillTree( parent );
     }
 
 
-    private void createMap2( Composite parent ) {
-        parent.setLayout( new FillLayout() );
-        OlWidget olwidget2 = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
-
-        Projection epsg3857 = new Projection( "EPSG:3857", Units.m );
-        OlMap map = new OlMap( olwidget2,
-                new View().projection.put( epsg3857 ).center.put( new Coordinate( 0, 0 ) ).zoom
-                        .put( 1 ) );
-
-        map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
-
-        VectorLayer vector = (VectorLayer)new VectorLayer().style.put( new Style().stroke
-                .put( new StrokeStyle().color.put( new Color( 0, 0, 0, 0.5f ) ).width.put( 2f ) ) ).source
-                .put( new GeoJSONSource().projection.put( epsg3857 ).url
-                        .put( "/rwt-resources/demo/polygon-samples.geojson" ).attribution
-                        .put( new Attribution( "Steffen Stundzig" ) ) );
-
-        map.addLayer( vector );
-
-        // vector.addEventListener(VectorSource.EVENT.addfeature, event ->
-        // System.out.println(event.getProperties()));
-
-        // DrawInteraction di = new DrawInteraction(source,
-        // GeometryType.LineString);
-        // di.addEventListener(DrawInteraction.EVENT.drawstart, event ->
-        // System.out.println(event.getProperties()));
-        // di.addEventListener(DrawInteraction.EVENT.drawend, event ->
-        // System.out.println(event.getProperties()));
-        // map2.addInteraction(di);
-        // WMSLayer layer = new WMSLayer("OSM2",
-        // "http://ows.terrestris.de/osm/service/", "OSM-WMS");
-        // layer.setIsBaseLayer(true);
-        // map2.addLayer(layer);
-        // //
-        // map2.addControl(new NavigationControl(true));
-        // map.addControl(new LayerSwitcherControl());
-        // map.addControl(new ClickControl());
-        // map.addControl(new ButtonControl("foo"));
-        // map.addControl(new BoxControl());
-
+    private void fillTree( Composite parent ) {
+        // final HashMap<String,DemoTab> exampleMap = new HashMap<String,DemoTab>();
+        // final BrowserNavigation navigation = RWT.getClient().getService(
+        // BrowserNavigation.class );
+        for (DemoTab tab : createExampleTabs()) {
+            TreeItem item = new TreeItem( menu, SWT.NONE );
+            item.setText( tab.getName() );
+            item.setData( tab );
+            // tab.setData( item );
+            // exampleMap.put( tab.getId(), tab );
+        }
+        menu.addListener( SWT.Selection, event -> {
+            selectTab( (DemoTab)event.item.getData() );
+            // navigation.pushState( tab.getId(), null );
+            } );
+        // navigation.addBrowserNavigationListener( new BrowserNavigationListener() {
         //
-        // HashMap<String, String> payload = new HashMap<String, String>();
-        // map.events.register( this, OlMap.EVENT_MOVEEND, payload );
-//        OlEventListener listener = new OlEventListener() {
-//
-//            @Override
-//            public void handleEvent( OlEvent event ) {
-//                System.out.println( event.getProperties() );
-//            }
-//        };
-        map.view.get().addEventListener( View.EVENT.center, event -> {
-            System.out.println( event.getProperties() );
-        } );
-        // view2.addEventListener(View.EVENT.resolution, listener);
-        // new OlEventListener() {
-        //
-        // @Override
-        // public void handleEvent(OpenLayersObject src, String name,
-        // JsonObject properties) {
-        // log.info(this + ": " + name);
+        // public void navigated( BrowserNavigationEvent event ) {
+        // DemoTab tab = exampleMap.get( event.getState() );
+        // if (tab != null) {
+        // menu.select( (TreeItem)tab.getData() );
+        // menu.showSelection();
+        // selectTab( tab );
         // }
-        //
-        // }, null);
-
-        // map2.addEventListener(OlMap.EVENT_MOVEEND,
-        // new OlEventListener() {
-        //
-        // @Override
-        // public void handleEvent(OpenLayersObject src, String name,
-        // JsonObject properties) {
-        // log.info(this + ": " + name);
         // }
-        //
-        // }, null);
+        // } );
+        menu.select( menu.getItem( 0 ) );
+        selectTab( (DemoTab)menu.getItem( 0 ).getData() );
+    }
 
+
+    private void selectTab( DemoTab tab ) {
+//        Composite current = null;
+        if (currentTab != null) {
+            currentTab.dispose();//.getContents( content );
+//            current.setVisible( false );
+        }
+        if (tab != null) {
+            Composite next = tab.getContents( content );
+//            next.setVisible( true );
+//            next.moveAbove( current );
+            currentTab = tab;
+        }
+        content.layout( true );
+    }
+
+
+    //
+    // private FormData createLayoutDataForHeader() {
+    // FormData layoutData = new FormData();
+    // layoutData.left = new FormAttachment( 0, 0 );
+    // layoutData.right = new FormAttachment( 100, 0 );
+    // layoutData.top = new FormAttachment( 0, 0 );
+    // layoutData.height = 80;
+    // return layoutData;
+    // }
+    //
+    //
+    // private FormData createLayoutDataForTree(Composite top) {
+    // FormData layoutData = new FormData();
+    // layoutData.top = new FormAttachment( top, 0 );
+    // layoutData.left = new FormAttachment( 0, 0 );
+    // layoutData.bottom = new FormAttachment( 100, 0 );
+    // layoutData.width = 190;
+    // return layoutData;
+    // }
+    //
+    //
+    // private FormData createLayoutDataForExampleParent(Composite top) {
+    // FormData layoutData = new FormData();
+    // layoutData.top = new FormAttachment( top, 0 );
+    // layoutData.left = new FormAttachment( menu, 10 );
+    // layoutData.right = new FormAttachment( 100, 0 );
+    // return layoutData;
+    // }
+    //
+    // private FormData createLayoutDataForStatusBar(Composite top) {
+    // FormData layoutData = new FormData();
+    // layoutData.top = new FormAttachment( top, 0 );
+    // layoutData.left = new FormAttachment( 0, 0 );
+    // layoutData.right = new FormAttachment( 100, 0 );
+    // layoutData.height = 80;
+    // layoutData.bottom = new FormAttachment( 100, 0 );
+    // return layoutData;
+    // }
+
+    private static DemoTab[] createExampleTabs() {
+        return new DemoTab[] { new ZoomControlTab(), new ZoomSliderControlTab() };
     }
 }

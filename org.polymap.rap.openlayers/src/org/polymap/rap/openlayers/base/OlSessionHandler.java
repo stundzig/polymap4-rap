@@ -80,8 +80,8 @@ public class OlSessionHandler {
         Connection connection = RWT.getUISession().getConnection();
         remote = connection.createRemoteObject( "org.polymap.rap.openlayers.OlWidget" );
         // remote.set("parent", WidgetUtil.getId(this));
-        register( "org/polymap/rap/openlayers/internal/resources/OpenLayersWrapper.js",
-                "OpenLayersWrapper.js" );
+        register( "org/polymap/rap/openlayers/internal/resources/OlWrapper.js",
+                "OlWrapper.js" );
         loadJavaScript();
         // map = new OlMap(this, remoteObject);
 
@@ -163,7 +163,7 @@ public class OlSessionHandler {
     private void loadJavaScript() {
         JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
         jsLoader.require( js_location );
-        jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OpenLayersWrapper.js" ) );
+        jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );
     }
 
 
@@ -190,7 +190,8 @@ public class OlSessionHandler {
 
     private void callRemote( String method, JsonObject json ) {
         if (isRendered) {
-            log.info( "callRemote: " + method + " with " + json.toString().replaceAll( "\\\\\"", "'" ) );
+            log.info( "callRemote: " + method + " with "
+                    + json.toString().replaceAll( "\\\\\"", "'" ) );
             remote.call( method, json );
         }
         else {

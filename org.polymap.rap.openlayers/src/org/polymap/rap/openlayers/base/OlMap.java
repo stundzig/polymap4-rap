@@ -12,24 +12,18 @@
  */
 package org.polymap.rap.openlayers.base;
 
-import org.json.JSONObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
-
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
-
 import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.Layer;
 import org.polymap.rap.openlayers.source.Source;
-import org.polymap.rap.openlayers.util.Stringer;
 import org.polymap.rap.openlayers.view.View;
 
 /**
@@ -114,11 +108,11 @@ public class OlMap
 
     // private int[] scales;
 
-    private OlWidget               widget;
+    private OlWidget                  widget;
 
     @Mandatory
     @Immutable
-    public Property2<OlMap,View>   view;
+    public Property2<OlMap,View>      view;
 
     @Mandatory
     @Immutable
@@ -129,14 +123,15 @@ public class OlMap
         super( "ol.Map" );
         this.widget = widget;
         this.view.set( view );
-        this.target.set( new Unquoted("this.createDiv('" + WidgetUtil.getId( widget ) + "')") );
+        this.target.set( new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
         widget.setMap( this );
-//
-//        JSONObject options = new JSONObject();
-//        options.put( "view", new Unquoted( view.getJSObjRef() ) );
-//        options.put( "target",
-//                new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
-//        create( new Stringer( "new ", jsClassname, "(", options.toString(), ");" ).toString() );
+        //
+        // JSONObject options = new JSONObject();
+        // options.put( "view", new Unquoted( view.getJSObjRef() ) );
+        // options.put( "target",
+        // new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
+        // create( new Stringer( "new ", jsClassname, "(", options.toString(), ");"
+        // ).toString() );
     }
 
 

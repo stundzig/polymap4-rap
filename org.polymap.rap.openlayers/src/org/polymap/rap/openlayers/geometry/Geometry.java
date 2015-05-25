@@ -30,6 +30,8 @@ import org.polymap.rap.openlayers.base.OlObject;
  * 
  */
 
-public class Geometry extends OlObject {
-
+public abstract class Geometry extends OlObject {
+    public Geometry( String jsClassname ) {
+        super( jsClassname );
+    }
 }

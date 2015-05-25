@@ -14,9 +14,7 @@
  */
 package org.polymap.rap.openlayers.layer;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rap.openlayers.source.TileSource;
 
 /**
@@ -34,8 +32,7 @@ public class TileLayer
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-	public TileLayer( Consumer<TileLayer>... initializers ) {
+	public TileLayer() {
         super( "ol.layer.Tile" );
-        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
 	}
 }

@@ -10,26 +10,22 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.layer;
+package org.polymap.rap.openlayers.style;
 
-import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.rap.openlayers.source.ImageSource;
 
 /**
- * Server-rendered images that are available for arbitrary extents and resolutions.
- * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.layer.Image.html">OpenLayers
- *      Doc</a>
- * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.style.Icon.html
+ *      
+ *      Set icon style for vector features.
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
  */
-public class ImageLayer
-        extends Layer<ImageSource> {
+public class IconStyle
+        extends ImageStyle {
 
-    /**
-     * Constructs a new instance.
-     */
-    public ImageLayer() {
-        super( "ol.layer.Image" );
+    // TODO add all properties here
+    
+    public IconStyle() {
+        super( "ol.style.Icon" );
     }
 }

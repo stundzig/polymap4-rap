@@ -14,9 +14,6 @@
  */
 package org.polymap.rap.openlayers.source;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import org.polymap.core.runtime.config.Mandatory;
 
 /**
@@ -33,9 +30,7 @@ public class GeoJSONSource
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-    public GeoJSONSource( Consumer<GeoJSONSource>... initializers ) {
+    public GeoJSONSource() {
         super( "ol.source.GeoJSON" );
-        Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
     }
-
 }

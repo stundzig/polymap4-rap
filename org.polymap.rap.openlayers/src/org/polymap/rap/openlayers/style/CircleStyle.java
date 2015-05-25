@@ -10,26 +10,21 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.layer;
-
-import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.rap.openlayers.source.ImageSource;
+package org.polymap.rap.openlayers.style;
 
 /**
- * Server-rendered images that are available for arbitrary extents and resolutions.
+ * @see http://openlayers.org/en/master/apidoc/ol.style.Circle.html
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.layer.Image.html">OpenLayers
- *      Doc</a>
- * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ *      Set circle style for vector features.
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class ImageLayer
-        extends Layer<ImageSource> {
+public class CircleStyle
+        extends ImageStyle {
 
-    /**
-     * Constructs a new instance.
-     */
-    public ImageLayer() {
-        super( "ol.layer.Image" );
+    // TODO add all properties here
+
+    public CircleStyle() {
+        super( "ol.style.Circle" );
     }
 }

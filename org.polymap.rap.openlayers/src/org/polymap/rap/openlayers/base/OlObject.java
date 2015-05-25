@@ -1,16 +1,14 @@
 /*
- * polymap.org
- * Copyright (C) 2009-2013, Polymap GmbH. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * polymap.org Copyright (C) 2009-2013, Polymap GmbH. All rights reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 package org.polymap.rap.openlayers.base;
 
@@ -25,8 +23,8 @@ import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
- * Client Side OpenLayers Object Base Class holding a reference to the widget
- * and keeps track of changes to the object
+ * Client Side OpenLayers Object Base Class holding a reference to the widget and
+ * keeps track of changes to the object
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
@@ -34,21 +32,21 @@ import org.polymap.rap.openlayers.util.Stringer;
  */
 public abstract class OlObject {
 
-    public static final String  UNKNOWN_CLASSNAME = "_unknown_";
-    
-    protected String            jsClassname = UNKNOWN_CLASSNAME;
-    
-    protected String            objRef;
+    public static final String UNKNOWN_CLASSNAME = "_unknown_";
+
+    protected String           jsClassname       = UNKNOWN_CLASSNAME;
+
+    protected String           objRef;
 
 
     public OlObject( String jsClassname ) {
         this.jsClassname = jsClassname;
-        
+
         // initialize Property instances
         ConfigurationFactory.inject( this );
     }
-    
-    
+
+
     /**
      * Create the JS instance on the client side using the values of all
      * {@link Property} members.
@@ -67,89 +65,96 @@ public abstract class OlObject {
         wp.executeCommand( new OlCommand( getJSObjRef() + "=" + code + ";" ) );
     }
 
-    
+
     protected void lazyCreate() {
         if (objRef == null) {
             create();
         }
     }
 
-    
+
     public void execute( String code ) {
         OlSessionHandler.getInstance().executeCommand(
                 new OlCommand( new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
     }
 
 
-	/**
-	 * Add code that calls the given function with the given arguments.
-	 * 
-	 * @param function
-	 *            The name of the function.
-	 * @param args
-	 *            Can be: {@link String}, kind of {@link Number},
-	 *            {@link Boolean} or {@link OlObject}.
-	 */
-	private void prepareExecutionCode(String function, Object... args) {
-		StringBuilder buf = new StringBuilder(128).append(getJSObjRef())
-				.append('.').append(function).append('(');
+    /**
+     * Add code that calls the given function with the given arguments.
+     * 
+     * @param function The name of the function.
+     * @param args Can be: {@link String}, kind of {@link Number}, {@link Boolean} or
+     *        {@link OlObject}.
+     */
+    private void prepareExecutionCode( String function, Object... args ) {
+        StringBuilder buf = new StringBuilder( 128 ).append( getJSObjRef() ).append( '.' )
+                .append( function ).append( '(' );
 
-		for (int i = 0; i < args.length; i++) {
-			if (i > 0) {
-				buf.append(',');
-			}
-			Object arg = args[i];
-			if (arg instanceof OlObject) {
-				buf.append(((OlObject) arg).getJSObjRef());
-			} else if (arg instanceof Number) {
-				buf.append(arg.toString());
-			} else if (arg instanceof Boolean) {
-				buf.append(arg.toString());
-			} else if (arg instanceof String) {
-				buf.append('\'').append((String) arg).append('\'');
-			} else {
-				throw new IllegalArgumentException("Unknown arg type: " + arg);
-			}
-		}
-		execute(buf.append(");").toString());
-	}
+        for (int i = 0; i < args.length; i++) {
+            if (i > 0) {
+                buf.append( ',' );
+            }
+            Object arg = args[i];
+            if (arg instanceof OlObject) {
+                buf.append( ((OlObject)arg).getJSObjRef() );
+            }
+            else if (arg instanceof Number) {
+                buf.append( arg.toString() );
+            }
+            else if (arg instanceof Boolean) {
+                buf.append( arg.toString() );
+            }
+            else if (arg instanceof String) {
+                buf.append( '\'' ).append( (String)arg ).append( '\'' );
+            }
+            else {
+                throw new IllegalArgumentException( "Unknown arg type: " + arg );
+            }
+        }
+        execute( buf.append( ");" ).toString() );
+    }
 
-	public void execute(String function, OlObject obj) {
-		prepareExecutionCode(function, obj);
-	}
 
-	public void execute(String function, OlObject obj, boolean bool) {
-		prepareExecutionCode(function, obj, bool);
-	}
+    public void execute( String function, OlObject obj ) {
+        prepareExecutionCode( function, obj );
+    }
 
-	public void execute(String function, double dbl, boolean bool) {
-		prepareExecutionCode(function, dbl, bool);
-	}
 
-	public void execute(String function, int val) {
-		prepareExecutionCode(function, val);
-	}
+    public void execute( String function, OlObject obj, boolean bool ) {
+        prepareExecutionCode( function, obj, bool );
+    }
 
-	public void execute(String function, boolean val) {
-		prepareExecutionCode(function, val);
-	}
 
-	public void execute(String function, double val) {
-		prepareExecutionCode(function, val);
-	}
+    public void execute( String function, double dbl, boolean bool ) {
+        prepareExecutionCode( function, dbl, bool );
+    }
 
-	/**
-	 * Adds code that sets the value of the given attribute.
-	 * 
-	 * @param attr
-	 *            The name of the attribute.
-	 * @param args
-	 *            Can be: {@link String}, kind of {@link Number},
-	 *            {@link Boolean} or {@link OlObject}.
-	 */
-	public void setAttribute(String attr, Object arg) {
-        StringBuilder buf = new StringBuilder( 128 )
-                .append( getJSObjRef() ).append( '.' ).append( attr ).append( '=' );
+
+    public void execute( String function, int val ) {
+        prepareExecutionCode( function, val );
+    }
+
+
+    public void execute( String function, boolean val ) {
+        prepareExecutionCode( function, val );
+    }
+
+
+    public void execute( String function, double val ) {
+        prepareExecutionCode( function, val );
+    }
+
+
+    /**
+     * Adds code that sets the value of the given attribute.
+     * 
+     * @param attr The name of the attribute.
+     * @param args Can be: {@link String}, kind of {@link Number}, {@link Boolean} or
+     *        {@link OlObject}.
+     */
+    public void setAttribute( String attr, Object arg ) {
+        StringBuilder buf = new StringBuilder( 128 ).append( getJSObjRef() ).append( '.' )
+                .append( attr ).append( '=' );
 
         if (arg instanceof OlObject) {
             buf.append( ((OlObject)arg).getJSObjRef() );
@@ -173,43 +178,49 @@ public abstract class OlObject {
     }
 
 
-	public String getObjRef() {
-		return objRef;
-	}
+    public String getObjRef() {
+        lazyCreate();
+        return objRef;
+    }
 
-	public String getJSObjRef() {
-	    lazyCreate();
-		return new Stringer().replaceNulls( "null" ).add( "this.objs['", objRef, "']" ).toString();
-	}
 
-	public String getJSObj(OlObject object) {
-		if (object == null)
-			return "null";
-		else
-			return object.getJSObjRef();
-	}
+    public String getJSObjRef() {
+        lazyCreate();
+        return new Stringer().replaceNulls( "null" ).add( "this.objs['", objRef, "']" ).toString();
+    }
 
-	public String getJSObj(OlObject[] oa) {
-		if (oa == null)
-			return "[null]";
-		else {
-			String res = "[";
-			for (OlObject obj : oa) {
-				if (!res.equals("["))
-					res += ",";
-				res += getJSObj(obj);
-			}
-			return res + "]";
-		}
 
-	}
+    public String getJSObj( OlObject object ) {
+        if (object == null)
+            return "null";
+        else
+            return object.getJSObjRef();
+    }
 
-	public void dispose() {
-		OlSessionHandler.getInstance().remove(getObjRef());
-		execute(getJSObjRef() + "=null;");
-	}
 
-	private Map<String, Set<OlEventListener>> eventListeners = new HashMap<String, Set<OlEventListener>>();
+    public String getJSObj( OlObject[] oa ) {
+        if (oa == null)
+            return "[null]";
+        else {
+            String res = "[";
+            for (OlObject obj : oa) {
+                if (!res.equals( "[" ))
+                    res += ",";
+                res += getJSObj( obj );
+            }
+            return res + "]";
+        }
+
+    }
+
+
+    public void dispose() {
+        // TODO remove also all controls and othe stuff of this map
+        OlSessionHandler.getInstance().remove( getObjRef() );
+        execute( getJSObjRef() + "=null;" );
+    }
+
+    private Map<String,Set<OlEventListener>> eventListeners = new HashMap<String,Set<OlEventListener>>();
 
 
     protected void addEventListener( final String event, OlEventListener listener, PayLoad payload ) {
@@ -233,8 +244,8 @@ public abstract class OlObject {
     }
 
 
-	public Set<OlEventListener> getEventListener(String method) {
-		return eventListeners.get(method);
-	};
+    public Set<OlEventListener> getEventListener( String method ) {
+        return eventListeners.get( method );
+    };
 
 }

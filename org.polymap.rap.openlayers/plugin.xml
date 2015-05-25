@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rap.ui.entrypoint">
       <entrypoint
-            class="org.polymap.rap.openlayers.demo.DemoEntryPoint"
+            class="org.polymap.rap.openlayers.demo.DemoEntryPoint2"
             id="org.polymap.rap.openlayers.entrypoint3"
             path="/ol">
       </entrypoint>

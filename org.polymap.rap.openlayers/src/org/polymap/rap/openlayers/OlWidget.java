@@ -219,14 +219,12 @@ public class OlWidget extends Composite {
 		throw new UnsupportedOperationException(
 				"Cannot change internal layout of OlMap");
 	}
-//
-//	@Override
-//	public void dispose() {
-//		if (remote != null) {
-//			remote.destroy();
-//		}
-//		super.dispose();
-//	}
 
-
+	@Override
+	public void dispose() {
+		if (map != null) {
+			map.dispose();
+		}
+		super.dispose();
+	}
 }

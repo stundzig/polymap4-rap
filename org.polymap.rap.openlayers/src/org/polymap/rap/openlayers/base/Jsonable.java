@@ -16,8 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * 
- *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public interface Jsonable {

@@ -20,7 +20,6 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
  * @see http://openlayers.org/en/master/apidoc/ol.proj.Projection.html
- * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */

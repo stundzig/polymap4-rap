@@ -10,21 +10,24 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.style;
-
-import org.polymap.rap.openlayers.base.OlObject;
+package org.polymap.rap.openlayers.format;
 
 /**
- * A base class used for creating subclasses and not instantiated in apps. Base class
- * for ol.style.Icon and ol.style.Circle.
+ * Feature format for reading and writing data in the GeoJSON format.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Image.html
- * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.format.GeoJSON.html
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public abstract class ImageStyle
-        extends OlObject {
+public class GeoJSONFormat
+        extends FeatureFormat {
 
-    public ImageStyle( String jsClassname ) {
-        super( jsClassname );
+    // TODO add properties
+    /*
+     * defaultDataProjection ol.proj.ProjectionLike Default data projection.
+     * geometryName string | undefined Geometry name to use when creating features.
+     */
+
+    public GeoJSONFormat() {
+        super( "ol.format.GeoJSON" );
     }
 }

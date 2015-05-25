@@ -4,7 +4,7 @@
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
- * Foundation; either version 2.1 of the License, or (at your option) any later
+ * Foundation; either version 3 of the License, or (at your option) any later
  * version.
  * 
  * This software is distributed in the hope that it will be useful, but WITHOUT ANY
@@ -15,36 +15,27 @@
  * with this software; if not, write to the Free Software Foundation, Inc., 51
  * Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site:
  * http://www.fsf.org.
- * 
- * $Id$
  */
 
-package org.polymap.rap.openlayers.base;
-
-import org.eclipse.rap.json.JsonObject;
+package org.polymap.rap.openlayers.geom;
 
 /**
- * Command Pattern implementation used for e.g. the remote call.
+ * Polygon Geometry.
  * 
+ * @see http://openlayers.org/en/master/apidoc/ol.geom.Polygon.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class OlCommand {
+public class PolygonGeometry
+        extends SimpleGeometry {
 
-    private String command;
-
-
-    public OlCommand( String cmd ) {
-        this.command = cmd;
+    /*
+     * TODO
+     * 
+     * coordinates Array.<Array.<ol.Coordinate>> Coordinates.
+     * 
+     * layout ol.geom.GeometryLayout Layout.
+     */
+    public PolygonGeometry() {
+        super( "ol.geom.Polygon" );
     }
-
-
-    public String getCommand() {
-        return command;
-    }
-
-
-    public JsonObject getJson() {
-        return new JsonObject().add( "code", command );
-    }
-
 }

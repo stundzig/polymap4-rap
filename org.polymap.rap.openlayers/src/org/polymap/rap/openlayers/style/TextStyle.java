@@ -15,12 +15,10 @@ package org.polymap.rap.openlayers.style;
 import org.polymap.rap.openlayers.base.OlObject;
 
 /**
+ * Set text style for vector features.
+ * 
  * @see http://openlayers.org/en/master/apidoc/ol.style.Text.html
- * 
- *      Set text style for vector features.
- * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
- *
  */
 public class TextStyle
         extends OlObject {

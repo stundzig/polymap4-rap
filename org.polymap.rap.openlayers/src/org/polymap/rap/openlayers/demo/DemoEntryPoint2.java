@@ -15,11 +15,12 @@ import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.control.ZoomControl;
+import org.polymap.rap.openlayers.format.GeoJSONFormat;
+import org.polymap.rap.openlayers.geom.GeometryType;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.layer.VectorLayer;
-import org.polymap.rap.openlayers.source.GeoJSONSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.source.MapQuestSource;
@@ -31,7 +32,6 @@ import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Color;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
-import org.polymap.rap.openlayers.types.GeometryType;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
@@ -155,7 +155,7 @@ public class DemoEntryPoint2
         // .put( new RequestParams().layers.put( "OSM-WMS" ) )).opacity.put( 0.5f ));
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
         //
-        VectorSource source = new GeoJSONSource().projection.put( epsg3857 ).url
+        VectorSource source = new VectorSource().format.put( new GeoJSONFormat()).url
                 .put( "/rwt-resources/demo/polygon-samples.geojson" ).attributions.put( Arrays
                 .asList( new Attribution( "Steffen Stundzig" ) ) );
 

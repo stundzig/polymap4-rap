@@ -20,10 +20,9 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * An attribution for a layer source.
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.Attribution.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.Attribution.html
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Attribution
         implements Jsonable {

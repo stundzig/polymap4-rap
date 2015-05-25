@@ -69,7 +69,7 @@
 
 	map.OlWidget = function(properties) {
 		console.log("map.OlWidget created()");
-		// console.log("window.map ", window.map);
+		console.log("window.map ", window.map);
 		this.objs = {};
 		this.listenerKeys = {};
 		this.events = {};

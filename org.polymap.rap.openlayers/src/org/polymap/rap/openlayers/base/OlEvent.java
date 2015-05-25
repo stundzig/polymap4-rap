@@ -21,6 +21,11 @@ package org.polymap.rap.openlayers.base;
 
 import org.eclipse.rap.json.JsonObject;
 
+/**
+ * The base event used by the listeners.
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ */
 public class OlEvent {
 
     private OlObject   src;

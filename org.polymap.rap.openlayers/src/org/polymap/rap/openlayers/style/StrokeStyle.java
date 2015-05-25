@@ -1,16 +1,14 @@
 /*
- * polymap.org
- * Copyright (C) 2009-2015, Polymap GmbH. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * polymap.org Copyright (C) 2009-2015, Polymap GmbH. All rights reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 package org.polymap.rap.openlayers.style;
 
@@ -30,21 +28,20 @@ import org.polymap.rap.openlayers.types.Color;
  * defaults, which will be used if option is not defined. The get functions return
  * whatever was entered in the options; they will not return the default.
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.style.Stroke.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.style.Stroke.html
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class StrokeStyle 
+public class StrokeStyle
         extends OlObject {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<StrokeStyle,Float>     width;
+    public Property2<StrokeStyle,Float> width;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<StrokeStyle,Color>     color;
+    public Property2<StrokeStyle,Color> color;
 
-    
+
     /**
      * Constructs a new instance.
      *

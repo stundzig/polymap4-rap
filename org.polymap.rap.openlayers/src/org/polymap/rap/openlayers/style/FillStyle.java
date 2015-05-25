@@ -19,10 +19,9 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Color;
 
 /**
+ * Set Fill style for vector features.
+ * 
  * @see http://openlayers.org/en/master/apidoc/ol.style.Fill.html
- * 
- *      Set Fill style for vector features.
- * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class FillStyle

@@ -12,7 +12,6 @@
  */
 package org.polymap.rap.openlayers.source;
 
-import java.text.Format;
 import java.util.List;
 
 import org.polymap.core.runtime.config.Concern;
@@ -20,18 +19,17 @@ import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
+import org.polymap.rap.openlayers.format.FeatureFormat;
 import org.polymap.rap.openlayers.types.Attribution;
-import org.polymap.rap.openlayers.types.Projection;
 
 /**
  * Provides a source of features for vector layers.
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.source.Vector.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.source.Vector.html
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public abstract class VectorSource
+public class VectorSource
         extends Source {
 
     public enum EVENT {
@@ -58,20 +56,20 @@ public abstract class VectorSource
         removefeature;
     }
 
+    /*
+     * TODO
+     */
     @Concern(OlPropertyConcern.class)
     public Property2<VectorSource,List<Attribution>> attributions;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,String>      logo;
-
-    @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,Projection>  projection;
+    public Property2<VectorSource,String>            logo;
 
     /**
      * Experimental: The feature format used by the XHR feature loader when url is
      * set. Required if {@link #url} is set, otherwise ignored. Default is undefined.
      */
-    public Property2<VectorSource,Format>      format;
+    public Property2<VectorSource,FeatureFormat>     format;
 
     /**
      * Experimental: Setting this option instructs the source to use an XHR loader
@@ -79,7 +77,7 @@ public abstract class VectorSource
      * download of all features from that URL. Requires format to be set as well.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,String>       url;
+    public Property2<VectorSource,String>            url;
 
 
     /**
@@ -89,6 +87,11 @@ public abstract class VectorSource
      */
     public VectorSource( String jsClassname ) {
         super( jsClassname );
+    }
+
+
+    public VectorSource() {
+        super( "ol.source.Vector" );
     }
 
 

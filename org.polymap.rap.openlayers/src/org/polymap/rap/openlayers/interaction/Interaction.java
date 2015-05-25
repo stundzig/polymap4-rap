@@ -15,18 +15,17 @@ package org.polymap.rap.openlayers.interaction;
 import org.polymap.rap.openlayers.base.OlObject;
 
 /**
+ * 
+ * Abstract base class; normally only used for creating subclasses and not
+ * instantiated in apps. User actions that change the state of the map. Some are
+ * similar to controls, but are not associated with a DOM element. For example,
+ * ol.interaction.KeyboardZoom is functionally the same as ol.control.Zoom, but
+ * triggered by a keyboard event not a button element event. Although interactions do
+ * not have a DOM element, some of them do render vectors and so are visible on the
+ * screen.
+ * 
  * @see http://openlayers.org/en/master/apidoc/ol.interaction.Interaction.html
- * 
- *      Abstract base class; normally only used for creating subclasses and not
- *      instantiated in apps. User actions that change the state of the map. Some are
- *      similar to controls, but are not associated with a DOM element. For example,
- *      ol.interaction.KeyboardZoom is functionally the same as ol.control.Zoom, but
- *      triggered by a keyboard event not a button element event. Although
- *      interactions do not have a DOM element, some of them do render vectors and so
- *      are visible on the screen.
- * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
- *
  */
 public abstract class Interaction
         extends OlObject {

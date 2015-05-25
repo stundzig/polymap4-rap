@@ -10,21 +10,19 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.style;
-
-import org.polymap.rap.openlayers.base.OlObject;
+package org.polymap.rap.openlayers.format;
 
 /**
- * A base class used for creating subclasses and not instantiated in apps. Base class
- * for ol.style.Icon and ol.style.Circle.
+ * Abstract base class; normally only used for creating subclasses and not
+ * instantiated in apps. Base class for JSON feature formats.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Image.html
- * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.format.JSONFeature.html
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public abstract class ImageStyle
-        extends OlObject {
+public abstract class JSONFeatureFormat
+        extends FeatureFormat {
 
-    public ImageStyle( String jsClassname ) {
+    public JSONFeatureFormat( String jsClassname ) {
         super( jsClassname );
     }
 }

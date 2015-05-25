@@ -23,9 +23,9 @@ import org.polymap.rap.openlayers.base.Jsonable;
  * blue should be integers in the range 0..255 inclusive. alpha should be a float in
  * the range 0..1 inclusive.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Color">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.html#Color
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Color
         implements Jsonable {
@@ -67,8 +67,9 @@ public class Color
 
     @Override
     public Object toJson() {
-        return "'" + (name.get() != null ? name.get() : "rgba(" + red.get() + "," + green.get() + ","
-                + blue.get() + "," + alpha.get() + ")") + "'";
+        return "'"
+                + (name.get() != null ? name.get() : "rgba(" + red.get() + "," + green.get() + ","
+                        + blue.get() + "," + alpha.get() + ")") + "'";
     }
 
 }

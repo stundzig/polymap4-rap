@@ -10,21 +10,24 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.style;
+package org.polymap.rap.openlayers.format;
 
 import org.polymap.rap.openlayers.base.OlObject;
 
 /**
- * A base class used for creating subclasses and not instantiated in apps. Base class
- * for ol.style.Icon and ol.style.Circle.
+ * Abstract base class; normally only used for creating subclasses and not
+ * instantiated in apps. Base class for feature formats. {ol.format.Feature}
+ * subclasses provide the ability to decode and encode ol.Feature objects from a
+ * variety of commonly used geospatial file formats. See the documentation for each
+ * format for more details.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Image.html
- * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.format.Feature.html
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
-public abstract class ImageStyle
+public abstract class FeatureFormat
         extends OlObject {
 
-    public ImageStyle( String jsClassname ) {
+    public FeatureFormat( String jsClassname ) {
         super( jsClassname );
     }
 }

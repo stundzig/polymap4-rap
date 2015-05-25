@@ -12,19 +12,17 @@
  */
 package org.polymap.rap.openlayers.style;
 
-
 /**
+ * Set icon style for vector features.
+ * 
  * @see http://openlayers.org/en/master/apidoc/ol.style.Icon.html
- *      
- *      Set icon style for vector features.
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
- *
  */
 public class IconStyle
         extends ImageStyle {
 
     // TODO add all properties here
-    
+
     public IconStyle() {
         super( "ol.style.Icon" );
     }

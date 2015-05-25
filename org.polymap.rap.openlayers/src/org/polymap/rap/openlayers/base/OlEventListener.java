@@ -22,6 +22,11 @@ package org.polymap.rap.openlayers.base;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base interface for all types of event listeners to be registered via ol3.
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ */
 public interface OlEventListener {
 
     void handleEvent( OlEvent event );

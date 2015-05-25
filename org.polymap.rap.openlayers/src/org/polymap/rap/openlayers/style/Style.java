@@ -24,8 +24,8 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
  * uses the style is re-rendered.
  * 
  * @see href="http://openlayers.org/en/master/apidoc/ol.style.Style.html
- * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Style
         extends OlObject {

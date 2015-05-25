@@ -18,9 +18,15 @@ import org.polymap.core.runtime.config.Property;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
+import org.polymap.rap.openlayers.geom.GeometryType;
 import org.polymap.rap.openlayers.source.VectorSource;
-import org.polymap.rap.openlayers.types.GeometryType;
 
+/**
+ * Interaction that allows drawing geometries.
+ * 
+ * @see http://openlayers.org/en/master/apidoc/ol.interaction.Draw.html
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ */
 public class DrawInteraction
         extends Interaction {
 
@@ -40,6 +46,8 @@ public class DrawInteraction
         }
     }
 
+    // TODO more properties
+    
     @Immutable
     @Concern(OlPropertyConcern.class)
     public Property<VectorSource> source;

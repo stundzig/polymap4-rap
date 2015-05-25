@@ -25,17 +25,12 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Source for WMS servers providing single, untiled images.
  *
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.source.ImageWMS.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.source.ImageWMS.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ImageWMSSource
         extends ImageSource {
 
-    /**
-     * 
-     */
     public static class RequestParams
             implements Jsonable {
 
@@ -79,17 +74,9 @@ public class ImageWMSSource
     public Property2<ImageWMSSource,RequestParams> params;
 
 
-    /**
-     * Constructs a new instance.
-     *
-     * @param initializers Initialize at least all {@link Mandatory} properties.
-     */
+    // TODO properties
     public ImageWMSSource() {
         super( "ol.source.ImageWMS" );
-
-        // create("new ol.source.ImageWMS({url: '" + url + "'" + (crossOrigin != null
-        // ? ",crossOrigin:'" +crossOrigin+"," : "") + ", params : { LAYERS : '" +
-        // layers + "'}})");
     }
 
 }

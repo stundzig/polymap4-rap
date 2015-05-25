@@ -17,10 +17,9 @@ import org.polymap.core.runtime.config.Property2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
- * @see http://openlayers.org/en/master/apidoc/ol.source.TileJSON.html
- * 
  * Layer source for tile data in TileJSON format.
  * 
+ * @see http://openlayers.org/en/master/apidoc/ol.source.TileJSON.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  *
  */
@@ -33,6 +32,8 @@ public class TileJsonSource
     @Concern(OlPropertyConcern.class)
     public Property2<TileJsonSource,String> crossOrigin;
 
+
+    // TODO properties
 
     public TileJsonSource( String url, String crossOrigin ) {
         super( "ol.source.TileJSON" );

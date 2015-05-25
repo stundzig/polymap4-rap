@@ -31,6 +31,7 @@ import org.polymap.rap.openlayers.view.View;
  * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">OpenLayers
  *      Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
 public class OlMap
         extends OlObject {

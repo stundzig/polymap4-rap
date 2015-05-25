@@ -13,10 +13,9 @@
 package org.polymap.rap.openlayers.style;
 
 /**
+ * Set circle style for vector features.
+ * 
  * @see http://openlayers.org/en/master/apidoc/ol.style.Circle.html
- * 
- *      Set circle style for vector features.
- * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class CircleStyle

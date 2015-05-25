@@ -51,10 +51,7 @@ import org.polymap.rap.openlayers.util.Stringer;
  */
 public class OlSessionHandler {
 
-    private final static Log     log         = LogFactory.getLog( OlSessionHandler.class );
-
-    /** default external openlayers lib location **/
-    public String                js_location = "http://openlayers.org/en/v3.1.0/build/ol.js";
+    private final static Log     log   = LogFactory.getLog( OlSessionHandler.class );
 
     /**
      * HashMap to hold references to created objects as value with the client side id
@@ -68,7 +65,7 @@ public class OlSessionHandler {
 
     private final RemoteObject   remote;
 
-    private List<RemoteCall>     calls       = new ArrayList<RemoteCall>();
+    private List<RemoteCall>     calls = new ArrayList<RemoteCall>();
 
     private boolean              isRendered;
 
@@ -79,11 +76,7 @@ public class OlSessionHandler {
 
         Connection connection = RWT.getUISession().getConnection();
         remote = connection.createRemoteObject( "org.polymap.rap.openlayers.OlWidget" );
-        // remote.set("parent", WidgetUtil.getId(this));
-        register( "org/polymap/rap/openlayers/internal/resources/OlWrapper.js",
-                "OlWrapper.js" );
         loadJavaScript();
-        // map = new OlMap(this, remoteObject);
 
         remote.setHandler( operationHandler );
         remote.set( "appearance", "composite" );
@@ -140,6 +133,15 @@ public class OlSessionHandler {
                                                             };
 
 
+    private void loadJavaScript() {
+        JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
+        jsLoader.require( "/ol_js/ol-3.5.0.js" );
+
+        register( "org/polymap/rap/openlayers/internal/resources/OlWrapper.js", "OlWrapper.js" );
+        jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );
+    }
+
+
     private void register( String resourceName, String fileName ) {
         ClassLoader classLoader = OlWidget.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream( resourceName );
@@ -158,14 +160,6 @@ public class OlSessionHandler {
             }
         }
     }
-
-
-    private void loadJavaScript() {
-        JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
-        jsLoader.require( js_location );
-        jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );
-    }
-
 
     // remote call
 
@@ -230,6 +224,10 @@ public class OlSessionHandler {
         if (payload != null) {
             payload.values().forEach(
                     value -> payloadStringer.add( "result.", value.key, " = ", value.value, ";" ) );
+        }
+        if (src.getObjRef() == null) {
+            // the source was not created before, but here we need the id
+            src.create();
         }
         String command = new Stringer(
                 // "console.log('", event, "');",

@@ -12,13 +12,9 @@
  */
 package org.polymap.rap.openlayers.view;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
-
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlProperty;
@@ -31,8 +27,7 @@ import org.polymap.rap.openlayers.types.Projection;
  * An ol.View object represents a simple 2D view of the map. This is the object to
  * act upon to change the center, resolution, and rotation of the map.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.View.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.View.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -43,7 +38,7 @@ public class View
         center, resolution, rotation
     }
 
-//    @Mandatory
+    // @Mandatory
     @Concern(OlPropertyConcern.class)
     public Property2<View,Projection> projection;
 

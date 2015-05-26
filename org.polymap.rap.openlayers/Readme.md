@@ -4,6 +4,7 @@ This plugin adds a [OpenLayers3](http://openlayers.org) based map widget to the 
 
 ## Sample Usage
 
+
 ```java
 OlWidget olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 OlMap map = new OlMap( olwidget, new View()
@@ -15,11 +16,10 @@ map.addLayer( new TileLayer()
         .source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
 ```
 
-See also [DemoEntryPoint.java](src/org/polymap/rap/openlayers/demo/DemoEntryPoint.java)
+See also org.polymap.rap.demo with the sample entry points.
 
 ## Todos
 
-* resources should be load locally
 * migrate all controls, layers and types to new property API (see issue #4)
 * more tests
 * maven/tycho based builds?

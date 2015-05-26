@@ -109,7 +109,7 @@ public class OlMap
 
     // private int[] scales;
 
-    private OlWidget                  widget;
+//    private OlWidget                  widget;
 
     @Mandatory
     @Immutable
@@ -121,8 +121,8 @@ public class OlMap
 
 
     public OlMap( OlWidget widget, View view ) {
-        super( "ol.Map" );
-        this.widget = widget;
+        super( widget, "ol.Map" );
+//        this.widget = widget;
         this.view.set( view );
         this.target.set( new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
         widget.setMap( this );
@@ -135,10 +135,10 @@ public class OlMap
         // ).toString() );
     }
 
-
-    public OlWidget widget() {
-        return widget;
-    }
+//
+//    public OlWidget widget() {
+//        return widget;
+//    }
 
 
     public void addLayer( Layer<? extends Source> layer ) {
@@ -167,7 +167,7 @@ public class OlMap
 
     public void addControl( Control control ) {
         // control.map.set( this );
-        control.setMap( this );
+//        control.setMap( this );
         execute( "addControl", control );
     }
 
@@ -179,7 +179,7 @@ public class OlMap
 
     public void removeControl( Control control ) {
         // control.map.set( this );
-        control.setMap( this );
+//        control.setMap( this );
         execute( "removeControl", control );
     }
 

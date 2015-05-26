@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.polymap.rap.openlayers.base.OlMap;
+import org.polymap.rap.openlayers.base.OlSessionHandler;
 
 /**
  * Composite part for the OpenLayers RAP Widget
@@ -37,9 +38,12 @@ public class OlWidget
     /** reference to the map object - every widget has exactly one Map **/
     private OlMap             map;
 
+    private OlSessionHandler sessionHandler;
+
 
     public OlWidget( Composite parent, int style ) {
         super( parent, style );
+        sessionHandler = new OlSessionHandler(this);
         // Connection connection = RWT.getUISession().getConnection();
         // remote = connection
         // .createRemoteObject("org.polymap.rap.openlayers.OlWidget");
@@ -61,6 +65,9 @@ public class OlWidget
         // hookContextMenu();
     }
 
+    public OlSessionHandler sessionHandler() {
+        return sessionHandler;
+    }
 
     //
     // private final OperationHandler operationHandler = new
@@ -143,7 +150,7 @@ public class OlWidget
     // // setMenu( menu );
     // // }
 
-    public OlMap getMap() {
+    public OlMap map() {
         return map;
     }
 

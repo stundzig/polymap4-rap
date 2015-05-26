@@ -15,6 +15,7 @@ package org.polymap.rap.openlayers.types;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Property;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
@@ -42,8 +43,8 @@ public class Projection
     public Property<Units>  units;
 
 
-    public Projection( String code, Units units ) {
-        super( "ol.proj.Projection" );
+    public Projection( OlWidget widget, String code, Units units ) {
+        super( widget, "ol.proj.Projection" );
         this.code.set( code );
         this.units.set( units );
         // create();

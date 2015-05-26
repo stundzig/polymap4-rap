@@ -19,6 +19,8 @@
 
 package org.polymap.rap.openlayers.control;
 
+import org.polymap.rap.openlayers.OlWidget;
+
 /**
  * A slider type of control for zooming.
  * 
@@ -31,16 +33,15 @@ public class ZoomSliderControl
     /*
      * TODO
      * 
-     * className string | undefined CSS class name. 
-     * duration number | undefined
+     * className string | undefined CSS class name. duration number | undefined
      * experimental Animation duration in milliseconds. Default is 200. maxResolution
      * number | undefined Maximum resolution. minResolution number | undefined
      * Minimum resolution. render function | undefined experimental Function called
      * when the control should be re-rendered. This is called in a
      * requestAnimationFrame callback.
      */
-    
-    public ZoomSliderControl() {
-        super( "ol.control.ZoomSlider" );
+
+    public ZoomSliderControl( OlWidget widget ) {
+        super( widget, "ol.control.ZoomSlider" );
     }
 }

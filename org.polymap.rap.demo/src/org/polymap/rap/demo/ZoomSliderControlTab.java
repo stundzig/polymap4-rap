@@ -37,19 +37,18 @@ public class ZoomSliderControlTab
         // olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1
         // ) );
 
-        OlMap map = new OlMap( olwidget,
-                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
-                        .put( new Extent( 12.80, 53.00, 14.30, 54.50 ) ).zoom.put( 3 ).center
-                        .put( new Coordinate( 0, 0 ) ) );
+        OlMap map = new OlMap( olwidget, new View( olwidget ).projection.put( new Projection(
+                olwidget, "EPSG:3857", Units.m ) ).extent.put( new Extent( 12.80, 53.00, 14.30,
+                54.50 ) ).zoom.put( 3 ).center.put( new Coordinate( 0, 0 ) ) );
 
         // map.addLayer( new TileLayer( newLayer ->
         // newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
 
-        map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
+        map.addLayer( new ImageLayer( olwidget ).source.put( new ImageWMSSource( olwidget ).url
                 .put( "http://ows.terrestris.de/osm/service/" ).params
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
-        map.addControl( new ZoomSliderControl() );
+        map.addControl( new ZoomSliderControl( olwidget ) );
     }
 
 

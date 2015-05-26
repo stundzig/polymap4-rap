@@ -5,15 +5,12 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
-import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
@@ -42,14 +39,18 @@ public class DemoEntryPoint2
         Composite left = new Composite( parent, SWT.BORDER );
         Composite right = new Composite( parent, SWT.BORDER );
         Composite buttons = new Composite( parent, SWT.BORDER );
-
-//        SashForm horSashForm = new SashForm( left, SWT.HORIZONTAL );
+//        left.setLayout( new FillLayout() );
         
-        Composite left2 = new Composite(left, SWT.BORDER);
-//        Composite left2s = new Group(left, SWT.BORDER);
-//        horSashForm.setWeights( new int[] { 80, 20 } );
-        createMap( left2 );
-//        createMap( right );
+        SashForm horSashForm = new SashForm( left, SWT.HORIZONTAL );
+        
+//        Composite left2 = new Composite(left, SWT.BORDER);
+//        left.setLayout( new RowLayout( SWT.VERTICAL ) );
+        Composite left2l = new Group(horSashForm, SWT.BORDER);
+//        left2l.setLayout( new FillLayout() );
+        Composite left2r = new Group(horSashForm, SWT.BORDER);
+        horSashForm.setWeights( new int[] { 80, 20 } );
+        createMap( left2l );
+        createMap( left2r );
 //        createMap( buttons );
 //        left2.layout();
 //        createMap2( left2s );
@@ -98,14 +99,14 @@ public class DemoEntryPoint2
         // // map.updateSize();
 
         OlMap map = new OlMap( olwidget,
-                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
+                new View(olwidget).projection.put( new Projection(olwidget, "EPSG:3857", Units.m ) ).extent
                         .put( new Extent( 12.80, 53.00, 14.30, 54.50 ) ).zoom.put( 3 ).center
                         .put( new Coordinate( 0, 0 ) ) );
 
         // map.addLayer( new TileLayer( newLayer ->
         // newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
 
-        map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
+        map.addLayer( new ImageLayer(olwidget).source.put( new ImageWMSSource(olwidget).url
                 .put( "http://ows.terrestris.de/osm/service/" ).params
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
@@ -140,17 +141,17 @@ public class DemoEntryPoint2
 
     private void createMap2( Composite parent ) {
         parent.setLayout( new FillLayout() );
-        OlWidget olwidget2 = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
+        OlWidget olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 
-        Projection epsg3857 = new Projection( "EPSG:3857", Units.m );
-        OlMap map = new OlMap( olwidget2, new View()
+        Projection epsg3857 = new Projection(olwidget, "EPSG:3857", Units.m );
+        OlMap map = new OlMap( olwidget, new View(olwidget)
         // .projection.put( epsg3857 )
                 .center.put( new Coordinate( -8161939, 6095025 ) ).zoom.put( 8 ) );
 
         // map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
         // .put( "http://ows.terrestris.de/osm/service/" ).params
         // .put( new RequestParams().layers.put( "OSM-WMS" ) )).opacity.put( 0.5f ));
-        map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
+        map.addLayer( new TileLayer(olwidget).source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
 //        //
 //        VectorSource source = new VectorSource().format.put( new GeoJSONFormat() ).url.put( RWT
 //                .getResourceManager().getLocation( "/polygon-samples.geojson" ) ).attributions

@@ -22,6 +22,7 @@ package org.polymap.rap.openlayers.control;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.style.StrokeStyle;
@@ -60,7 +61,7 @@ public class ZoomControl
      * The zoom delta applied on each click. target Element | undefined Target.
      */
 
-    public ZoomControl() {
-        super( "ol.control.Zoom" );
+    public ZoomControl( OlWidget widget) {
+        super( widget, "ol.control.Zoom" );
     }
 }

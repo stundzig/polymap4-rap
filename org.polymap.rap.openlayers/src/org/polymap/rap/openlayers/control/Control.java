@@ -12,6 +12,7 @@
  */
 package org.polymap.rap.openlayers.control;
 
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlObject;
 
@@ -37,12 +38,13 @@ public abstract class Control
     private OlMap map;
 
 
-    public Control( String jsClassname ) {
-        super( jsClassname );
+    public Control( OlWidget widget, String jsClassname ) {
+        super( widget, jsClassname );
+        setMap(widget.map());
     }
 
 
-    public void setMap( OlMap map ) {
+    private void setMap( OlMap map ) {
         this.map = map;
         if (map != null) {
             execute( "setMap", map );

@@ -12,6 +12,8 @@
  */
 package org.polymap.rap.openlayers.source;
 
+import org.polymap.rap.openlayers.OlWidget;
+
 /**
  * Abstract base class; normally only used for creating subclasses and not
  * instantiated in apps. Base class for sources providing a single image.
@@ -25,8 +27,8 @@ public abstract class ImageSource
 
     // TODO options
 
-    public ImageSource( String jsClassname ) {
-        super( jsClassname );
+    public ImageSource( OlWidget widget, String jsClassname ) {
+        super( widget, jsClassname );
     }
 
 }

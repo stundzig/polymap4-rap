@@ -13,6 +13,7 @@
 package org.polymap.rap.openlayers.layer;
 
 import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.source.ImageSource;
 
 /**
@@ -29,7 +30,7 @@ public class ImageLayer
     /**
      * Constructs a new instance.
      */
-    public ImageLayer() {
-        super( "ol.layer.Image" );
+    public ImageLayer( OlWidget widget ) {
+        super( widget, "ol.layer.Image" );
     }
 }

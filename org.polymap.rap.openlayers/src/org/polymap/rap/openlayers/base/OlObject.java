@@ -16,9 +16,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.Property;
-
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
@@ -38,8 +39,11 @@ public abstract class OlObject {
 
     protected String           objRef;
 
+    private OlWidget widget;
 
-    public OlObject( String jsClassname ) {
+
+    public OlObject( OlWidget widget, String jsClassname ) {
+        this.widget = widget;
         this.jsClassname = jsClassname;
 
         // initialize Property instances
@@ -60,7 +64,7 @@ public abstract class OlObject {
 
 
     protected void create( String code ) {
-        OlSessionHandler wp = OlSessionHandler.getInstance();
+        OlSessionHandler wp = widget.sessionHandler();
         objRef = wp.generateReference( this );
         wp.executeCommand( new OlCommand( getJSObjRef() + "=" + code + ";" ) );
     }
@@ -74,7 +78,7 @@ public abstract class OlObject {
 
 
     public void execute( String code ) {
-        OlSessionHandler.getInstance().executeCommand(
+        widget.sessionHandler().executeCommand(
                 new OlCommand( new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
     }
 
@@ -216,7 +220,7 @@ public abstract class OlObject {
 
     public void dispose() {
         // TODO remove also all controls and othe stuff of this map
-        OlSessionHandler.getInstance().remove( getObjRef() );
+        widget.sessionHandler().remove( getObjRef() );
         execute( getJSObjRef() + "=null;" );
     }
 
@@ -231,7 +235,7 @@ public abstract class OlObject {
         }
         listeners.add( listener );
 
-        OlSessionHandler.getInstance().registerEventListener( this, event, listener, payload );
+        widget.sessionHandler().registerEventListener( this, event, listener, payload );
     }
 
 
@@ -240,7 +244,7 @@ public abstract class OlObject {
         if (listeners != null) {
             listeners.remove( listener );
         }
-        OlSessionHandler.getInstance().unregisterEventListener( this, event, listener );
+        widget.sessionHandler().unregisterEventListener( this, event, listener );
     }
 
 

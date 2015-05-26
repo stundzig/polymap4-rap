@@ -18,6 +18,7 @@ import org.polymap.core.runtime.config.DefaultString;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.Jsonable;
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -75,8 +76,8 @@ public class ImageWMSSource
 
 
     // TODO properties
-    public ImageWMSSource() {
-        super( "ol.source.ImageWMS" );
+    public ImageWMSSource(OlWidget widget) {
+        super( widget, "ol.source.ImageWMS" );
     }
 
 }

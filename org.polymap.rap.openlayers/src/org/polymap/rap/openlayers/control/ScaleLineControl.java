@@ -20,8 +20,8 @@
 package org.polymap.rap.openlayers.control;
 
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlMap;
 
@@ -55,8 +55,8 @@ public class ScaleLineControl
     public Property2<OlMap,Double> minWidth;
 
 
-    public ScaleLineControl( String cssName, Double minWidth ) {
-        super( "ol.control.ScaleLine" );
+    public ScaleLineControl( OlWidget widget, String cssName, Double minWidth ) {
+        super( widget, "ol.control.ScaleLine" );
         this.className.set( cssName );
         this.minWidth.set( minWidth );
     }

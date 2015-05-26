@@ -12,6 +12,7 @@
  */
 package org.polymap.rap.openlayers.source;
 
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlObject;
 
 /**
@@ -24,8 +25,8 @@ import org.polymap.rap.openlayers.base.OlObject;
 public abstract class Source
         extends OlObject {
 
-    public Source( String jsClassname ) {
-        super( jsClassname );
+    public Source( OlWidget widget, String jsClassname ) {
+        super( widget, jsClassname );
     }
 
 }

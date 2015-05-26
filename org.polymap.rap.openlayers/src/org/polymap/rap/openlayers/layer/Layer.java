@@ -16,6 +16,7 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.source.Source;
 
@@ -31,7 +32,7 @@ import org.polymap.rap.openlayers.source.Source;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public abstract class Layer<S extends Source>
-        extends Base {
+        extends BaseLayer {
 
     @Immutable
     @Mandatory
@@ -39,7 +40,7 @@ public abstract class Layer<S extends Source>
     public Property2<Layer<S>,S> source;
 
 
-    public Layer( String jsClassname ) {
-        super( jsClassname );
+    public Layer( OlWidget widget, String jsClassname ) {
+        super( widget, jsClassname );
     }
 }

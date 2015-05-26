@@ -15,6 +15,7 @@ package org.polymap.rap.openlayers.view;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlProperty;
@@ -87,8 +88,8 @@ public class View
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-    public View() {
-        super( "ol.View" );
+    public View( OlWidget widget ) {
+        super( widget, "ol.View" );
     }
 
 

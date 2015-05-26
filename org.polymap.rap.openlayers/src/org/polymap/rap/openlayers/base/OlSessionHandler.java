@@ -20,7 +20,6 @@ package org.polymap.rap.openlayers.base;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
@@ -38,7 +36,7 @@ import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
 import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
 import org.eclipse.rap.rwt.remote.RemoteObject;
-
+import org.eclipse.rap.rwt.widgets.WidgetUtil;
 import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
@@ -69,8 +67,11 @@ public class OlSessionHandler {
 
     private boolean              isRendered;
 
+    private OlWidget widget;
 
-    private OlSessionHandler() {
+
+    public OlSessionHandler(OlWidget widget) {
+        this.widget = widget;
         ref2obj = new HashMap<String,OlObject>();
         cmdsBeforeRemoteWasPresent = new Vector<OlCommand>();
 
@@ -190,14 +191,15 @@ public class OlSessionHandler {
         }
     }
 
-
-    public synchronized static OlSessionHandler getInstance() {
-        return SingletonUtil.getSessionInstance( OlSessionHandler.class );
-    }
+//
+//    public synchronized static OlSessionHandler getInstance(OlWidget widget) {
+//        OlSessionHandlers handlers = SingletonUtil.getSessionInstance( OlSessionHandlers.class );
+//        OlSessionHandler 
+//    }
 
 
     public synchronized String generateReference( OlObject src ) {
-        String newRef = "ol" + referenceCounter++;
+        String newRef = "ol" + WidgetUtil.getId( widget ) + referenceCounter++;
         if (ref2obj.put( newRef, src ) != null) {
             throw new IllegalStateException( "objRef already added: " + newRef );
         }

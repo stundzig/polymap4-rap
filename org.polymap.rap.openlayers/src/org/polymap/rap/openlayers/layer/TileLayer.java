@@ -15,6 +15,7 @@
 package org.polymap.rap.openlayers.layer;
 
 import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.source.TileSource;
 
 /**
@@ -32,7 +33,7 @@ public class TileLayer
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-	public TileLayer() {
-        super( "ol.layer.Tile" );
+	public TileLayer( OlWidget widget) {
+        super( widget, "ol.layer.Tile" );
 	}
 }

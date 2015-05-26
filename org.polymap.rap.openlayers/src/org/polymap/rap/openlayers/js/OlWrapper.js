@@ -61,7 +61,7 @@
 		this.objs = {};
 		this.listenerKeys = {};
 		this.events = {};
-		bindAll(this, [ /* "layout", */"onRender", "createDiv" ]);
+		bindAll(this, [ /* "layout", */"onRender"/*, "createDiv"*/ ]);
 		rap.on("render", this.onRender);
 		this.remoteObject;
 	};
@@ -73,14 +73,14 @@
 		createDiv : function(id) {
 			console.log('create map in ' + id);
 			var parent = rap.getObject(id);
-			console.log('parent is ' + parent.getAttribute('id'));
+			console.log('parent is ' + parent);
 			var element = document.createElement('div');
 			element.setAttribute("id", id + id);
 			parent.append(element);
 
 			console.log('element id is ' + element.getAttribute("id"));
-			// this.remoteObject = rap.getRemoteObject(this);
-			return element.getAttribute("id");
+//			this.remoteObject = rap.getRemoteObject(this);
+			return element;
 		},
 
 		onRender : function() {

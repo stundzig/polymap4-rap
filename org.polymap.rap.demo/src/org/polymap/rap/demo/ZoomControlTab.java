@@ -51,16 +51,13 @@ public class ZoomControlTab
 
         map.addControl( new ZoomControl() );
         
-        map.render();
     }
 
-
-    @Override
-    protected void disposeControls() {
-        if (olwidget != null) {
-//            olwidget.dispose();
-        }
-    }
+//
+//    @Override
+//    public void redraw() {
+//        olwidget.getMap().render();
+//    }
 
 
     @Override

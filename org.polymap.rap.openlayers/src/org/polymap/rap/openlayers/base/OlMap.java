@@ -229,8 +229,8 @@ public class OlMap
     }
 
 
-    public void render() {
-       execute("this.obj.render();");
+    public void update() {
+       execute("this.obj.updateSize();");
     }
 
 }

@@ -116,8 +116,8 @@ public class DemoEntryPoint
         // next.moveAbove( current );
         // currentTab = tab;
         // }
-        next.redraw();
-        content.getParent().layout( true, true );
+//        content.redraw();
+        content.layout( true, true );
 //        Polymap.executorService().execute( ( ) -> {
 //            next.layout( true, true );
 //        } );

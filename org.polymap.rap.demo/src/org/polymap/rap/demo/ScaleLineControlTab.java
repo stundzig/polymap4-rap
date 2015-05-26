@@ -49,16 +49,9 @@ public class ScaleLineControlTab
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
         map.addControl( new ScaleLineControl(null, null) );
-        map.render();
+        
     }
 
-
-    @Override
-    protected void disposeControls() {
-        if (olwidget != null) {
-//            olwidget.dispose();
-        }
-    }
 
 
     @Override
@@ -66,4 +59,10 @@ public class ScaleLineControlTab
         // TODO Auto-generated method stub
         
     }
+
+//
+//    @Override
+//    public void redraw() {
+//        olwidget.getMap().render();
+//    }
 }

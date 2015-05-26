@@ -825,15 +825,8 @@ public abstract class DemoTab {
     // return control != null && !control.isDisposed();
     // }
 
-    abstract void disposeControls();
-
-
-    public void dispose() {
-        disposeControls();
-        // if (left != null) {
-        // left.dispose();
-        // left = null;
-        // }
-    }
+    //
+    //
+    // abstract public void redraw();
 
 }

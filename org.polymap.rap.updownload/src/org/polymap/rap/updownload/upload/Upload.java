@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -36,8 +36,8 @@ import org.eclipse.rap.rwt.lifecycle.UICallBack;
 import org.eclipse.rap.rwt.widgets.FileUpload;
 
 import org.polymap.core.Messages;
-import org.polymap.core.runtime.IMessages;
-import org.polymap.core.runtime.SessionContext;
+import org.polymap.core.runtime.i18n.IMessages;
+import org.polymap.core.runtime.session.SessionContext;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
 

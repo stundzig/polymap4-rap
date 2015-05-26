@@ -16,11 +16,11 @@ package org.polymap.rap.updownload.dnd;
 
 import java.util.List;
 
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.polymap.core.runtime.ListenerList;
-import org.polymap.core.runtime.SessionSingleton;
+import org.polymap.core.runtime.session.SessionSingleton;
 
 /**
  * 

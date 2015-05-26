@@ -32,7 +32,7 @@ public class ZoomControlTab
 
     @Override
     protected void createDemoControls( Composite parent ) {
-        parent.setLayout( new FillLayout() );
+//        parent.setLayout( new FillLayout() );
         olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
 //        olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 

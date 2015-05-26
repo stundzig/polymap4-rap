@@ -228,4 +228,8 @@ public class OlMap
         removeEventListener( "change:" + event.name(), listener );
     }
 
+    public void render() {
+        execute("this.obj.renderSync();");
+    }
+
 }

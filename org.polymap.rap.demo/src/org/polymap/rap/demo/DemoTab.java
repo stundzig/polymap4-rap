@@ -173,15 +173,11 @@ public abstract class DemoTab {
 
 
     private void createLeft( Composite parent ) {
-        Composite composite = new Composite( parent, SWT.NONE );
-        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
-        composite.setLayout( new FormLayout() );
-        Label header = new Label( composite, SWT.CENTER );
-        header.setFont( getHeaderFont( parent ) );
-        header.setText( getName() );
-        header.setLayoutData( createLayoutDataForHeader() );
-        demoComposite = new Composite( composite, SWT.NONE );
-        demoComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
+//        Composite composite = new Composite( parent, SWT.NONE );
+//        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
+//        composite.setLayout( new FillLayout() );
+        demoComposite = new Composite( parent, SWT.NONE );
+//        demoComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
         demoComposite.setLayout( new FillLayout() );
         createDemoControls( demoComposite );
     }

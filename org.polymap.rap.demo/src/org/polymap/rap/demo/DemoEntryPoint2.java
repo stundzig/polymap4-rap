@@ -39,7 +39,7 @@ public class DemoEntryPoint2
         Composite left = new Composite( parent, SWT.BORDER );
         Composite right = new Composite( parent, SWT.BORDER );
         Composite buttons = new Composite( parent, SWT.BORDER );
-//        left.setLayout( new FillLayout() );
+        left.setLayout( new FillLayout() );
         
         SashForm horSashForm = new SashForm( left, SWT.HORIZONTAL );
         

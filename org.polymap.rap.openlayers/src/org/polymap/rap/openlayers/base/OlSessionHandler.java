@@ -67,21 +67,22 @@ public class OlSessionHandler {
 
     private boolean              isRendered;
 
-    private OlWidget widget;
+    private OlWidget             widget;
 
 
-    public OlSessionHandler(OlWidget widget) {
+    public OlSessionHandler( OlWidget widget ) {
         this.widget = widget;
         ref2obj = new HashMap<String,OlObject>();
         cmdsBeforeRemoteWasPresent = new Vector<OlCommand>();
 
-        Connection connection = RWT.getUISession().getConnection();
-        remote = connection.createRemoteObject( "org.polymap.rap.openlayers.OlWidget" );
         loadJavaScript();
 
+        Connection connection = RWT.getUISession().getConnection();
+        remote = connection.createRemoteObject( "org.polymap.rap.openlayers.OlWidget" );
         remote.setHandler( operationHandler );
-        remote.set( "appearance", "composite" );
-        remote.set( "overflow", "hidden" );
+//        remote.set( "appearance", "composite" );
+//        remote.set( "overflow", "hidden" );
+        remote.set( "parent", WidgetUtil.getId( widget ) );
     }
 
     private final AbstractOperationHandler operationHandler = new AbstractOperationHandler() {
@@ -159,6 +160,7 @@ public class OlSessionHandler {
         }
     }
 
+
     // remote call
 
     public void executeCommand( OlCommand command ) {
@@ -191,12 +193,13 @@ public class OlSessionHandler {
         }
     }
 
-//
-//    public synchronized static OlSessionHandler getInstance(OlWidget widget) {
-//        OlSessionHandlers handlers = SingletonUtil.getSessionInstance( OlSessionHandlers.class );
-//        OlSessionHandler 
-//    }
 
+    //
+    // public synchronized static OlSessionHandler getInstance(OlWidget widget) {
+    // OlSessionHandlers handlers = SingletonUtil.getSessionInstance(
+    // OlSessionHandlers.class );
+    // OlSessionHandler
+    // }
 
     public synchronized String generateReference( OlObject src ) {
         String newRef = "ol" + WidgetUtil.getId( widget ) + referenceCounter++;

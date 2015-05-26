@@ -49,6 +49,7 @@ public class ScaleLineControlTab
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
         map.addControl( new ScaleLineControl(null, null) );
+        map.render();
     }
 
 

@@ -61,7 +61,7 @@ public abstract class DemoTab {
     // private int defaultStyle = SWT.NONE;
     // private int[] horizontalWeights = new int[] { 50, 50 };
     // private final Set<String> properties = new HashSet<String>();
-//    private Object       data;
+    // private Object data;
 
     //
     // private static final String[] SWT_CURSORS = {
@@ -91,9 +91,9 @@ public abstract class DemoTab {
     // };
     private final String name;
 
-//    private Shell        shell;
+    // private Shell shell;
 
-    private Control      form;
+    private Composite    form;
 
 
     // private Composite left;
@@ -107,36 +107,36 @@ public abstract class DemoTab {
     public String getName() {
         return name;
     }
-//
-//
-//    public String getId() {
-//        String id = this.getClass().getSimpleName();
-//        if (id.endsWith( "Tab" )) {
-//            id = id.substring( 0, id.length() - 3 );
-//        }
-//        return id;
-//    }
-
-//
-//    public Object getData() {
-//        return data;
-//    }
-//
-//
-//    public void setData( Object data ) {
-//        this.data = data;
-//    }
 
 
-    public Control createContents( Composite parent ) {
-//        shell = parent.getShell();
+    //
+    //
+    // public String getId() {
+    // String id = this.getClass().getSimpleName();
+    // if (id.endsWith( "Tab" )) {
+    // id = id.substring( 0, id.length() - 3 );
+    // }
+    // return id;
+    // }
+
+    //
+    // public Object getData() {
+    // return data;
+    // }
+    //
+    //
+    // public void setData( Object data ) {
+    // this.data = data;
+    // }
+
+    public Composite createContents( Composite parent ) {
+        // shell = parent.getShell();
         if (form == null) {
             form = createSashForm( parent );
             // initColors( parent.getDisplay() );
-            
-            
-//            demoComposite.layout();
-//            styleComposite.layout();
+
+            // demoComposite.layout();
+            // styleComposite.layout();
             //
             // if (left == null) {
             //
@@ -163,7 +163,7 @@ public abstract class DemoTab {
     protected abstract void createDemoControls( Composite parent );
 
 
-    private Control createSashForm( Composite parent ) {
+    private Composite createSashForm( Composite parent ) {
         SashForm horSashForm = new SashForm( parent, SWT.HORIZONTAL );
         createLeft( horSashForm );
         createRight( horSashForm );
@@ -815,11 +815,10 @@ public abstract class DemoTab {
     // }
     // return result;
     // }
-//
-//    protected Shell shell() {
-//        return shell;
-//    }
-
+    //
+    // protected Shell shell() {
+    // return shell;
+    // }
 
     //
     // protected boolean checkControl( Control control ) {

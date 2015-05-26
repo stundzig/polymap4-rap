@@ -73,14 +73,14 @@
 		createDiv : function(id) {
 			console.log('create map in ' + id);
 			var parent = rap.getObject(id);
-			console.log('parent is ' + parent.getAttribute('id'));
+//			console.log('parent is ' + parent.getAttribute('id'));
 			var element = document.createElement('div');
 			element.setAttribute("id", id + id);
 			parent.append(element);
 
 			console.log('element id is ' + element.getAttribute("id"));
 			// this.remoteObject = rap.getRemoteObject(this);
-			return element.getAttribute("id");
+			return element;
 		},
 
 		onRender : function() {

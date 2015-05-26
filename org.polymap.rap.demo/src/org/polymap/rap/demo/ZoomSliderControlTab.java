@@ -32,7 +32,7 @@ public class ZoomSliderControlTab
 
     @Override
     protected void createDemoControls( Composite parent ) {
-        parent.setLayout( new RowLayout( SWT.VERTICAL ) );
+//        parent.setLayout( new RowLayout( SWT.VERTICAL ) );
         olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
         // olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1
         // ) );
@@ -50,6 +50,7 @@ public class ZoomSliderControlTab
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
         map.addControl( new ZoomSliderControl() );
+        map.render();
     }
 
 

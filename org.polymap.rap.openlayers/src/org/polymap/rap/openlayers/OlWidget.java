@@ -229,4 +229,12 @@ public class OlWidget
         }
         super.dispose();
     }
+//    
+//    @Override
+//    public void layout( boolean changed, boolean all ) {
+//        if (map != null) {
+//            map.render();
+//        }
+//        super.layout( changed, all );
+//    }
 }

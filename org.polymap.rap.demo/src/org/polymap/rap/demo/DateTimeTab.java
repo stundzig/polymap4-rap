@@ -23,7 +23,7 @@ public class DateTimeTab
 
     @Override
     protected void createDemoControls( Composite parent ) {
-        parent.setLayout( new FillLayout() );
+//        parent.setLayout( new FillLayout() );
 
         DateTime date = new DateTime( parent, SWT.BORDER );
     }

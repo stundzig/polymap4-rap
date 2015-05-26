@@ -1,24 +1,26 @@
 package org.polymap.rap.demo;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.polymap.core.runtime.Polymap;
 
 public class DemoEntryPoint
         extends AbstractEntryPoint {
 
-    final ServerPushSession pushSession = new ServerPushSession();
+    private final static Log log         = LogFactory.getLog( DemoEntryPoint2.class );
+
+    final ServerPushSession  pushSession = new ServerPushSession();
 
     //
     // @Override
@@ -26,23 +28,23 @@ public class DemoEntryPoint
     // // display.setSynchronizer(new ClusteredSynchronizer(display));
     // return super.createShell(display);
     // }
-    private Tree            menu;
+    private Tree             menu;
 
-    private Composite       content;
+    private Composite        content;
 
-    private DemoTab         currentTab;
+    private DemoTab          currentTab;
 
 
     @Override
     protected void createContents( Composite parent ) {
-        pushSession.start();
-        parent.addDisposeListener( new DisposeListener() {
-
-            @Override
-            public void widgetDisposed( DisposeEvent arg0 ) {
-                pushSession.stop();
-            }
-        } );
+        // pushSession.start();
+        // parent.addDisposeListener( new DisposeListener() {
+        //
+        // @Override
+        // public void widgetDisposed( DisposeEvent arg0 ) {
+        // pushSession.stop();
+        // }
+        // } );
         parent.setLayout( new GridLayout( 2, false ) );
         Color backgroundColor = new Color( parent.getDisplay(), 0x31, 0x61, 0x9C );
         Composite header = new Composite( parent, SWT.NONE );
@@ -57,7 +59,7 @@ public class DemoEntryPoint
         menu = new Tree( parent, SWT.FULL_SELECTION );
         menu.setLayoutData( new GridData( SWT.NONE, SWT.FILL, false, false, 1, 1 ) );
         content = new Composite( parent, SWT.NONE );
-//        content.setLayout( new GridLayout( 1, false ) );
+        // content.setLayout( new GridLayout( 1, false ) );
         content.setLayout( new StackLayout() );
         content.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 
@@ -83,6 +85,7 @@ public class DemoEntryPoint
             // exampleMap.put( tab.getId(), tab );
         }
         menu.addListener( SWT.Selection, event -> {
+            log.info( "select " + ((DemoTab)event.item.getData()).getName() );
             selectTab( (DemoTab)event.item.getData() );
             // navigation.pushState( tab.getId(), null );
             } );
@@ -103,17 +106,21 @@ public class DemoEntryPoint
 
 
     private void selectTab( DemoTab tab ) {
-//        for (Control children : content.getChildren()) {
-//            children.dispose();
-//        }
-        Control next = tab.createContents( content );
+        // for (Control children : content.getChildren()) {
+        // children.dispose();
+        // }
+        final Composite next = tab.createContents( content );
         StackLayout layout = (StackLayout)content.getLayout();
         layout.topControl = next;
-//            next.setVisible( true );
-//            next.moveAbove( current );
-//            currentTab = tab;
-//        }
-//        content.layout( true );
+        // next.setVisible( true );
+        // next.moveAbove( current );
+        // currentTab = tab;
+        // }
+        next.redraw();
+        content.getParent().layout( true, true );
+//        Polymap.executorService().execute( ( ) -> {
+//            next.layout( true, true );
+//        } );
     }
 
 

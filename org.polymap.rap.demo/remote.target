@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="org.polymap.rap.openlayers Remote" sequenceNumber="6">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rap.feature.feature.group" version="2.3.2.20150128-1013"/>
+<repository location="http://download.eclipse.org/rt/rap/2.3/"/>
+</location>
+<location path="${eclipse_home}" type="Profile"/>
+</locations>
+</target>

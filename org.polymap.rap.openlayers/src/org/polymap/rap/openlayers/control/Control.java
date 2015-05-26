@@ -12,10 +12,6 @@
  */
 package org.polymap.rap.openlayers.control;
 
-import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
-
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlObject;
 

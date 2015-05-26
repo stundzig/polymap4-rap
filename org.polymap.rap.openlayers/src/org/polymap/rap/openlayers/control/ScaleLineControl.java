@@ -26,10 +26,14 @@ import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlMap;
 
 /**
- * @see http://openlayers.org/en/master/apidoc/ol.control.ScaleLine.html
+ * A control displaying rough x-axis distances, calculated for the center of the
+ * viewport. No scale line will be shown when the x-axis distance cannot be
+ * calculated in the view projection (e.g. at or beyond the poles in EPSG:4326). By
+ * default the scale line will show in the bottom left portion of the map, but this
+ * can be changed by using the css selector .ol-scale-line.
  * 
- * @author stundzig
- *
+ * @see http://openlayers.org/en/master/apidoc/ol.control.ScaleLine.html
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ScaleLineControl
         extends Control {
@@ -38,28 +42,22 @@ public class ScaleLineControl
         degrees, imperial, nautical, metric, us
     }
 
-//    @Mandatory
     @Immutable
     public Property2<OlMap,String> className;
 
-//    @Mandatory
     @Immutable
     public Property2<OlMap,String> target;
 
-//    @Mandatory
     @Immutable
     public Property2<OlMap,Units>  units;
 
-//    @Mandatory
     @Immutable
     public Property2<OlMap,Double> minWidth;
 
 
-    public ScaleLineControl( String cssName, String targetWidget, Units units, Double minWidth ) {
+    public ScaleLineControl( String cssName, Double minWidth ) {
         super( "ol.control.ScaleLine" );
         this.className.set( cssName );
-        this.target.set( targetWidget );
-        this.units.set( units );
         this.minWidth.set( minWidth );
     }
 

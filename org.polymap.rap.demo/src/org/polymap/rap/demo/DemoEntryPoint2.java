@@ -1,35 +1,24 @@
-package org.polymap.rap.openlayers.demo;
-
-import java.util.Arrays;
+package org.polymap.rap.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
-import org.polymap.rap.openlayers.control.ZoomControl;
-import org.polymap.rap.openlayers.format.GeoJSONFormat;
-import org.polymap.rap.openlayers.geom.GeometryType;
-import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
-import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.source.VectorSource;
-import org.polymap.rap.openlayers.style.FillStyle;
-import org.polymap.rap.openlayers.style.StrokeStyle;
-import org.polymap.rap.openlayers.style.Style;
-import org.polymap.rap.openlayers.types.Attribution;
-import org.polymap.rap.openlayers.types.Color;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
@@ -41,7 +30,7 @@ public class DemoEntryPoint2
 
     private final static Log log = LogFactory.getLog( DemoEntryPoint2.class );
 
-    private OlMap            map;
+//    private OlMap            map;
 
 
     @Override
@@ -54,33 +43,41 @@ public class DemoEntryPoint2
         Composite right = new Composite( parent, SWT.BORDER );
         Composite buttons = new Composite( parent, SWT.BORDER );
 
-        createMap( left );
-        createMap2( right );
-        createButtons( buttons );
+//        SashForm horSashForm = new SashForm( left, SWT.HORIZONTAL );
+        
+        Composite left2 = new Composite(left, SWT.BORDER);
+//        Composite left2s = new Group(left, SWT.BORDER);
+//        horSashForm.setWeights( new int[] { 80, 20 } );
+        createMap( left2 );
+//        createMap( right );
+//        createMap( buttons );
+//        left2.layout();
+//        createMap2( left2s );
+//        createMap2( right );
+//        createButtons( buttons );
     }
 
-
-    private void createButtons( Composite parent ) {
-        parent.setLayout( new FillLayout() );
-        Button button = new Button( parent, SWT.PUSH );
-        button.setText( "addScaleLineControlToLeftMap" );
-        button.addSelectionListener( new SelectionListener() {
-
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                map.addControl( new ScaleLineControl( null, null, ScaleLineControl.Units.metric,
-                        null ) );
-                // view.removeEventListener( View.EVENT.center, listener );
-            }
-
-
-            @Override
-            public void widgetDefaultSelected( SelectionEvent e ) {
-                // TODO Auto-generated method stub
-
-            }
-        } );
-    }
+//
+//    private void createButtons( Composite parent ) {
+//        parent.setLayout( new FillLayout() );
+//        Button button = new Button( parent, SWT.PUSH );
+//        button.setText( "addScaleLineControlToLeftMap" );
+//        button.addSelectionListener( new SelectionListener() {
+//
+//            @Override
+//            public void widgetSelected( SelectionEvent e ) {
+//                map.addControl( new ScaleLineControl( null, null) );
+//                // view.removeEventListener( View.EVENT.center, listener );
+//            }
+//
+//
+//            @Override
+//            public void widgetDefaultSelected( SelectionEvent e ) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        } );
+//    }
 
 
     private OlWidget createMap( Composite parent ) {
@@ -100,7 +97,7 @@ public class DemoEntryPoint2
         // maxResolution);
         // // map.updateSize();
 
-        this.map = new OlMap( olwidget,
+        OlMap map = new OlMap( olwidget,
                 new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
                         .put( new Extent( 12.80, 53.00, 14.30, 54.50 ) ).zoom.put( 3 ).center
                         .put( new Coordinate( 0, 0 ) ) );
@@ -120,7 +117,7 @@ public class DemoEntryPoint2
         // map.addControl(new ScaleLineControl());
         // map.addControl(new OverviewMapControl(map, layer));
 
-        map.addControl( new ZoomControl() );
+//        map.addControl( new ZoomControl() );
         // map.addControl( new ZoomSliderControl() );
         // map.addControl( new LoadingPanelControl() );
 
@@ -154,27 +151,27 @@ public class DemoEntryPoint2
         // .put( "http://ows.terrestris.de/osm/service/" ).params
         // .put( new RequestParams().layers.put( "OSM-WMS" ) )).opacity.put( 0.5f ));
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
-        //
-        VectorSource source = new VectorSource().format.put( new GeoJSONFormat()).url
-                .put( "/rwt-resources/demo/polygon-samples.geojson" ).attributions.put( Arrays
-                .asList( new Attribution( "Steffen Stundzig" ) ) );
-
-        VectorLayer vector = new VectorLayer().style.put( new Style().fill
-                .put( new FillStyle().color.put( new Color( 0, 0, 255, 0.1f ) ) ).stroke
-                .put( new StrokeStyle().color.put( new Color( "red" ) ).width.put( 1f ) ) ).source
-                .put( source );
-
-        map.addLayer( vector );
+//        //
+//        VectorSource source = new VectorSource().format.put( new GeoJSONFormat() ).url.put( RWT
+//                .getResourceManager().getLocation( "/polygon-samples.geojson" ) ).attributions
+//                .put( Arrays.asList( new Attribution( "Steffen Stundzig" ) ) );
+//
+//        VectorLayer vector = new VectorLayer().style.put( new Style().fill
+//                .put( new FillStyle().color.put( new Color( 0, 0, 255, 0.1f ) ) ).stroke
+//                .put( new StrokeStyle().color.put( new Color( "red" ) ).width.put( 1f ) ) ).source
+//                .put( source );
+//
+//        map.addLayer( vector );
 
         // vector.addEventListener(VectorSource.EVENT.addfeature, event ->
         // System.out.println(event.getProperties()));
-
-        DrawInteraction di = new DrawInteraction( source, GeometryType.LineString );
-        di.addEventListener( DrawInteraction.EVENT.drawstart,
-                event -> System.out.println( event.getProperties() ) );
-        di.addEventListener( DrawInteraction.EVENT.drawend,
-                event -> System.out.println( event.getProperties() ) );
-        map.addInteraction( di );
+//
+//        DrawInteraction di = new DrawInteraction( source, GeometryType.LineString );
+//        di.addEventListener( DrawInteraction.EVENT.drawstart,
+//                event -> System.out.println( event.getProperties() ) );
+//        di.addEventListener( DrawInteraction.EVENT.drawend,
+//                event -> System.out.println( event.getProperties() ) );
+//        map.addInteraction( di );
         // WMSLayer layer = new WMSLayer("OSM2",
         // "http://ows.terrestris.de/osm/service/", "OSM-WMS");
         // layer.setIsBaseLayer(true);
@@ -196,9 +193,9 @@ public class DemoEntryPoint2
         // System.out.println( event.getProperties() );
         // }
         // };
-        map.view.get().addEventListener( View.EVENT.center, event -> {
-            System.out.println( event.getProperties() );
-        } );
+//        map.view.get().addEventListener( View.EVENT.center, event -> {
+//            System.out.println( event.getProperties() );
+//        } );
         // view2.addEventListener(View.EVENT.resolution, listener);
         // new OlEventListener() {
         //

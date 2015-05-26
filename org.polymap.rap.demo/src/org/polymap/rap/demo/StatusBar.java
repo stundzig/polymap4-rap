@@ -1,4 +1,4 @@
-package org.polymap.rap.openlayers.demo;
+package org.polymap.rap.demo;
 
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.SingletonUtil;

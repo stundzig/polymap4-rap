@@ -1,14 +1,13 @@
-package org.polymap.rap.openlayers.demo;
+package org.polymap.rap.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
-import org.polymap.rap.openlayers.control.ZoomSliderControl;
+import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
@@ -18,24 +17,24 @@ import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
 
-public class ZoomSliderControlTab
+public class ScaleLineControlTab
         extends DemoTab {
 
     private OlWidget olwidget;
 
 
-    public ZoomSliderControlTab() {
-        super( "ZoomSliderControl" );
+    public ScaleLineControlTab() {
+        super( "ScaleLineControl" );
     }
 
-    private final static Log log = LogFactory.getLog( ZoomSliderControlTab.class );
+    private final static Log log = LogFactory.getLog( ScaleLineControlTab.class );
 
 
     @Override
-    protected void createControls( Composite parent ) {
-        parent.setLayout( new GridLayout() );
+    protected void createDemoControls( Composite parent ) {
+ 
         olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
-        olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
+//        olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 
         OlMap map = new OlMap( olwidget,
                 new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
@@ -49,15 +48,21 @@ public class ZoomSliderControlTab
                 .put( "http://ows.terrestris.de/osm/service/" ).params
                 .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
-        map.addControl( new ZoomSliderControl() );
+        map.addControl( new ScaleLineControl(null, null) );
     }
 
 
     @Override
     protected void disposeControls() {
         if (olwidget != null) {
-            olwidget.dispose();
+//            olwidget.dispose();
         }
+    }
 
+
+    @Override
+    protected void createStyleControls( Composite parent ) {
+        // TODO Auto-generated method stub
+        
     }
 }

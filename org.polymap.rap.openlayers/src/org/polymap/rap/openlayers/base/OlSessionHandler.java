@@ -92,12 +92,9 @@ public class OlSessionHandler {
                                                                 public void handleCall(
                                                                         String method,
                                                                         JsonObject properties ) {
-                                                                    // log.warn(this
-                                                                    // +
-                                                                    // ".handleCall "
-                                                                    // + method + ";"
-                                                                    // +
-                                                                    // properties.toString());
+                                                                    log.warn( this + ".handleCall "
+                                                                            + method + ";"
+                                                                            + properties.toString() );
                                                                     if ("handleOnRender"
                                                                             .equals( method )) {
                                                                         isRendered = true;
@@ -137,7 +134,7 @@ public class OlSessionHandler {
         JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
         jsLoader.require( "/ol_js/ol-3.5.0.js" );
 
-        register( "org/polymap/rap/openlayers/internal/resources/OlWrapper.js", "OlWrapper.js" );
+        register( "org/polymap/rap/openlayers/js/OlWrapper.js", "OlWrapper.js" );
         jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );
     }
 

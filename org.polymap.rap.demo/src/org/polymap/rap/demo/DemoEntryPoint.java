@@ -1,18 +1,19 @@
-package org.polymap.rap.openlayers.demo;
+package org.polymap.rap.demo;
 
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.polymap.rap.openlayers.control.ZoomControl;
 
 public class DemoEntryPoint
         extends AbstractEntryPoint {
@@ -56,7 +57,8 @@ public class DemoEntryPoint
         menu = new Tree( parent, SWT.FULL_SELECTION );
         menu.setLayoutData( new GridData( SWT.NONE, SWT.FILL, false, false, 1, 1 ) );
         content = new Composite( parent, SWT.NONE );
-        content.setLayout( new GridLayout( 1, false ) );
+//        content.setLayout( new GridLayout( 1, false ) );
+        content.setLayout( new StackLayout() );
         content.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 
         StatusBar status = StatusBar.getInstance().create( parent, SWT.NONE );
@@ -101,18 +103,17 @@ public class DemoEntryPoint
 
 
     private void selectTab( DemoTab tab ) {
-//        Composite current = null;
-        if (currentTab != null) {
-            currentTab.dispose();//.getContents( content );
-//            current.setVisible( false );
-        }
-        if (tab != null) {
-            Composite next = tab.getContents( content );
+//        for (Control children : content.getChildren()) {
+//            children.dispose();
+//        }
+        Control next = tab.createContents( content );
+        StackLayout layout = (StackLayout)content.getLayout();
+        layout.topControl = next;
 //            next.setVisible( true );
 //            next.moveAbove( current );
-            currentTab = tab;
-        }
-        content.layout( true );
+//            currentTab = tab;
+//        }
+//        content.layout( true );
     }
 
 
@@ -156,6 +157,7 @@ public class DemoEntryPoint
     // }
 
     private static DemoTab[] createExampleTabs() {
-        return new DemoTab[] { new ZoomControlTab(), new ZoomSliderControlTab() };
+        return new DemoTab[] { new ScaleLineControlTab(), new DateTimeTab(), new ZoomControlTab(),
+                new ZoomSliderControlTab() };
     }
 }

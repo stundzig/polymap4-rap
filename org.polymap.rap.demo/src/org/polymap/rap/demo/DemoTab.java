@@ -7,19 +7,23 @@
  * Contributors: Innoopract Informationssysteme GmbH - initial API and implementation
  * EclipseSource - ongoing development
  ******************************************************************************/
-package org.polymap.rap.openlayers.demo;
+package org.polymap.rap.demo;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-abstract class DemoTab {
+public abstract class DemoTab {
 
     //
     // public static final int BG_COLOR_GREEN = 1;
@@ -33,9 +37,10 @@ abstract class DemoTab {
     //
     // protected final List<Control> controls;
     //
-    // private Composite exampleComp;
+    private Composite    demoComposite;
 
-    // protected Composite styleComp;
+    protected Composite  styleComposite;
+
     // protected Color[] bgColors;
     // protected Color[] fgColors;
     // protected Color[] gradientColors;
@@ -56,7 +61,7 @@ abstract class DemoTab {
     // private int defaultStyle = SWT.NONE;
     // private int[] horizontalWeights = new int[] { 50, 50 };
     // private final Set<String> properties = new HashSet<String>();
-    private Object       data;
+//    private Object       data;
 
     //
     // private static final String[] SWT_CURSORS = {
@@ -86,10 +91,12 @@ abstract class DemoTab {
     // };
     private final String name;
 
-    private Shell        shell;
+//    private Shell        shell;
 
-    private Composite    left;
+    private Control      form;
 
+
+    // private Composite left;
 
     public DemoTab( String name ) {
         this.name = name;
@@ -100,44 +107,97 @@ abstract class DemoTab {
     public String getName() {
         return name;
     }
+//
+//
+//    public String getId() {
+//        String id = this.getClass().getSimpleName();
+//        if (id.endsWith( "Tab" )) {
+//            id = id.substring( 0, id.length() - 3 );
+//        }
+//        return id;
+//    }
+
+//
+//    public Object getData() {
+//        return data;
+//    }
+//
+//
+//    public void setData( Object data ) {
+//        this.data = data;
+//    }
 
 
-    public String getId() {
-        String id = this.getClass().getSimpleName();
-        if (id.endsWith( "Tab" )) {
-            id = id.substring( 0, id.length() - 3 );
-        }
-        return id;
-    }
-
-
-    public Object getData() {
-        return data;
-    }
-
-
-    public void setData( Object data ) {
-        this.data = data;
-    }
-
-
-    public Composite getContents( Composite parent ) {
-        shell = parent.getShell();
-
-        if (left == null) {
-            
-            // Composite left = new Composite( parent, SWT.BORDER );
-
-            left = new Composite( parent, SWT.BORDER );
-            left.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
-
+    public Control createContents( Composite parent ) {
+//        shell = parent.getShell();
+        if (form == null) {
+            form = createSashForm( parent );
             // initColors( parent.getDisplay() );
-            createControls( left );
+            
+            
+//            demoComposite.layout();
+//            styleComposite.layout();
+            //
+            // if (left == null) {
+            //
+            // // Composite left = new Composite( parent, SWT.BORDER );
+            //
+            // left = new Composite( parent, SWT.BORDER );
+            // left.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1
+            // ) );
+            //
+            // // initColors( parent.getDisplay() );
+            // createControls( left );
+            // }
+            // createStyleControls( styleComp );
+            // exampleComp.layout();
+            // styleComp.layout();
         }
-        // createStyleControls( styleComp );
-        // exampleComp.layout();
-        // styleComp.layout();
-        return left;
+        return form;
+    }
+
+
+    protected abstract void createStyleControls( Composite parent );
+
+
+    protected abstract void createDemoControls( Composite parent );
+
+
+    private Control createSashForm( Composite parent ) {
+        SashForm horSashForm = new SashForm( parent, SWT.HORIZONTAL );
+        createLeft( horSashForm );
+        createRight( horSashForm );
+        horSashForm.setWeights( new int[] { 80, 20 } );
+        return horSashForm;
+    }
+
+
+    private void createLeft( Composite parent ) {
+        Composite composite = new Composite( parent, SWT.NONE );
+        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
+        composite.setLayout( new FormLayout() );
+        Label header = new Label( composite, SWT.CENTER );
+        header.setFont( getHeaderFont( parent ) );
+        header.setText( getName() );
+        header.setLayoutData( createLayoutDataForHeader() );
+        demoComposite = new Composite( composite, SWT.NONE );
+        demoComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
+        demoComposite.setLayout( new FillLayout() );
+        createDemoControls( demoComposite );
+    }
+
+
+    private void createRight( Composite parent ) {
+        Composite composite = new Composite( parent, SWT.NONE );
+        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
+        composite.setLayout( new FormLayout() );
+        Label header = new Label( composite, SWT.LEFT );
+        header.setText( "Styles and Parameters" );
+        header.setLayoutData( createLayoutDataForHeader() );
+        styleComposite = new Composite( composite, SWT.NONE );
+        styleComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
+        styleComposite.setLayout( new RowLayout( SWT.VERTICAL ) );
+        createStyleControls( styleComposite );
     }
 
 
@@ -250,8 +310,7 @@ abstract class DemoTab {
     //
     // protected abstract void createStyleControls( Composite parent);
     //
-    protected abstract void createControls( Composite parent );
-
+    // protected abstract void createControls( Composite parent );
 
     //
     // // TODO [rst] Refactor ExampleTab to evaluate style controls before example
@@ -756,10 +815,10 @@ abstract class DemoTab {
     // }
     // return result;
     // }
-
-    protected Shell shell() {
-        return shell;
-    }
+//
+//    protected Shell shell() {
+//        return shell;
+//    }
 
 
     //
@@ -772,10 +831,10 @@ abstract class DemoTab {
 
     public void dispose() {
         disposeControls();
-        if (left != null) {
-            left.dispose();
-            left = null;
-        }
+        // if (left != null) {
+        // left.dispose();
+        // left = null;
+        // }
     }
 
 }

@@ -15,6 +15,7 @@ package org.polymap.rap.openlayers.interaction;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Property;
+import org.polymap.rap.openlayers.base.Jsonable;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -30,13 +31,13 @@ import org.polymap.rap.openlayers.source.VectorSource;
 public class DrawInteraction
         extends Interaction {
 
-    public enum EVENT {
+    public enum Event {
         active("change:active"), drawend("drawend"), drawstart("drawstart");
 
         private String value;
 
 
-        private EVENT( String value ) {
+        private Event( String value ) {
             this.value = value;
         }
 
@@ -46,27 +47,37 @@ public class DrawInteraction
         }
     }
 
+
+    public enum Type implements Jsonable {
+        Point, LineString, Polygon, Circle;
+
+        @Override
+        public Object toJson() {
+            return "/** @type {ol.geom.GeometryType} */ '" + name() + "'";
+        }
+    }
+
     // TODO more properties
-    
+
     @Immutable
     @Concern(OlPropertyConcern.class)
     public Property<VectorSource> source;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property<GeometryType> type;
+    public Property<Type>         type;
 
 
-    public DrawInteraction( VectorSource source, GeometryType type ) {
+    public DrawInteraction( VectorSource source, Type type ) {
         super( "ol.interaction.Draw" );
         this.source.set( source );
         this.type.set( type );
     }
 
 
-    public void addEventListener( EVENT event, OlEventListener listener ) {
+    public void addEventListener( Event event, OlEventListener listener ) {
         PayLoad payload = new PayLoad();
-        if (event == EVENT.drawend) {
+        if (event == Event.drawend) {
             payload.add( "feature", "{}" );
             payload.add( "feature.type", "theEvent.feature.getGeometry().getType()" );
             payload.add( "feature.extent", "theEvent.feature.getGeometry().getExtent()" );
@@ -76,7 +87,7 @@ public class DrawInteraction
     }
 
 
-    public void removeEventListener( EVENT event, OlEventListener listener ) {
+    public void removeEventListener( Event event, OlEventListener listener ) {
         removeEventListener( event.getValue(), listener );
     }
 }

@@ -1,14 +1,16 @@
 /*
- * polymap.org Copyright 2009-2013, Polymap GmbH. All rights reserved.
- * 
- * This is free software; you can redistribute it and/or modify it under the terms of
- * the GNU Lesser General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- * 
- * This software is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * polymap.org
+ * Copyright (C) 2009-2015 Polymap GmbH. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package org.polymap.rap.demo;
 
@@ -26,6 +28,11 @@ import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
 
+/**
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
+ */
 public class ScaleLineControlTab
         extends DemoTab {
 
@@ -37,6 +44,7 @@ public class ScaleLineControlTab
     }
 
     private final static Log log = LogFactory.getLog( ScaleLineControlTab.class );
+
     private ScaleLineControl control;
 
 
@@ -52,21 +60,23 @@ public class ScaleLineControlTab
     @Override
     protected void createStyleControls( Composite parent ) {
         Composite group = new Composite( parent, SWT.NONE );
-        group.setLayout( new GridLayout( 2, true ) );
-        
+        group.setLayout( new GridLayout( 2, false ) );
+
         new Label( group, SWT.NONE ).setText( "Units" );
-        
+
         final Combo combo = new Combo( group, SWT.READ_ONLY );
-        combo.setItems( Arrays.stream( ScaleLineControl.Units.values() ).map( unit -> unit.toString() ).toArray( String[]::new ));
+        combo.setItems( Arrays.stream( ScaleLineControl.Units.values() )
+                .map( unit -> unit.toString() ).toArray( String[]::new ) );
         combo.select( 0 );
         combo.addSelectionListener( new SelectionAdapter() {
-          @Override
-          public void widgetSelected( SelectionEvent e ) {
-            int index = combo.getSelectionIndex();
-            String selection = combo.getItem( index );
-            control.units.set( ScaleLineControl.Units.valueOf( selection ) );
-          }
+
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                int index = combo.getSelectionIndex();
+                String selection = combo.getItem( index );
+                control.units.set( ScaleLineControl.Units.valueOf( selection ) );
+            }
         } );
-        
+
     }
 }

@@ -16,10 +16,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.Property;
-
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
+import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
@@ -170,6 +171,9 @@ public abstract class OlObject {
         }
         else if (arg instanceof Enum) {
             buf.append( '\'' ).append( ((Enum)arg).name() ).append( '\'' );
+        }
+        else if (arg instanceof Unquoted) {
+            buf.append( ((Unquoted)arg).toJSONString() );
         }
         else {
             throw new IllegalArgumentException( "Unknown arg type: " + arg );

@@ -1,14 +1,16 @@
 /*
- * polymap.org Copyright 2009-2013, Polymap GmbH. All rights reserved.
- * 
- * This is free software; you can redistribute it and/or modify it under the terms of
- * the GNU Lesser General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- * 
- * This software is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * polymap.org
+ * Copyright (C) 2009-2015 Polymap GmbH. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package org.polymap.rap.demo;
 
@@ -20,19 +22,25 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.rap.rwt.client.service.BrowserNavigation;
-import org.eclipse.rap.rwt.client.service.BrowserNavigationEvent;
-import org.eclipse.rap.rwt.client.service.BrowserNavigationListener;
 import org.eclipse.rap.rwt.service.ServerPushSession;
+import org.eclipse.rap.rwt.widgets.ClusteredSynchronizer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+/**
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
+ */
 public class DemoEntryPoint
         extends AbstractEntryPoint {
 
@@ -50,6 +58,10 @@ public class DemoEntryPoint
 
     @Override
     protected void createContents( Composite parent ) {
+        pushSession.start();
+        parent.addDisposeListener( e -> {
+            pushSession.stop();
+        } );
         parent.setLayout( new GridLayout( 2, false ) );
         Color backgroundColor = new Color( parent.getDisplay(), 0x31, 0x61, 0x9C );
         Composite header = new Composite( parent, SWT.NONE );
@@ -69,7 +81,7 @@ public class DemoEntryPoint
         content.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
 
         StatusBar status = StatusBar.getInstance().create( parent, SWT.NONE );
-        status.addInfo( "Polymap RAP Openlayers Demo started..." );
+        status.addInfo( parent, "Polymap RAP Openlayers Demo started..." );
         // status.setLayoutData( new GridData( SWT.FILL, SWT.NONE, true, false, 2, 1
         // ) );
         status.setLayoutData( new GridData( SWT.FILL, SWT.NONE, true, false, 2, 1 ) );
@@ -83,7 +95,7 @@ public class DemoEntryPoint
         final BrowserNavigation navigation = RWT.getClient().getService( BrowserNavigation.class );
         for (DemoTab tab : createExampleTabs()) {
             TreeItem item = new TreeItem( menu, SWT.NONE );
-            item.setText( tab.getName() );
+            item.setText( tab.name() );
             item.setData( tab );
             exampleMap.put( tab.getId(), item );
         }

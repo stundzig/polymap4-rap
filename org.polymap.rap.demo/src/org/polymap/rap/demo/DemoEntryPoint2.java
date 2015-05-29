@@ -1,14 +1,16 @@
 /*
- * polymap.org Copyright 2009-2013, Polymap GmbH. All rights reserved.
- * 
- * This is free software; you can redistribute it and/or modify it under the terms of
- * the GNU Lesser General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- * 
- * This software is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * polymap.org
+ * Copyright (C) 2009-2015 Polymap GmbH. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package org.polymap.rap.demo;
 
@@ -48,6 +50,11 @@ import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
 
+/**
+ * 
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
+ */
 public class DemoEntryPoint2
         extends AbstractEntryPoint {
 
@@ -186,10 +193,10 @@ public class DemoEntryPoint2
         // vector.addEventListener(VectorSource.EVENT.addfeature, event ->
         // System.out.println(event.getProperties()));
 
-        DrawInteraction di = new DrawInteraction( source, GeometryType.LineString );
-        di.addEventListener( DrawInteraction.EVENT.drawstart,
+        DrawInteraction di = new DrawInteraction( source, DrawInteraction.Type.LineString );
+        di.addEventListener( DrawInteraction.Event.drawstart,
                 event -> System.out.println( event.getProperties() ) );
-        di.addEventListener( DrawInteraction.EVENT.drawend,
+        di.addEventListener( DrawInteraction.Event.drawend,
                 event -> System.out.println( event.getProperties() ) );
         map.addInteraction( di );
         // WMSLayer layer = new WMSLayer("OSM2",

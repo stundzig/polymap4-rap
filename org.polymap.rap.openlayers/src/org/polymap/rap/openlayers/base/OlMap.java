@@ -15,10 +15,12 @@ package org.polymap.rap.openlayers.base;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
-import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
@@ -28,8 +30,8 @@ import org.polymap.rap.openlayers.view.View;
 
 /**
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.Map.html
+ * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
@@ -43,74 +45,6 @@ public class OlMap
         layerGroup, size, target, view
     }
 
-    // /** Event: triggered after mouseover the map. */
-    // public final static String EVENT_MOUSE_OVER = "mouseover";
-    //
-    // /** Event: triggered after mouseout the map. */
-    // public final static String EVENT_MOUSE_OUT = "mouseout";
-    //
-    // /** Event: triggered after mousemove the map. */
-    // public final static String EVENT_MOUSE_MOVE = "mousemove";
-    //
-    // /**
-    // * triggered before a layer has been added. The event object will include a
-    // * layer property that references the layer to be added.
-    // **/
-    // public final static String EVENT_PREADDLAYER = "preaddlayer";
-    //
-    // /**
-    // * triggered after a layer has been added. The event object will include a
-    // * layer property that references the added layer.
-    // **/
-    // public final static String EVENT_ADDLAYER = "addlayer";
-    //
-    // /**
-    // * triggered after a layer has been removed. The event object will include a
-    // * layer property that references the removed layer.
-    // **/
-    // public final static String EVENT_REMOVELAYER = "removelayer";
-    //
-    // /**
-    // * triggered after a layer name change, order change, or visibility change
-    // * (due to resolution thresholds). Listeners will receive an event object
-    // * with layer and property properties. The layer property will be a reference
-    // * to the changed layer. The property property will be a key to the changed
-    // * property (name, visibility, or order).
-    // **/
-    // public final static String EVENT_CHANGELAYER = "changelayer";
-    //
-    // /** triggered after the start of a drag, pan, or zoom **/
-    // public final static String EVENT_MOVESTART = "movestart";
-    //
-    // /** triggered after each drag, pan, or zoom **/
-    // public final static String EVENT_MOVE = "move";
-    //
-    // /** triggered after a drag, pan, or zoom completes **/
-    // public final static String EVENT_MOVEEND = "moveend";
-    //
-    // /** triggered after a zoom completes **/
-    // public final static String EVENT_ZOOMEND = "zoomend";
-    //
-    // /** triggered after a marker has been added **/
-    // public final static String EVENT_ADDMARKER = "addmarker";
-    //
-    // /** triggered after a marker has been removed **/
-    // public final static String EVENT_REMOVEMARKER = "removemarker";
-    //
-    // /** triggered after markers have been cleared **/
-    // public final static String EVENT_CLEARMARKERS = "clearmarkers";
-    //
-    // /** triggered after the base layer changes **/
-    // public final static String EVENT_CHANGEBASELAYER = "changebaselayer";
-    //
-    // private ArrayList<Control> controls;
-
-    // private LinkedHashMap<String, Layer> layers;
-
-    // private int[] scales;
-
-    private OlWidget                  widget;
-
     @Mandatory
     @Immutable
     public Property2<OlMap,View>      view;
@@ -119,13 +53,33 @@ public class OlMap
     @Immutable
     private Property2<OlMap,Unquoted> target;
 
+    private Composite                 widget;
 
-    public OlMap( OlWidget widget, View view ) {
+
+    public OlMap( Composite parent, int style, View view ) {
         super( "ol.Map" );
-        this.widget = widget;
         this.view.set( view );
+
+        widget = new Composite( parent, style );
+        widget.setLayout( new Layout() {
+
+            private static final long serialVersionUID = 1L;
+
+
+            @Override
+            protected void layout( Composite composite, boolean flushCache ) {
+                update();
+            }
+
+
+            @Override
+            protected Point computeSize( Composite composite, int wHint, int hHint,
+                    boolean flushCache ) {
+                return new Point( wHint, hHint );
+            }
+        } );
         this.target.set( new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
-        widget.setMap( this );
+        // widget.setMap( this );
         //
         // JSONObject options = new JSONObject();
         // options.put( "view", new Unquoted( view.getJSObjRef() ) );
@@ -136,10 +90,9 @@ public class OlMap
     }
 
 
-    public OlWidget widget() {
-        return widget;
+    public void setLayoutData( Object layoutData ) {
+        widget.setLayoutData( layoutData );
     }
-
 
     public void addLayer( Layer<? extends Source> layer ) {
         // layer2add.setWidget(widget);
@@ -229,8 +182,15 @@ public class OlMap
     }
 
 
-    public void update() {
-       execute("this.obj.updateSize();");
+    private void update() {
+        execute( "this.obj.updateSize();" );
     }
 
+
+    @Override
+    public void dispose() {
+        // TODO clear the widget and the map
+
+        super.dispose();
+    }
 }

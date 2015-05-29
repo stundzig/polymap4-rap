@@ -1,27 +1,25 @@
+/*
+ * polymap.org Copyright 2009-2013, Polymap GmbH. All rights reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ */
 package org.polymap.rap.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ZoomControl;
-import org.polymap.rap.openlayers.layer.ImageLayer;
-import org.polymap.rap.openlayers.source.ImageWMSSource;
-import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
-import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.types.Extent;
-import org.polymap.rap.openlayers.types.Projection;
-import org.polymap.rap.openlayers.types.Projection.Units;
-import org.polymap.rap.openlayers.view.View;
 
 public class ZoomControlTab
         extends DemoTab {
-
-    private OlWidget olwidget;
-
 
     public ZoomControlTab() {
         super( "ZoomControl" );
@@ -32,37 +30,14 @@ public class ZoomControlTab
 
     @Override
     protected void createDemoControls( Composite parent ) {
-//        parent.setLayout( new FillLayout() );
-        olwidget = new OlWidget( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER );
-
-//        olwidget.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true, 1, 1 ) );
-
-        OlMap map = new OlMap( olwidget,
-                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
-                        .put( new Extent( 12.80, 53.00, 14.30, 54.50 ) ).zoom.put( 3 ).center
-                        .put( new Coordinate( 0, 0 ) ) );
-
-        // map.addLayer( new TileLayer( newLayer ->
-        // newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
-
-        map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
-                .put( "http://ows.terrestris.de/osm/service/" ).params
-                .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
-
+        OlMap map = defaultMap( parent );
         map.addControl( new ZoomControl() );
-        
     }
-
-//
-//    @Override
-//    public void redraw() {
-//        olwidget.getMap().render();
-//    }
 
 
     @Override
     protected void createStyleControls( Composite parent ) {
         // TODO Auto-generated method stub
-        
+
     }
 }

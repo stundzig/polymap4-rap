@@ -20,7 +20,6 @@ package org.polymap.rap.openlayers.base;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
@@ -38,8 +36,6 @@ import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
 import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
 import org.eclipse.rap.rwt.remote.RemoteObject;
-
-import org.polymap.rap.openlayers.OlWidget;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
@@ -140,7 +136,7 @@ public class OlSessionHandler {
 
 
     private void register( String resourceName, String fileName ) {
-        ClassLoader classLoader = OlWidget.class.getClassLoader();
+        ClassLoader classLoader = OlMap.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream( resourceName );
         if (inputStream == null) {
             throw new IllegalStateException( resourceName + " could not be found" );

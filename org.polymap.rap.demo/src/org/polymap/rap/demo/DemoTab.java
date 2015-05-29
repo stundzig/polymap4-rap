@@ -25,7 +25,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.layer.ImageLayer;
+import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
+import org.polymap.rap.openlayers.source.MapQuestSource;
 import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
@@ -41,16 +43,11 @@ public abstract class DemoTab {
 
     private final String name;
 
-    // private Shell shell;
-
     private Composite    form;
 
 
-    // private Composite left;
-
     public DemoTab( String name ) {
         this.name = name;
-        // controls = new ArrayList<Control>();
     }
 
 
@@ -59,28 +56,16 @@ public abstract class DemoTab {
     }
 
 
-    //
-    //
-    // public String getId() {
-    // String id = this.getClass().getSimpleName();
-    // if (id.endsWith( "Tab" )) {
-    // id = id.substring( 0, id.length() - 3 );
-    // }
-    // return id;
-    // }
+    public String getId() {
+        String id = this.getClass().getSimpleName();
+        if (id.endsWith( "Tab" )) {
+            id = id.substring( 0, id.length() - 3 );
+        }
+        return id;
+    }
 
-    //
-    // public Object getData() {
-    // return data;
-    // }
-    //
-    //
-    // public void setData( Object data ) {
-    // this.data = data;
-    // }
 
     public Composite createContents( Composite parent ) {
-        // shell = parent.getShell();
         if (form == null) {
             form = createSashForm( parent );
         }
@@ -104,50 +89,22 @@ public abstract class DemoTab {
 
 
     private void createLeft( Composite parent ) {
-        Composite composite = new Composite( parent, SWT.NONE );
-        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
-        composite.setLayout( new FormLayout() );
-        Label header = new Label( composite, SWT.CENTER );
-        header.setFont( getHeaderFont( parent ) );
-        header.setText( getName() );
-        header.setLayoutData( createLayoutDataForHeader() );
-        demoComposite = new Composite( composite, SWT.NONE );
-        demoComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
+        demoComposite = new Composite( parent, SWT.NONE );
+        demoComposite.setLayoutData( createLayoutDataForContentArea() );
         demoComposite.setLayout( new FillLayout() );
         createDemoControls( demoComposite );
     }
 
 
     private void createRight( Composite parent ) {
-        Composite composite = new Composite( parent, SWT.NONE );
-        composite.setBackground( parent.getDisplay().getSystemColor( SWT.COLOR_WHITE ) );
-        composite.setLayout( new FormLayout() );
-        Label header = new Label( composite, SWT.LEFT );
-        header.setText( "Styles and Parameters" );
-        header.setLayoutData( createLayoutDataForHeader() );
-        styleComposite = new Composite( composite, SWT.NONE );
-        styleComposite.setLayoutData( createLayoutDataForExampleArea( header ) );
+        styleComposite = new Composite( parent, SWT.NONE );
+        styleComposite.setLayoutData( createLayoutDataForContentArea() );
         styleComposite.setLayout( new RowLayout( SWT.VERTICAL ) );
         createStyleControls( styleComposite );
     }
 
 
-    private static Font getHeaderFont( Composite parent ) {
-        String fontName = parent.getFont().getFontData()[0].getName();
-        return new Font( parent.getDisplay(), fontName, 18, SWT.BOLD );
-    }
-
-
-    private static Object createLayoutDataForHeader() {
-        FormData formData = new FormData();
-        formData.top = new FormAttachment( 0, 5 );
-        formData.left = new FormAttachment( 0, 10 );
-        formData.right = new FormAttachment( 100, -10 );
-        return formData;
-    }
-
-
-    private static Object createLayoutDataForExampleArea( Control control ) {
+    private static Object createLayoutDataForContentArea() {
         FormData formData = new FormData();
         formData.top = new FormAttachment( 0, 35 );
         formData.left = new FormAttachment( 0, 5 );
@@ -158,17 +115,18 @@ public abstract class DemoTab {
 
 
     protected OlMap defaultMap( Composite parent ) {
-        OlMap map = new OlMap( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER,
-                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).extent
-                        .put( new Extent( 12.80, 53.00, 14.30, 54.50 ) ).zoom.put( 3 ).center
+        OlMap map = new OlMap(
+                parent,
+                SWT.MULTI | SWT.WRAP | SWT.BORDER,
+                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).zoom.put( 3 ).center
                         .put( new Coordinate( 0, 0 ) ) );
 
-        // map.addLayer( new TileLayer( newLayer ->
-        // newLayer.source.set( new MapQuestSource( MapQuestSource.Type.hyb ) ) ) );
-
-        map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
-                .put( "http://ows.terrestris.de/osm/service/" ).params
-                .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
+        map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
+        //
+        // map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
+        // .put( "http://ows.terrestris.de/osm/service/" ).params
+        // .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f )
+        // );
         return map;
     }
 }

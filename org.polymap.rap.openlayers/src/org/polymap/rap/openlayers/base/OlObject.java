@@ -154,7 +154,7 @@ public abstract class OlObject {
      */
     public void setAttribute( String attr, Object arg ) {
         StringBuilder buf = new StringBuilder( 128 ).append( getJSObjRef() ).append( '.' )
-                .append( attr ).append( '=' );
+                .append( "set('" ).append( attr ).append( "'," );
 
         if (arg instanceof OlObject) {
             buf.append( ((OlObject)arg).getJSObjRef() );
@@ -174,7 +174,7 @@ public abstract class OlObject {
         else {
             throw new IllegalArgumentException( "Unknown arg type: " + arg );
         }
-        execute( buf.append( ';' ).toString() );
+        execute( buf.append( ");" ).toString() );
     }
 
 

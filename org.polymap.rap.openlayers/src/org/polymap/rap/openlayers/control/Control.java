@@ -22,9 +22,10 @@ import org.polymap.rap.openlayers.base.OlObject;
  * with CSS class name ol-overlaycontainer-stopevent, but can use any outside DOM
  * element.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.View.html">OpenLayers
- *      Doc</a>
+ * @see http://openlayers.org/en/master/apidoc/ol.Control.html
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
  */
 public abstract class Control
         extends OlObject {

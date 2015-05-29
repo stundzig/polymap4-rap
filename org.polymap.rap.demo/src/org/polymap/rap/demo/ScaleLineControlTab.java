@@ -12,9 +12,17 @@
  */
 package org.polymap.rap.demo;
 
+import java.util.Arrays;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
 
@@ -29,28 +37,36 @@ public class ScaleLineControlTab
     }
 
     private final static Log log = LogFactory.getLog( ScaleLineControlTab.class );
+    private ScaleLineControl control;
 
 
     @Override
     protected void createDemoControls( Composite parent ) {
-        map = defaultMap(parent);
-        map.addControl( new ScaleLineControl(null, null) );
+        map = defaultMap( parent );
+        control = new ScaleLineControl( null, null );
+        control.units.set( ScaleLineControl.Units.degrees );
+        map.addControl( control );
     }
-
-
-
-
 
 
     @Override
     protected void createStyleControls( Composite parent ) {
-        // TODO Auto-generated method stub
+        Composite group = new Composite( parent, SWT.NONE );
+        group.setLayout( new GridLayout( 2, true ) );
+        
+        new Label( group, SWT.NONE ).setText( "Units" );
+        
+        final Combo combo = new Combo( group, SWT.READ_ONLY );
+        combo.setItems( Arrays.stream( ScaleLineControl.Units.values() ).map( unit -> unit.toString() ).toArray( String[]::new ));
+        combo.select( 0 );
+        combo.addSelectionListener( new SelectionAdapter() {
+          @Override
+          public void widgetSelected( SelectionEvent e ) {
+            int index = combo.getSelectionIndex();
+            String selection = combo.getItem( index );
+            control.units.set( ScaleLineControl.Units.valueOf( selection ) );
+          }
+        } );
         
     }
-
-//
-//    @Override
-//    public void redraw() {
-//        olwidget.getMap().render();
-//    }
 }

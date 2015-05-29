@@ -12,9 +12,16 @@
  */
 package org.polymap.rap.demo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
+import org.eclipse.rap.rwt.client.service.BrowserNavigation;
+import org.eclipse.rap.rwt.client.service.BrowserNavigationEvent;
+import org.eclipse.rap.rwt.client.service.BrowserNavigationListener;
 import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -25,7 +32,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.polymap.core.runtime.Polymap;
 
 public class DemoEntryPoint
         extends AbstractEntryPoint {
@@ -34,29 +40,16 @@ public class DemoEntryPoint
 
     final ServerPushSession  pushSession = new ServerPushSession();
 
-    //
-    // @Override
-    // protected Shell createShell(Display display) {
-    // // display.setSynchronizer(new ClusteredSynchronizer(display));
-    // return super.createShell(display);
-    // }
     private Tree             menu;
 
     private Composite        content;
 
-    private DemoTab          currentTab;
 
+    //
+    // private DemoTab currentTab;
 
     @Override
     protected void createContents( Composite parent ) {
-        // pushSession.start();
-        // parent.addDisposeListener( new DisposeListener() {
-        //
-        // @Override
-        // public void widgetDisposed( DisposeEvent arg0 ) {
-        // pushSession.stop();
-        // }
-        // } );
         parent.setLayout( new GridLayout( 2, false ) );
         Color backgroundColor = new Color( parent.getDisplay(), 0x31, 0x61, 0x9C );
         Composite header = new Composite( parent, SWT.NONE );
@@ -86,97 +79,42 @@ public class DemoEntryPoint
 
 
     private void fillTree( Composite parent ) {
-        // final HashMap<String,DemoTab> exampleMap = new HashMap<String,DemoTab>();
-        // final BrowserNavigation navigation = RWT.getClient().getService(
-        // BrowserNavigation.class );
+        final Map<String,TreeItem> exampleMap = new HashMap<String,TreeItem>();
+        final BrowserNavigation navigation = RWT.getClient().getService( BrowserNavigation.class );
         for (DemoTab tab : createExampleTabs()) {
             TreeItem item = new TreeItem( menu, SWT.NONE );
             item.setText( tab.getName() );
             item.setData( tab );
-            // tab.setData( item );
-            // exampleMap.put( tab.getId(), tab );
+            exampleMap.put( tab.getId(), item );
         }
         menu.addListener( SWT.Selection, event -> {
-            log.info( "select " + ((DemoTab)event.item.getData()).getName() );
-            selectTab( (DemoTab)event.item.getData() );
-            // navigation.pushState( tab.getId(), null );
-            } );
-        // navigation.addBrowserNavigationListener( new BrowserNavigationListener() {
-        //
-        // public void navigated( BrowserNavigationEvent event ) {
-        // DemoTab tab = exampleMap.get( event.getState() );
-        // if (tab != null) {
-        // menu.select( (TreeItem)tab.getData() );
-        // menu.showSelection();
-        // selectTab( tab );
-        // }
-        // }
-        // } );
+            DemoTab tab = (DemoTab)event.item.getData();
+            selectTab( tab );
+            navigation.pushState( tab.getId(), null );
+        } );
+        navigation.addBrowserNavigationListener( event -> {
+            TreeItem item = exampleMap.get( event.getState() );
+            if (item != null) {
+                menu.select( item );
+                menu.showSelection();
+                selectTab( (DemoTab)item.getData() );
+            }
+        } );
         menu.select( menu.getItem( 0 ) );
         selectTab( (DemoTab)menu.getItem( 0 ).getData() );
     }
 
 
     private void selectTab( DemoTab tab ) {
-        // for (Control children : content.getChildren()) {
-        // children.dispose();
-        // }
         final Composite next = tab.createContents( content );
         StackLayout layout = (StackLayout)content.getLayout();
         layout.topControl = next;
-        // next.setVisible( true );
-        // next.moveAbove( current );
-        // currentTab = tab;
-        // }
-//        content.redraw();
         content.layout( true, true );
-//        Polymap.executorService().execute( ( ) -> {
-//            next.layout( true, true );
-//        } );
     }
 
 
-    //
-    // private FormData createLayoutDataForHeader() {
-    // FormData layoutData = new FormData();
-    // layoutData.left = new FormAttachment( 0, 0 );
-    // layoutData.right = new FormAttachment( 100, 0 );
-    // layoutData.top = new FormAttachment( 0, 0 );
-    // layoutData.height = 80;
-    // return layoutData;
-    // }
-    //
-    //
-    // private FormData createLayoutDataForTree(Composite top) {
-    // FormData layoutData = new FormData();
-    // layoutData.top = new FormAttachment( top, 0 );
-    // layoutData.left = new FormAttachment( 0, 0 );
-    // layoutData.bottom = new FormAttachment( 100, 0 );
-    // layoutData.width = 190;
-    // return layoutData;
-    // }
-    //
-    //
-    // private FormData createLayoutDataForExampleParent(Composite top) {
-    // FormData layoutData = new FormData();
-    // layoutData.top = new FormAttachment( top, 0 );
-    // layoutData.left = new FormAttachment( menu, 10 );
-    // layoutData.right = new FormAttachment( 100, 0 );
-    // return layoutData;
-    // }
-    //
-    // private FormData createLayoutDataForStatusBar(Composite top) {
-    // FormData layoutData = new FormData();
-    // layoutData.top = new FormAttachment( top, 0 );
-    // layoutData.left = new FormAttachment( 0, 0 );
-    // layoutData.right = new FormAttachment( 100, 0 );
-    // layoutData.height = 80;
-    // layoutData.bottom = new FormAttachment( 100, 0 );
-    // return layoutData;
-    // }
-
     private static DemoTab[] createExampleTabs() {
-        return new DemoTab[] { new ScaleLineControlTab(), new DateTimeTab(), new ZoomControlTab(),
-                new ZoomSliderControlTab() };
+        return new DemoTab[] { new DrawInteractionTab(), new ScaleLineControlTab(),
+                new ZoomControlTab(), new ZoomSliderControlTab() };
     }
 }

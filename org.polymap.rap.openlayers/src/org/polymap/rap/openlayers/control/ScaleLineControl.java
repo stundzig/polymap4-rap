@@ -19,11 +19,13 @@
 
 package org.polymap.rap.openlayers.control;
 
+import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlMap;
+import org.polymap.rap.openlayers.base.OlProperty;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
  * A control displaying rough x-axis distances, calculated for the center of the
@@ -45,10 +47,12 @@ public class ScaleLineControl
     @Immutable
     public Property2<OlMap,String> className;
 
-    @Immutable
+//    @Immutable
     public Property2<OlMap,String> target;
 
-    @Immutable
+//    @Immutable
+    @Concern(OlPropertyConcern.class)
+    @OlProperty("units")
     public Property2<OlMap,Units>  units;
 
     @Immutable

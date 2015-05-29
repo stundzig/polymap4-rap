@@ -45,6 +45,7 @@ public class OlPropertyConcern
 //        log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() + " = " + value );
 
         // is the object created as JS on the client already?
+        // if it is created, we must call the setter of this obj
         if (((OlObject)obj).getObjRef() != null) {
 
             OlProperty a = prop.info().getAnnotation( OlProperty.class );

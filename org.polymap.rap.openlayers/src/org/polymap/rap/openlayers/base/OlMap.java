@@ -193,4 +193,9 @@ public class OlMap
 
         super.dispose();
     }
+
+
+    public void render() {
+        execute( "this.obj.render();" );
+    }
 }

@@ -81,7 +81,16 @@ public class DrawInteraction
             payload.add( "feature", "{}" );
             payload.add( "feature.type", "theEvent.feature.getGeometry().getType()" );
             payload.add( "feature.extent", "theEvent.feature.getGeometry().getExtent()" );
-            payload.add( "feature.coordinates", "theEvent.feature.getGeometry().getCoordinates()" );
+            if (type.get().equals( Type.Circle )) {
+                payload.add( "feature.center",
+                        "theEvent.feature.getGeometry().getCenter()" );
+                payload.add( "feature.radius",
+                        "theEvent.feature.getGeometry().getRadius()" );
+            }
+            else {
+                payload.add( "feature.coordinates",
+                        "theEvent.feature.getGeometry().getCoordinates()" );
+            }
         }
         addEventListener( event.getValue(), listener, payload );
     }

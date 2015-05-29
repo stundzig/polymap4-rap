@@ -18,9 +18,11 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlFeature;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.format.FeatureFormat;
 import org.polymap.rap.openlayers.types.Attribution;
+import org.polymap.rap.openlayers.util.Stringer;
 
 /**
  * Provides a source of features for vector layers.
@@ -32,7 +34,7 @@ import org.polymap.rap.openlayers.types.Attribution;
 public class VectorSource
         extends Source {
 
-    public enum EVENT {
+    public enum Event {
         /**
          * (ol.source.VectorEvent) - Triggered when a feature is added to the source.
          */
@@ -95,7 +97,7 @@ public class VectorSource
     }
 
 
-    public void addEventListener( EVENT event, OlEventListener listener ) {
+    public void addEventListener( Event event, OlEventListener listener ) {
         // Map<String, String> props = new HashMap<String, String>();
         // if (event == EVENT.addfeature || event == EVENT.removefeature) {
         // props.put("feature", "event.feature");
@@ -104,8 +106,30 @@ public class VectorSource
     }
 
 
-    public void removeEventListener( EVENT event, OlEventListener listener ) {
+    public void removeEventListener( Event event, OlEventListener listener ) {
         removeEventListener( event.name(), listener );
+    }
+
+
+    public void addFeature( OlFeature feature ) {
+        addFeatures( feature );
+    }
+
+
+    public void addFeatures( OlFeature... features ) {
+        Stringer command = new Stringer( "this.obj.addFeatures([" );
+        boolean first = true;
+        for (OlFeature feature : features) {
+            if (first) {
+                first = false;
+            }
+            else {
+                command.add( ", " );
+            }
+            command.add( feature.getJSObjRef() );
+        }
+        command.add( "]);" );
+        execute( command.toString() );
     }
 
 }

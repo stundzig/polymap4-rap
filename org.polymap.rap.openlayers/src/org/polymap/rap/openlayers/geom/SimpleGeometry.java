@@ -31,6 +31,11 @@ package org.polymap.rap.openlayers.geom;
 public abstract class SimpleGeometry
         extends Geometry {
 
+    // @Immutable
+    // @Concern(OlPropertyConcern.class)
+    // Property2<SimpleGeometry,GeometryLayout> layout;
+    // TODO must be set as parameter in the ctor and not as json property
+
     public SimpleGeometry( String jsClassname ) {
         super( jsClassname );
     }

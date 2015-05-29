@@ -42,17 +42,24 @@ public class OlPropertyConcern
 
     @Override
     public Object doSet( Object obj, Property prop, Object value ) {
-//        log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() + " = " + value );
+        // log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() +
+        // " = " + value );
 
-        // is the object created as JS on the client already?
-        // if it is created, we must call the setter of this obj
-        if (((OlObject)obj).getObjRef() != null) {
+        OlMethodProperty setter = prop.info().getAnnotation( OlMethodProperty.class );
+        if (setter != null) {
+            ((OlObject)obj).execute( setter.value(), value );
+        }
+        else {
+            // is the object created as JS on the client already?
+            // if it is created, we must call the setter of this obj
+            if (((OlObject)obj).getObjRef() != null) {
 
-            OlProperty a = prop.info().getAnnotation( OlProperty.class );
-            String propName = a != null ? a.value() : prop.info().getName();
+                Object jsonValue = propertyAsJson( prop, value );
 
-            Object jsonValue = propertyAsJson( prop, value );
-            ((OlObject)obj).setAttribute( propName, jsonValue );
+                OlProperty a = prop.info().getAnnotation( OlProperty.class );
+                String propName = a != null ? a.value() : prop.info().getName();
+                ((OlObject)obj).setAttribute( propName, jsonValue );
+            }
         }
         return value;
     }
@@ -94,7 +101,7 @@ public class OlPropertyConcern
      * 
      */
     public static Object propertyAsJson( Property prop, Object value ) {
-//        log.info( prop.info().getName() + ": " + value );
+        // log.info( prop.info().getName() + ": " + value );
         if (value instanceof Jsonable) {
             return new Unquoted( ((Jsonable)value).toJson().toString() );
         }

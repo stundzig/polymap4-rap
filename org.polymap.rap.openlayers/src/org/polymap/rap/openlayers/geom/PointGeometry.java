@@ -11,20 +11,31 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.style;
+package org.polymap.rap.openlayers.geom;
+
+import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.types.Coordinate;
+import org.polymap.rap.openlayers.util.Stringer;
 
 /**
- * Set icon style for vector features.
+ * Point Geometry.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Icon.html
+ * @see http://openlayers.org/en/master/apidoc/ol.geom.Point.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class IconStyle
-        extends ImageStyle {
+public class PointGeometry
+        extends SimpleGeometry {
 
-    // TODO add all properties here
+//    @Concern(OlPropertyConcern.class)
+    Property2<SimpleGeometry,Coordinate> coordinates;
 
-    public IconStyle() {
-        super( "ol.style.Icon" );
+    public PointGeometry(Coordinate coordinate) {
+        super( "ol.geom.Point" );
+        this.coordinates.set(coordinate);
+    }
+    
+    @Override
+    protected void create() {
+        super.create( new Stringer( "new ", jsClassname, "(", coordinates.get().toJson(), ")" ).toString() );
     }
 }

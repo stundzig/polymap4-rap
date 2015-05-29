@@ -126,7 +126,7 @@ public abstract class DemoTab {
                 parent,
                 SWT.MULTI | SWT.WRAP | SWT.BORDER,
                 new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).zoom.put( 3 ).center
-                        .put( new Coordinate( 0, 0 ) ) );
+                        .put( new Coordinate(  -8161939, 6095025  ) ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
         //

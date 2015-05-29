@@ -19,6 +19,15 @@
 
 package org.polymap.rap.openlayers.geom;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
+import org.polymap.rap.openlayers.types.Coordinate;
+import org.polymap.rap.openlayers.util.Stringer;
+
 /**
  * Polygon Geometry.
  * 
@@ -28,14 +37,30 @@ package org.polymap.rap.openlayers.geom;
 public class PolygonGeometry
         extends SimpleGeometry {
 
-    /*
-     * TODO
-     * 
-     * coordinates Array.<Array.<ol.Coordinate>> Coordinates.
-     * 
-     * layout ol.geom.GeometryLayout Layout.
-     */
-    public PolygonGeometry() {
+    // coordinates must set as [array] directly during construction
+//    @Concern(OlPropertyConcern.class)
+    Property2<SimpleGeometry,List<Coordinate>> coordinates;
+
+
+    public PolygonGeometry( Coordinate... coordinates ) {
         super( "ol.geom.Polygon" );
+        this.coordinates.set( Arrays.asList( coordinates ) );
+    }
+
+
+    @Override
+    protected void create() {
+        Stringer command = new Stringer( "new ", jsClassname, "([" );
+        boolean afterFirst = false;
+        for (Coordinate coordinate : coordinates.get()) {
+            if (afterFirst) {
+                command.add( ", " );
+            }
+            command.add( coordinate.toJson() );
+            afterFirst = true;
+        }
+        command.add( "])" );
+
+        super.create( command.toString() );
     }
 }

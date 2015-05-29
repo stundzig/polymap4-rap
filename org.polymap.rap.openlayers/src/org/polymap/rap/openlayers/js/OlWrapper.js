@@ -188,7 +188,10 @@
 			var key = this.objs[properties.src].on(properties.event, function(
 					theEvent) {
 				console.log(this.objs[properties.src].getProperties());
+				console.log("theEvent");
 				console.log(theEvent);
+				console.log("theEvent.feature");
+				console.log(theEvent.feature);
 				var oldTimeOut = this.events[theEvent];
 				if (oldTimeOut) {
 					window.clearTimeout(oldTimeOut);

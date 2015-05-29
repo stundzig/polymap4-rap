@@ -24,23 +24,23 @@ import org.polymap.rap.openlayers.base.Jsonable;
 public class Coordinate
         implements Jsonable {
 
-    private int x;
+    private double x;
 
-    private int y;
+    private double y;
 
 
-    public Coordinate( int x, int y ) {
+    public Coordinate( double x, double y ) {
         this.x = x;
         this.y = y;
     }
 
 
     //
-    // public int x() {
+    // public double x() {
     // return x;
     // }
     //
-    // public int y() {
+    // public double y() {
     // return y;
     // }
 

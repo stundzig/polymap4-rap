@@ -116,19 +116,19 @@ public abstract class OlObject {
     }
 
 
-    public void execute( String function, OlObject obj ) {
+    public void execute( String function, Object obj ) {
         prepareExecutionCode( function, obj );
     }
 
-
-    public void execute( String function, OlObject obj, boolean bool ) {
-        prepareExecutionCode( function, obj, bool );
-    }
-
-
-    public void execute( String function, double dbl, boolean bool ) {
-        prepareExecutionCode( function, dbl, bool );
-    }
+//
+//    public void execute( String function, OlObject obj, boolean bool ) {
+//        prepareExecutionCode( function, obj, bool );
+//    }
+//
+//
+//    public void execute( String function, double dbl, boolean bool ) {
+//        prepareExecutionCode( function, dbl, bool );
+//    }
 
 
     public void execute( String function, int val ) {

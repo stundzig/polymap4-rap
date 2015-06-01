@@ -22,17 +22,19 @@ package org.polymap.rap.openlayers.geom;
 import java.util.Arrays;
 import java.util.List;
 
+import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Property2;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.util.Stringer;
 
 /**
- * Polygon Geometry.
+ * Linear ring geometry. Only used as part of polygon; cannot be rendered on its own.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.Polygon.html
+ * @see http://openlayers.org/en/master/apidoc/ol.geom.LinearRing.html
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
-public class PolygonGeometry
+public class LinearRingGeometry
         extends SimpleGeometry {
 
     // coordinates must set as [array] directly during construction
@@ -40,15 +42,15 @@ public class PolygonGeometry
     Property2<SimpleGeometry,List<Coordinate>> coordinates;
 
 
-    public PolygonGeometry( Coordinate... coordinates ) {
-        super( "ol.geom.Polygon" );
+    public LinearRingGeometry( Coordinate... coordinates ) {
+        super( "ol.geom.LinearRing" );
         this.coordinates.set( Arrays.asList( coordinates ) );
     }
 
 
     @Override
     protected void create() {
-        Stringer command = new Stringer( "new ", jsClassname, "([[" );
+        Stringer command = new Stringer( "new ", jsClassname, "([" );
         boolean afterFirst = false;
         for (Coordinate coordinate : coordinates.get()) {
             if (afterFirst) {
@@ -57,7 +59,7 @@ public class PolygonGeometry
             command.add( coordinate.toJson() );
             afterFirst = true;
         }
-        command.add( "]])" );
+        command.add( "])" );
 
         super.create( command.toString() );
     }

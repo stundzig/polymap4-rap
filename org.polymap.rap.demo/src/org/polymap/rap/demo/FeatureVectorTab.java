@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlFeature;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.format.GeoJSONFormat;
+import org.polymap.rap.openlayers.geom.LinearRingGeometry;
 import org.polymap.rap.openlayers.geom.PointGeometry;
 import org.polymap.rap.openlayers.geom.PolygonGeometry;
 import org.polymap.rap.openlayers.layer.VectorLayer;
@@ -101,11 +102,11 @@ public class FeatureVectorTab
                 OlFeature feature2 = new OlFeature();
                 feature2.name.set( "Polygon" );
                 feature2.labelPoint.set( map.view.get().center.get() );
-                feature2.geometry.set( new PolygonGeometry( new Coordinate( -7294043.592788689,
-                        6683576.061026307 ),
-                        new Coordinate( -7860876.838653959, 4709432.687495542 ), new Coordinate(
-                                -4029865.9355645515, 4572610.869528064 ), new Coordinate(
-                                -7294043.592788689, 6683576.061026307 ) ) );
+                feature2.geometry.set( new PolygonGeometry( new Coordinate(
+                        -12393642.369994164, 9388521.61821717 ), new Coordinate(
+                        -13351395.095766516, 7297102.400714279 ), new Coordinate(
+                        -10888602.372351898, 7688021.880621362 ), new Coordinate(
+                        -12393642.369994164, 9388521.61821717 ) ) );
                 feature2.style.put( new Style().fill.put( new FillStyle().color.put( new Color(
                         "red" ) ) ).stroke.put( new StrokeStyle().color.put( new Color( "blue" ) ).width
                         .put( 10f ) ) );

@@ -14,8 +14,6 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -29,16 +27,61 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 public class TextStyle
         extends OlObject {
 
+    public enum Align {
+        center, end, left, right, start
+    }
+
+
+    public enum Baseline {
+        alphabetic, bottom, hanging, ideographic, middle, top
+    }
+
+    /*
+     * <label>Rotation: </label> <select id="points-rotation"> <option
+     * value="0">0°</option> <option value="0.785398164">45°</option> <option
+     * value="1.570796327">90°</option> </select> public enum Rotation { "0°",
+     * "90°"alphabetic, bottom, hanging, ideographic, middle, top }
+     */
+
     // TODO add all possible properties
 
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,StrokeStyle> stroke;
+    public Property2<TextStyle,Align>       textAlign;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,String>      font;
+    public Property2<TextStyle,Baseline>    textBaseline;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,FillStyle>   fill;
+    public Property2<TextStyle,StrokeStyle> stroke;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,Font>        font;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,String>      text;
+
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,FillStyle>   fill;
+
+    /**
+     * Horizontal text offset in pixels. A positive will shift the text right.
+     * Default is 0.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,Double>      offsetX;
+
+    /**
+     * Vertical text offset in pixels. A positive will shift the text down. Default
+     * is 0.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,Double>      offsetY;
+
+    /**
+     * Rotation in radians (positive rotation clockwise). Default is 0.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Property2<TextStyle,Double>      rotation;
 
 
     public TextStyle() {

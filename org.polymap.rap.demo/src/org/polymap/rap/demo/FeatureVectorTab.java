@@ -33,8 +33,10 @@ import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.VectorSource;
 import org.polymap.rap.openlayers.style.CircleStyle;
 import org.polymap.rap.openlayers.style.FillStyle;
+import org.polymap.rap.openlayers.style.Font;
 import org.polymap.rap.openlayers.style.StrokeStyle;
 import org.polymap.rap.openlayers.style.Style;
+import org.polymap.rap.openlayers.style.TextStyle;
 import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Color;
 import org.polymap.rap.openlayers.types.Coordinate;
@@ -95,18 +97,22 @@ public class FeatureVectorTab
                 feature.name.set( "Point" );
                 feature.labelPoint.set( map.view.get().center.get() );
                 feature.geometry.set( new PointGeometry( map.view.get().center.get() ) );
-                feature.style.put( new Style().image.put( new CircleStyle( 5.0f ).fill
-                        .put( new FillStyle().color.put( new Color( "red" ) ) ) ) );
+                feature.style.put( new Style().text.put( new TextStyle().text.put( "MY MESSAGE" ).font
+                        .put( new Font().family.put( Font.Family.CourierNew ).weight
+                                .put( Font.Weight.bold ).size.put( 24 ) ).stroke
+                        .put( new StrokeStyle().color.put( new Color( "green" ) ).width.put( 2f ) ) ).image
+                        .put( new CircleStyle( 5.0f ).fill.put( new FillStyle().color
+                                .put( new Color( "red" ) ) ) ) );
                 source.addFeature( feature );
 
                 OlFeature feature2 = new OlFeature();
                 feature2.name.set( "Polygon" );
                 feature2.labelPoint.set( map.view.get().center.get() );
-                feature2.geometry.set( new PolygonGeometry( new Coordinate(
-                        -12393642.369994164, 9388521.61821717 ), new Coordinate(
-                        -13351395.095766516, 7297102.400714279 ), new Coordinate(
-                        -10888602.372351898, 7688021.880621362 ), new Coordinate(
-                        -12393642.369994164, 9388521.61821717 ) ) );
+                feature2.geometry.set( new PolygonGeometry( new Coordinate( -12393642.369994164,
+                        9388521.61821717 ),
+                        new Coordinate( -13351395.095766516, 7297102.400714279 ), new Coordinate(
+                                -10888602.372351898, 7688021.880621362 ), new Coordinate(
+                                -12393642.369994164, 9388521.61821717 ) ) );
                 feature2.style.put( new Style().fill.put( new FillStyle().color.put( new Color(
                         "red" ) ) ).stroke.put( new StrokeStyle().color.put( new Color( "blue" ) ).width
                         .put( 10f ) ) );

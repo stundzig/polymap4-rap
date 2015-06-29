@@ -45,19 +45,25 @@ public class OlPropertyConcern
         // log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() +
         // " = " + value );
 
-        OlMethodProperty setter = prop.info().getAnnotation( OlMethodProperty.class );
-        if (setter != null) {
-            ((OlObject)obj).execute( setter.value(), value );
+        OlSetter setterAnnotation = prop.info().getAnnotation( OlSetter.class );
+        OlProperty propertyAnnotation = prop.info().getAnnotation( OlProperty.class );
+        
+        // setter
+        if (setterAnnotation != null) {
+            assert propertyAnnotation == null;
+            ((OlObject)obj).execute( setterAnnotation.value(), value );
         }
+        
+        // property
         else {
+            assert setterAnnotation == null;
             // is the object created as JS on the client already?
-            // if it is created, we must call the setter of this obj
+            // if it is created, then we just set the attribute
             if (((OlObject)obj).getObjRef() != null) {
 
                 Object jsonValue = propertyAsJson( prop, value );
 
-                OlProperty a = prop.info().getAnnotation( OlProperty.class );
-                String propName = a != null ? a.value() : prop.info().getName();
+                String propName = propertyAnnotation != null ? propertyAnnotation.value() : prop.info().getName();
                 ((OlObject)obj).setAttribute( propName, jsonValue );
             }
         }

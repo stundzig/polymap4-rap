@@ -46,6 +46,12 @@ public class PolygonGeometry
     }
 
 
+    public PolygonGeometry( List<Coordinate> coordinates ) {
+        super( "ol.geom.Polygon" );
+        this.coordinates.set( coordinates );
+    }
+
+
     @Override
     protected void create() {
         Stringer command = new Stringer( "new ", jsClassname, "([[" );

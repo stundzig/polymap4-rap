@@ -19,14 +19,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Denotes the name of the setter of the JavaClass property used by {@link OlPropertyConcern}.
+ * Denotes the name of the setter method to modify an JavaClass property used by
+ * {@link OlPropertyConcern}.
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 @Documented
-public @interface OlMethodProperty {
+public @interface OlSetter {
 
     public String value();
 

@@ -42,7 +42,7 @@ public class OlFeature
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    @OlMethodProperty("setStyle")
+    @OlSetter("setStyle")
     public Property2<OlFeature,Style>      style;
 
     @Immutable

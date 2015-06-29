@@ -225,7 +225,7 @@ public abstract class OlObject {
 
 
     public void dispose() {
-        // TODO remove also all controls and othe stuff of this map
+        // TODO remove also all controls and other stuff of this map
         OlSessionHandler.getInstance().remove( getObjRef() );
         execute( getJSObjRef() + "=null;" );
     }

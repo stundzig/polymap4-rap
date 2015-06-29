@@ -38,7 +38,7 @@ public class DemoApplication
         properties.put( WebClient.PAGE_TITLE, "Polymap RAP Openlayers Demo" );
         properties
                 .put( WebClient.HEAD_HTML,
-                        "<link rel='stylesheet' type='text/css' href='/ol_css/ol-3.5.0.css'>"
+                        "<link rel='stylesheet' type='text/css' href='/ol_css/ol-3.6.0.css'>"
                                 + "<link rel='stylesheet' href='/ol_css/bootstrap-3.3.4.min.css' type='text/css'>" );
         // properties.put(WebClient.THEME_ID, "ol3");
         application.addEntryPoint( "/demo", DemoEntryPoint.class, properties );

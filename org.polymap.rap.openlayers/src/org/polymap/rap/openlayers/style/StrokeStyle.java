@@ -24,7 +24,7 @@ import org.polymap.rap.openlayers.types.Color;
  * defaults, which will be used if option is not defined. The get functions return
  * whatever was entered in the options; they will not return the default.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Stroke.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Stroke.html">OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */

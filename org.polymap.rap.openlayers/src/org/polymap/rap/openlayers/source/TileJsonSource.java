@@ -19,7 +19,7 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Layer source for tile data in TileJSON format.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.source.TileJSON.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.TileJSON.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  *
  */

@@ -16,7 +16,7 @@ package org.polymap.rap.openlayers.format;
  * Abstract base class; normally only used for creating subclasses and not
  * instantiated in apps. Base class for JSON feature formats.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.format.JSONFeature.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.format.JSONFeature.html">OpenLayers Doc</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
 public abstract class JSONFeatureFormat

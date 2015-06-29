@@ -22,7 +22,7 @@ package org.polymap.rap.openlayers.control;
 /**
  * A slider type of control for zooming.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.control.ZoomSlider.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.control.ZoomSlider.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ZoomSliderControl

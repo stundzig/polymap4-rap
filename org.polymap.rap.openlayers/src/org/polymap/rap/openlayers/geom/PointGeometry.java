@@ -24,7 +24,7 @@ import org.polymap.rap.openlayers.types.Coordinate;
 /**
  * Point Geometry.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.Point.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.Point.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class PointGeometry

@@ -20,7 +20,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * A Font for TextStyles based on a weight, a size in px and a font family.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Text.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Text.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Font

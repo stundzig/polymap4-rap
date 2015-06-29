@@ -24,7 +24,7 @@ import org.polymap.rap.openlayers.base.OlObject;
  * not have a DOM element, some of them do render vectors and so are visible on the
  * screen.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.interaction.Interaction.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.interaction.Interaction.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class Interaction

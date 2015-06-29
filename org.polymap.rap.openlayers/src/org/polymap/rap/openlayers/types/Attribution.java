@@ -20,7 +20,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * An attribution for a layer source.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.Attribution.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.Attribution.html">OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */

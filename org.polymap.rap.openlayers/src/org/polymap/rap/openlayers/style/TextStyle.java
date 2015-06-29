@@ -21,7 +21,7 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Set text style for vector features.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Text.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Text.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class TextStyle

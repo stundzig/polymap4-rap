@@ -22,7 +22,7 @@ import org.polymap.rap.openlayers.types.Color;
 /**
  * Set Fill style for vector features.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Fill.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Fill.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class FillStyle

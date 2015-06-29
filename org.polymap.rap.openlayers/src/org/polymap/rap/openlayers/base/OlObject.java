@@ -256,6 +256,12 @@ public abstract class OlObject {
 
     public Set<OlEventListener> getEventListener( String method ) {
         return eventListeners.get( method );
+    }
+
+
+    public Object getAttribute( String propName ) {
+        // TODO Auto-generated method stub
+        return null;
     };
 
 }

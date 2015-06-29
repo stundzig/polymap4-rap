@@ -135,11 +135,11 @@ public abstract class DemoTab {
         // .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f )
         // );
 
-        map.view.get().addEventListener( View.EVENT.center, event -> {
+        map.view.get().addEventListener( View.Event.center, event -> {
             StatusBar.getInstance().addInfo( parent, name() + ": " + event.getProperties().toString() );
         } );
         
-        map.view.get().addEventListener( View.EVENT.resolution, event -> {
+        map.view.get().addEventListener( View.Event.resolution, event -> {
             StatusBar.getInstance().addInfo( parent, name() + ": " + event.getProperties().toString() );
         } );
         

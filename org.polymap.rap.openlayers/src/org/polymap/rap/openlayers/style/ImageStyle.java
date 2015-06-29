@@ -19,7 +19,7 @@ import org.polymap.rap.openlayers.base.OlObject;
  * A base class used for creating subclasses and not instantiated in apps. Base class
  * for ol.style.Icon and ol.style.Circle.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Image.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Image.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class ImageStyle

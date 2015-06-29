@@ -15,7 +15,7 @@ package org.polymap.rap.openlayers.format;
 /**
  * Feature format for reading and writing data in the GeoJSON format.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.format.GeoJSON.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.format.GeoJSON.html">OpenLayers Doc</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
 public class GeoJSONFormat

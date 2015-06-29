@@ -21,7 +21,7 @@ package org.polymap.rap.openlayers.geom;
 import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
- * @see http://openlayers.org/en/master/apidoc/ol.geom.html#GeometryLayout
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.html#GeometryLayout
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public enum GeometryLayout implements Jsonable {

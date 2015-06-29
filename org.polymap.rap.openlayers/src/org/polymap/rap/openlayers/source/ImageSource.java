@@ -16,7 +16,7 @@ package org.polymap.rap.openlayers.source;
  * Abstract base class; normally only used for creating subclasses and not
  * instantiated in apps. Base class for sources providing a single image.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.source.Image.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.Image.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  *
  */

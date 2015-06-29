@@ -15,7 +15,7 @@ package org.polymap.rap.openlayers.source;
 /**
  * Base class for sources providing images divided into a tile grid.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.source.TileImage.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.TileImage.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  *
  */

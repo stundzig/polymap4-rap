@@ -25,7 +25,7 @@ import org.polymap.rap.openlayers.base.OlObject;
  * Abstract base class; normally only used for creating subclasses and not
  * instantiated in apps. Base class for vector geometries.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.Geometry.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.Geometry.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class Geometry

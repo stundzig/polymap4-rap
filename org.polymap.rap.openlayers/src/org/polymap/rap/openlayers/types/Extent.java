@@ -19,7 +19,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * An array of numbers representing an extent: [minx, miny, maxx, maxy].
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.html#Extent
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Extent
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */

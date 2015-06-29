@@ -128,7 +128,7 @@ public class OlSessionHandler {
 
     private void loadJavaScript() {
         JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
-        jsLoader.require( "/ol_js/ol-3.5.0.js" );
+        jsLoader.require( "/ol_js/ol-3.6.0.js" );
 
         register( "org/polymap/rap/openlayers/js/OlWrapper.js", "OlWrapper.js" );
         jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );

@@ -220,7 +220,7 @@ public class DemoEntryPoint2
         // System.out.println( event.getProperties() );
         // }
         // };
-        map.view.get().addEventListener( View.EVENT.center, event -> {
+        map.view.get().addEventListener( View.Event.center, event -> {
             System.out.println( event.getProperties() );
         } );
         // view2.addEventListener(View.EVENT.resolution, listener);

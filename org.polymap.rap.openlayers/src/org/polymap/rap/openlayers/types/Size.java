@@ -19,7 +19,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * An array of numbers representing a size: [width, height].
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.html#Size
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Size
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Size

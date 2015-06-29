@@ -22,7 +22,7 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Set circle style for vector features.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.style.Circle.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.style.Circle.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class CircleStyle

@@ -15,7 +15,7 @@ package org.polymap.rap.openlayers.source;
 /**
  * Layer source for tile data with URLs in a set XYZ format.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.source.XYZ.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.XYZ.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class XYZSource

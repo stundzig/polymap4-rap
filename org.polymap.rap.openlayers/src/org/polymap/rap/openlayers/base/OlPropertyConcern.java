@@ -71,6 +71,32 @@ public class OlPropertyConcern
         return value;
     }
 
+//
+//    @Override
+//    public Object doGet( Object obj, Property prop, Object value ) {
+//        log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() + " = " + value );
+//
+////        OlMethodProperty setter = prop.info().getAnnotation( OlMethodProperty.class );
+////        if (setter != null) {
+////            ((OlObject)obj).execute( setter.value(), value );
+////        }
+////        else {
+//            // is the object created as JS on the client already?
+//            // if it is created, we must call the setter of this obj
+//            if (((OlObject)obj).getObjRef() != null) {
+//
+//                Object jsonValue = propertyAsJson( prop, value );
+//
+//                OlProperty a = prop.info().getAnnotation( OlProperty.class );
+//                String propName = a != null ? a.value() : prop.info().getName();
+//                Object res = ((OlObject)obj).getAttribute( propName );
+//            } else {
+//                return super.doGet( obj, prop, value );
+//            }
+//        // }
+//        // return value;
+//    }
+
 
     /**
      * Creates a JSON representation of the {@link Property} members of an

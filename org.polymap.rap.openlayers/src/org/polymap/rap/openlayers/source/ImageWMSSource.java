@@ -25,7 +25,7 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
 /**
  * Source for WMS servers providing single, untiled images.
  *
- * @see http://openlayers.org/en/master/apidoc/ol.source.ImageWMS.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.ImageWMS.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ImageWMSSource

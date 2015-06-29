@@ -21,7 +21,7 @@ import org.polymap.rap.openlayers.base.OlObject;
  * variety of commonly used geospatial file formats. See the documentation for each
  * format for more details.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.format.Feature.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.format.Feature.html">OpenLayers Doc</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */
 public abstract class FeatureFormat

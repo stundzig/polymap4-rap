@@ -33,7 +33,7 @@ import org.polymap.rap.openlayers.types.Coordinate;
 /**
  * Polygon Geometry.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.Polygon.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.Polygon.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class PolygonGeometry

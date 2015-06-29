@@ -30,7 +30,7 @@ import org.polymap.rap.openlayers.view.View;
 
 /**
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.Map.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">Open Layers API Doc</a>
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>

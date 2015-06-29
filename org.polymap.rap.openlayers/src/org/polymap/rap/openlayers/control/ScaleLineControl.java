@@ -34,7 +34,7 @@ import org.polymap.rap.openlayers.base.OlPropertyConcern;
  * default the scale line will show in the bottom left portion of the map, but this
  * can be changed by using the css selector .ol-scale-line.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.control.ScaleLine.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.control.ScaleLine.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ScaleLineControl

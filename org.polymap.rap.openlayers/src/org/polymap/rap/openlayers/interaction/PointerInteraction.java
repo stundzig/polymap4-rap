@@ -21,7 +21,7 @@ package org.polymap.rap.openlayers.interaction;
  * The drag sequence ends when the handleUpEvent user function is called and returns
  * false.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.interaction.Pointer.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.interaction.Pointer.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class PointerInteraction

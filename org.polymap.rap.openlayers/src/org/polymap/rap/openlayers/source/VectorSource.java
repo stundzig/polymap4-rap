@@ -27,7 +27,7 @@ import org.polymap.rap.openlayers.util.Stringer;
 /**
  * Provides a source of features for vector layers.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.source.Vector.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.source.Vector.html">OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */

@@ -18,7 +18,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
 /**
  * An array of numbers representing an xy coordinate. Example: [16, 48].
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.html#Coordinate
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Coordinate
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Coordinate

@@ -28,7 +28,7 @@ import org.polymap.rap.openlayers.util.Stringer;
  * An array with two elements, representing a pixel. The first element is the
  * x-coordinate, the second the y-coordinate of the pixel.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.html#Pixel
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Pixel
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class Pixel

@@ -23,7 +23,7 @@ import org.polymap.rap.openlayers.types.Coordinate;
 
 /**
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.Feature.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">OpenLayers Doc</a>
  * 
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
  */

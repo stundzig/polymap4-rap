@@ -192,14 +192,14 @@
 				console.log(theEvent);
 				console.log("theEvent.feature");
 				console.log(theEvent.feature);
-				var oldTimeOut = this.events[theEvent];
+				var oldTimeOut = this.events[theEvent + theEvent.type];
 				if (oldTimeOut) {
 					window.clearTimeout(oldTimeOut);
 				}
 				var that = this;
 				// wait 100ms for sending the event, newer events will remove this call
-				var newTimeOut = window.setTimeout(function() {eval(properties.code)},100);
-				this.events[theEvent] = newTimeOut;
+				var newTimeOut = window.setTimeout(function() {console.log(properties.code);eval(properties.code);},100);
+				this.events[theEvent + theEvent.type] = newTimeOut;
 			}, this);
 			console.log('key:  ', key);
 			// listeners stored by key, do later remove them from the global goog context

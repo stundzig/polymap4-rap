@@ -25,7 +25,7 @@ package org.polymap.rap.openlayers.geom;
  * Abstract base class; only used for creating subclasses; do not instantiate in
  * apps, as cannot be rendered.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.SimpleGeometry.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.SimpleGeometry.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public abstract class SimpleGeometry

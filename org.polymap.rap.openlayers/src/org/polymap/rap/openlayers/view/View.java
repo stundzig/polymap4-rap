@@ -27,14 +27,14 @@ import org.polymap.rap.openlayers.types.Projection;
  * An ol.View object represents a simple 2D view of the map. This is the object to
  * act upon to change the center, resolution, and rotation of the map.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.View.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.View.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class View
         extends OlObject {
 
-    public enum EVENT {
+    public enum Event {
         center, resolution, rotation
     }
 
@@ -98,15 +98,19 @@ public class View
      * @param event
      * @param listener
      */
-    public void addEventListener( EVENT event, OlEventListener listener ) {
+    public void addEventListener( Event event, OlEventListener listener ) {
         addEventListener( "change:" + event.name(), listener, null );
     }
 
 
-    public void removeEventListener( EVENT event, OlEventListener listener ) {
+    public void removeEventListener( Event event, OlEventListener listener ) {
         removeEventListener( "change:" + event.name(), listener );
     }
 
+    public void addPropertyChangeListener( OlEventListener listener ) {
+        addEventListener( "propertychange", listener, null );
+    }
+    
     // public static class Params {
     // private Coordinate view;
     // private Double maxResolution;

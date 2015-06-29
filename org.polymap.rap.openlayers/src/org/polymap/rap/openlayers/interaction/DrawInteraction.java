@@ -25,7 +25,7 @@ import org.polymap.rap.openlayers.source.VectorSource;
 /**
  * Interaction that allows drawing geometries.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.interaction.Draw.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.interaction.Draw.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class DrawInteraction

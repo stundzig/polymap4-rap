@@ -33,7 +33,7 @@ import org.polymap.rap.openlayers.types.Coordinate;
 /**
  * Linear ring geometry. Only used as part of polygon; cannot be rendered on its own.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.geom.LinearRing.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.LinearRing.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class LinearRingGeometry

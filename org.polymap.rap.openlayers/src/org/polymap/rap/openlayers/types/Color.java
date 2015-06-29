@@ -23,7 +23,7 @@ import org.polymap.rap.openlayers.base.Jsonable;
  * blue should be integers in the range 0..255 inclusive. alpha should be a float in
  * the range 0..1 inclusive.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.html#Color
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Color
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */

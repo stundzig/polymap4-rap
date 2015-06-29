@@ -32,7 +32,7 @@ import org.polymap.rap.openlayers.style.Style;
  * one of the default controls of a map. To style this control use css selectors
  * .ol-zoom-in and .ol-zoom-out.
  * 
- * @see http://openlayers.org/en/master/apidoc/ol.control.Zoom.html
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.control.Zoom.html">OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class ZoomControl

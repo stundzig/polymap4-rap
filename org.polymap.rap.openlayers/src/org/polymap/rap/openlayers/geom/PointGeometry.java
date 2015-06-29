@@ -13,9 +13,13 @@
  */
 package org.polymap.rap.openlayers.geom;
 
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.util.Stringer;
 
 /**
  * Point Geometry.
@@ -26,16 +30,14 @@ import org.polymap.rap.openlayers.util.Stringer;
 public class PointGeometry
         extends SimpleGeometry {
 
-//    @Concern(OlPropertyConcern.class)
-    Property2<SimpleGeometry,Coordinate> coordinates;
+    @Immutable
+    @Mandatory
+    @Concern(OlPropertyConcern.class)
+    Property2<SimpleGeometry,Coordinate>    coordinate;
 
     public PointGeometry(Coordinate coordinate) {
         super( "ol.geom.Point" );
-        this.coordinates.set(coordinate);
+        this.coordinate.set( coordinate );
     }
     
-    @Override
-    protected void create() {
-        super.create( new Stringer( "new ", jsClassname, "(", coordinates.get().toJson(), ")" ).toString() );
-    }
 }

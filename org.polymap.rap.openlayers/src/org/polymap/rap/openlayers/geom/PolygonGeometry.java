@@ -58,6 +58,7 @@ public class PolygonGeometry
 
     @Override
     protected void create() {
+        // XXX warum das geschachtelte array? wenn das nicht ist, dann kommen wir ganz ohne diese methode aus
         super.create( jsClassname, "[" + OlPropertyConcern.propertyAsJson( coordinates.get() ) + "]" );
         
 //        Stringer command = new Stringer( "new ", jsClassname, "([[" );

@@ -40,4 +40,9 @@ public class PointGeometry
         this.coordinate.set( coordinate );
     }
     
+    @Override
+    protected void create() {
+        super.create( jsClassname, coordinate.get().toJson().toString() );
+    }
+
 }

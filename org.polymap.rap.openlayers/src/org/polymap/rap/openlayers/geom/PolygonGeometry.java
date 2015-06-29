@@ -22,9 +22,13 @@ package org.polymap.rap.openlayers.geom;
 import java.util.Arrays;
 import java.util.List;
 
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Immutable;
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Property2;
+
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.util.Stringer;
 
 /**
  * Polygon Geometry.
@@ -35,14 +39,14 @@ import org.polymap.rap.openlayers.util.Stringer;
 public class PolygonGeometry
         extends SimpleGeometry {
 
-    // coordinates must set as [array] directly during construction
-//    @Concern(OlPropertyConcern.class)
+    @Immutable
+    @Mandatory
+    @Concern(OlPropertyConcern.class)
     Property2<SimpleGeometry,List<Coordinate>> coordinates;
 
 
     public PolygonGeometry( Coordinate... coordinates ) {
-        super( "ol.geom.Polygon" );
-        this.coordinates.set( Arrays.asList( coordinates ) );
+        this( Arrays.asList( coordinates ) );
     }
 
 
@@ -54,17 +58,19 @@ public class PolygonGeometry
 
     @Override
     protected void create() {
-        Stringer command = new Stringer( "new ", jsClassname, "([[" );
-        boolean afterFirst = false;
-        for (Coordinate coordinate : coordinates.get()) {
-            if (afterFirst) {
-                command.add( ", " );
-            }
-            command.add( coordinate.toJson() );
-            afterFirst = true;
-        }
-        command.add( "]])" );
-
-        super.create( command.toString() );
+        super.create( jsClassname, "[" + OlPropertyConcern.propertyAsJson( coordinates.get() ) + "]" );
+        
+//        Stringer command = new Stringer( "new ", jsClassname, "([[" );
+//        boolean afterFirst = false;
+//        for (Coordinate coordinate : coordinates.get()) {
+//            if (afterFirst) {
+//                command.add( ", " );
+//            }
+//            command.add( coordinate.toJson() );
+//            afterFirst = true;
+//        }
+//        command.add( "]])" );
+//
+//        super.create( command.toString() );
     }
 }

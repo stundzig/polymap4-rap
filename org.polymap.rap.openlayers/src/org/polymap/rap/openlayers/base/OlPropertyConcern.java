@@ -25,8 +25,9 @@ import org.polymap.core.runtime.config.DefaultPropertyConcern;
 import org.polymap.core.runtime.config.Property;
 
 /**
- * Synchronizes the value of a {@link Property} of an {@link OlObject} with the
- * property of the JavaScript object.
+ * Synchronizes the value of a {@link Property} of an {@link OlObject},
+ * {@link Jsonable} or {@link Collection} thereof with the property of the JavaScript
+ * object.
  * <p/>
  * Provides static methods the build JSON representation of the properties of an
  * {@link OlObject}.
@@ -61,7 +62,7 @@ public class OlPropertyConcern
             // if it is created, then we just set the attribute
             if (((OlObject)obj).getObjRef() != null) {
 
-                Object jsonValue = propertyAsJson( prop, value );
+                Object jsonValue = propertyAsJson( value );
 
                 String propName = propertyAnnotation != null ? propertyAnnotation.value() : prop.info().getName();
                 ((OlObject)obj).setAttribute( propName, jsonValue );
@@ -85,7 +86,7 @@ public class OlPropertyConcern
                         Property prop = (Property)f.get( obj );
                         Object value = prop.get();
                         if (value != null) {
-                            Object jsonValue = propertyAsJson( prop, value );
+                            Object jsonValue = propertyAsJson( value );
 
                             OlProperty a = f.getAnnotation( OlProperty.class );
                             String name = a != null ? a.value() : f.getName();
@@ -106,7 +107,7 @@ public class OlPropertyConcern
     /**
      * 
      */
-    public static Object propertyAsJson( Property prop, Object value ) {
+    public static Object propertyAsJson( Object value ) {
         // log.info( prop.info().getName() + ": " + value );
         if (value instanceof Jsonable) {
             return new Unquoted( ((Jsonable)value).toJson().toString() );
@@ -115,11 +116,11 @@ public class OlPropertyConcern
             return new Unquoted( ((OlObject)value).getJSObjRef() );
         }
         else if (value instanceof Collection) {
-            JSONArray ret = new JSONArray();
+            JSONArray result = new JSONArray();
             ((Collection<Object>)value).forEach( item -> {
-                ret.put( propertyAsJson( prop, item ) );
+                result.put( propertyAsJson( item ) );
             } );
-            return ret;
+            return result;
         }
         else {
             return value;

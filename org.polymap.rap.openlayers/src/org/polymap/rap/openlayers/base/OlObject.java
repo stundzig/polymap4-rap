@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.Property;
+
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.util.Stringer;
@@ -56,10 +57,15 @@ public abstract class OlObject {
         assert jsClassname != null && !jsClassname.equals( UNKNOWN_CLASSNAME );
 
         String options = OlPropertyConcern.propertiesAsJson( this );
-        create( new Stringer( "new ", jsClassname, "(", options, ")" ).toString() );
+        create( jsClassname, options );
     }
 
 
+    protected void create( @SuppressWarnings("hiding") String jsClassname, String options ) {
+        create( new Stringer( "new ", jsClassname, "(", options, ")" ).toString() );        
+    }
+    
+    
     protected void create( String code ) {
         OlSessionHandler wp = OlSessionHandler.getInstance();
         objRef = wp.generateReference( this );

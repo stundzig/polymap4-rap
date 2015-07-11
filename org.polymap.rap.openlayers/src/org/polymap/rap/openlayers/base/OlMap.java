@@ -93,7 +93,10 @@ public class OlMap
     public void setLayoutData( Object layoutData ) {
         widget.setLayoutData( layoutData );
     }
-
+    
+    /**
+     * Adds the given layer to the top of this map.
+     */
     public void addLayer( Layer<? extends Source> layer ) {
         // layer2add.setWidget(widget);
         execute( "addLayer", layer );

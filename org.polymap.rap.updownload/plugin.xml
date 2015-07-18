@@ -14,8 +14,12 @@
             id="org.polymap.rap.updownload.DndServiceHandler">
       </serviceHandler>
       <serviceHandler
-            class="org.polymap.rap.updownload.download.DownloadServiceHandler"
-            id="org.polymap.rap.updownload.DownloadServiceHandler">
+            class="org.polymap.rap.updownload.download.DownloadService"
+            id="org.polymap.rap.updownload.DownloadService">
+      </serviceHandler>
+      <serviceHandler
+            class="org.polymap.rap.updownload.upload.UploadService"
+            id="org.polymap.rap.updownload.UploadService">
       </serviceHandler>
    </extension>
    <extension

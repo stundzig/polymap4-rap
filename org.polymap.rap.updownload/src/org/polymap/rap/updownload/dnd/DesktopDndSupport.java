@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2012, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2012-2015, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -19,13 +19,19 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.eclipse.swt.dnd.DropTarget;
+
+import org.eclipse.rap.rwt.dnd.ClientFileTransfer;
+
 import org.polymap.core.runtime.ListenerList;
 import org.polymap.core.runtime.session.SessionSingleton;
 
 /**
  * 
- *
- * @author <a href="http://www.polymap.de">Falko Br�utigam</a>
+ * @deprecated Use build-in {@link DropTarget} and {@link ClientFileTransfer} instead
+ *             for file transfer. Text transfer does not seem to be supported by
+ *             build-in components though.
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class DesktopDndSupport
         extends SessionSingleton {

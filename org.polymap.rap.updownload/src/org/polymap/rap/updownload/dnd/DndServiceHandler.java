@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2012, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2012-2015, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.rap.rwt.service.ServiceHandler;
 
-import org.polymap.core.runtime.Polymap;
+import org.polymap.core.ui.UIUtils;
 
 /**
  * This service handler gets hit from the client side after the uploads are
@@ -70,7 +70,7 @@ public class DndServiceHandler
                 }
             });
         }
-        Polymap.getSessionDisplay().asyncExec( new Runnable() {
+        UIUtils.sessionDisplay().asyncExec( new Runnable() {
             public void run() {
                 DesktopDndSupport.instance().fireEvents( events );
             }

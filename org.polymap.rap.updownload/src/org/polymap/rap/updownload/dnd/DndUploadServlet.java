@@ -1,7 +1,6 @@
 /*                                                                                           
  * polymap.org                                                                               
- * Copyright 2012, Polymap GmbH, and individual contributors as indicated                    
- * by the @authors tag.                                                                      
+ * Copyright (C) 2012-2015, Polymap GmbH. All rights reserved.                               
  *                                                                                           
  * This is free software; you can redistribute it and/or modify it                           
  * under the terms of the GNU Lesser General Public License as                               
@@ -43,8 +42,7 @@ import com.google.common.collect.ListMultimap;
 /**
  * This servlet handles DnD upload requests.
  *
- * @author <a href="http://www.polymap.de">Falko Braeutigam</a>
- * @since 3.1
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class DndUploadServlet
         extends HttpServlet {

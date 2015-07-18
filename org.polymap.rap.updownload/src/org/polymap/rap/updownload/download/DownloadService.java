@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2011-2015, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2011-2015, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,6 +14,8 @@
  */
 package org.polymap.rap.updownload.download;
 
+import java.util.concurrent.ConcurrentMap;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -24,41 +26,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
-
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.service.ServiceHandler;
-import org.eclipse.rap.rwt.widgets.ExternalBrowser;
 
 import org.polymap.core.runtime.ConcurrentReferenceHashMap;
 import org.polymap.core.runtime.ConcurrentReferenceHashMap.ReferenceType;
-import org.polymap.core.ui.FormDataFactory;
-import org.polymap.core.ui.FormLayoutFactory;
 import org.polymap.core.ui.ServiceUriBuilder;
 
 /**
  * General download service for feature operation results and other content.
  *
- * @author <a href="http://www.polymap.de">Falko Br�utigam</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class DownloadServiceHandler
+public class DownloadService
         implements ServiceHandler {
 
-    private static Log log = LogFactory.getLog( DownloadServiceHandler.class );
+    static Log log = LogFactory.getLog( DownloadService.class );
 
-    private static final String         SERVICE_HANDLER_ID = "org.polymap.rap.updownload.DownloadServiceHandler";
+    private static final String         SERVICE_HANDLER_ID = "org.polymap.rap.updownload.DownloadService";
 
     /**
      * The parameter used to identify the download provider.
@@ -68,19 +56,19 @@ public class DownloadServiceHandler
      */
     private static final String         ID_REQUEST_PARAM = "id";
 
-    static ConcurrentReferenceHashMap<String,ContentProvider>   providers 
-            = new ConcurrentReferenceHashMap( ReferenceType.STRONG, ReferenceType.WEAK );
+    static ConcurrentMap<String,ContentProvider>   providers = 
+            new ConcurrentReferenceHashMap( ReferenceType.STRONG, ReferenceType.WEAK );
 
 
 //    static {
-//        DownloadServiceHandler instance = new DownloadServiceHandler();
+//        DownloadService instance = new DownloadService();
 //        RWT.getServiceManager().registerServiceHandler( SERVICE_HANDLER_ID, instance );
 //    }
 
     
     /**
      * Registers the given provider for downloading. An unique id of the newly
-     * registered download is build automatically.
+     * registered download is build out of the hashcode of the provider.
      * 
      * @param provider This provider is <b>WEAKLY</b> referenced inside. Make sure to
      *        keep a strong reference as long as the download should be active.
@@ -142,7 +130,7 @@ public class DownloadServiceHandler
     
     // instance *******************************************
     
-    public DownloadServiceHandler() {
+    public DownloadService() {
     }
 
 
@@ -191,7 +179,7 @@ public class DownloadServiceHandler
                     return;
                 }
                 
-                String[] pathInfos = StringUtils.split( request.getPathInfo(), "/" );
+                //String[] pathInfos = StringUtils.split( request.getPathInfo(), "/" );
 
                 String contentType = provider.getContentType();
                 response.setContentType( contentType );
@@ -230,76 +218,6 @@ public class DownloadServiceHandler
             log.debug( "", e );
             throw new ServletException( e );
         }
-    }
-    
-    
-    // DownloadDialog
-    
-    /**
-     * 
-     * 
-     */
-    public static class DownloadDialog
-            extends Dialog {
-
-        private String          url;
-        private String          windowName;
-        private int             windowFlags;
-        private String          msg;
-        
-        
-        public DownloadDialog( Shell parentShell, String url ) {
-            super( parentShell );
-            this.url = url;
-            this.msg = "<a href=\"" + url + "\">Link...</a>";
-            setShellStyle( SWT.RESIZE | SWT.DIALOG_TRIM | SWT.SHEET );
-        }
-
-        @SuppressWarnings("hiding")
-        public DownloadDialog openBrowserWindow( String windowName, int windowFlags ) {
-            this.windowName = windowName;
-            this.windowFlags = windowFlags;
-            return this;
-        }
-
-        public DownloadDialog setMessage( String msg ) {
-            this.msg = msg;
-            log.info( msg );
-            return this;
-        }
-        
-        @Override
-        public int open() {
-            if (windowName != null) {
-                ExternalBrowser.open( windowName, url, windowFlags );
-            }
-            return super.open();
-        }
-
-        @Override
-        protected void createButtonsForButtonBar(Composite parent) {
-            createButton( parent, IDialogConstants.CANCEL_ID, IDialogConstants.get().CANCEL_LABEL, false );
-        }
-
-        @Override
-        protected Control createDialogArea( Composite parent ) {
-            getShell().setText( "Download" );
-            getShell().setSize( 520, 350 );
-            Rectangle displaySize = getShell().getDisplay().getClientArea();
-            getShell().setLocation( (displaySize.width - 520) / 2, (displaySize.height - 350) / 2 );
-
-            Composite result = (Composite)super.createDialogArea( parent );
-            result.setLayout( FormLayoutFactory.defaults().create() );
-            
-            Label link = new Label( result, SWT.WRAP );
-            link.setText( msg );
-            // after setText() in order to prevent validation, which fails
-            link.setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
-            link.setLayoutData( FormDataFactory.filled()/*.clearRight().width( 400 )*/.create() );
-            
-            return result;
-        }
-        
     }
     
 }

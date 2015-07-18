@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2013, Falko Br�utigam. All rights reserved.
+ * Copyright (C) 2015, Falko Br�utigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -16,10 +16,12 @@ package org.polymap.rap.updownload.upload;
 
 import java.io.InputStream;
 
+import org.eclipse.rap.rwt.client.ClientFile;
+
 /**
  * 
  *
- * @author <a href="http://www.polymap.de">Falko Br�utigam</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public interface IUploadHandler {
 
@@ -38,6 +40,6 @@ public interface IUploadHandler {
      * @param in
      * @throws Exception
      */
-    public void uploadStarted( String name, String contentType, int contentLength, InputStream in ) throws Exception;
+    public void uploadStarted( ClientFile clientFile, InputStream in ) throws Exception;
     
 }

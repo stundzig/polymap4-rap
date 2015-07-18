@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2013-2015, Falko Br�utigam. All rights reserved.
+ * Copyright (C) 2013-2015, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 
-import org.eclipse.rap.rwt.lifecycle.UICallBack;
+import org.eclipse.rap.rwt.client.ClientFile;
 import org.eclipse.rap.rwt.widgets.FileUpload;
 
 import org.polymap.core.Messages;
@@ -40,11 +40,12 @@ import org.polymap.core.runtime.i18n.IMessages;
 import org.polymap.core.runtime.session.SessionContext;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
+import org.polymap.core.ui.UIUtils;
 
 /**
  * 
  *
- * @author <a href="http://www.polymap.de">Falko Br�utigam</a>
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class Upload
         extends Composite
@@ -79,8 +80,8 @@ public class Upload
         fileUpload.setText( i18n.get( "select" ) );
         fileUpload.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected( SelectionEvent ev ) {
-                UICallBack.activate( "upload" );
-                fileUpload.submit( FileUploadServlet.addUploadHandler( Upload.this ) );
+                UIUtils.activateCallback( "upload" );
+                fileUpload.submit( UploadService.registerHandler( Upload.this ) );
             }
         });
         
@@ -98,8 +99,8 @@ public class Upload
     @Override
     public void dispose() {
         super.dispose();
-        FileUploadServlet.removeUploadHandler( this );
-        UICallBack.deactivate( "upload" );
+        UploadService.removeHandler( Upload.this );
+        UIUtils.deactivateCallback( "upload" );
     }
 
     public IUploadHandler getHandler() {
@@ -115,15 +116,13 @@ public class Upload
     }
 
     @Override
-    public void uploadStarted( final String name, final String contentType,
-            final int contentLength, final InputStream in ) throws Exception {
+    public void uploadStarted( final ClientFile clientFile, final InputStream in ) throws Exception {
         assert handler != null : "No handler set for Upload.";
 
         // give the thread the proper session context (but outside UI thread)
         sessionContext.execute( new Callable() {
             public Object call() throws Exception {
-                handler.uploadStarted( name, contentType, contentLength, 
-                        new ProgressInputStream( in, name, contentLength ) );
+                handler.uploadStarted( clientFile, new ProgressInputStream( in, clientFile.getName(), clientFile.getSize() ) );
                 return null;
             }
         });
@@ -138,12 +137,12 @@ public class Upload
     
         private String      name;
     
-        private int         count = 0;
+        private long        count = 0;
 
-        private int         contentLength;
+        private long        contentLength;
     
     
-        private ProgressInputStream( InputStream in, String name, int contentLength ) {
+        private ProgressInputStream( InputStream in, String name, long contentLength ) {
             super( in );
             this.name = name;
             this.contentLength = contentLength > 0 ? contentLength : 10*1024*1024;
@@ -168,19 +167,19 @@ public class Upload
                         count += result;
                         // init maximum (inside UI thread)
                         if (progress.getMaximum() == Integer.MAX_VALUE) {
-                            progress.setMaximum( contentLength );
+                            progress.setMaximum( (int)contentLength );
                         }
                         if (result == -1) {
                             progress.setSelection( progress.getMaximum() );
-                            UICallBack.deactivate( "upload" );
+                            UIUtils.deactivateCallback( "upload" );
                         }
                         else {
-                            progress.setSelection( count );
+                            progress.setSelection( (int)count );
                         }
                         // adjust contentLength
                         if (count >= contentLength) {
                             contentLength = count * 2;
-                            progress.setMaximum( contentLength );
+                            progress.setMaximum( (int)contentLength );
                         }
                         //int percent = 100 * progress.getSelection() / progress.getMaximum();
                         label.setText( name + " (" + FileUtils.byteCountToDisplaySize( count ) 

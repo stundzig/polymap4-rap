@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -62,7 +63,7 @@ public class Upload
 
     private ProgressBar             progress;
 
-    private Label                   label;
+    private Label                   progressLabel;
     
     private IUploadHandler          handler;
     
@@ -76,7 +77,7 @@ public class Upload
         setLayout( FormLayoutFactory.defaults().create() );
 
         fileUpload = new FileUpload( this, SWT.NONE );
-        fileUpload.setLayoutData( FormDataFactory.filled().right( -1 ).create() );
+        fileUpload.setLayoutData( FormDataFactory.filled().create() );
         fileUpload.setText( i18n.get( "select" ) );
         fileUpload.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected( SelectionEvent ev ) {
@@ -85,15 +86,23 @@ public class Upload
             }
         });
         
-        progress = new ProgressBar( this, SWT.HORIZONTAL );
-        progress.setLayoutData( FormDataFactory.filled().left( fileUpload ).create() );
-        progress.setMaximum( Integer.MAX_VALUE );
+        if (ArrayUtils.contains( uploadStyles, SHOW_UPLOAD_BUTTON )) {
+            log.info( "SHOW_UPLOAD_BUTTON is not supported yet." );
+        }
+        
+        if (ArrayUtils.contains( uploadStyles, SHOW_PROGRESS )) {
+            fileUpload.setLayoutData( FormDataFactory.filled().noRight().create() );
+            
+            progress = new ProgressBar( this, SWT.HORIZONTAL );
+            progress.setLayoutData( FormDataFactory.filled().left( fileUpload ).create() );
+            progress.setMaximum( Integer.MAX_VALUE );
 
-        label = new Label( this, SWT.NONE );
-        label.setLayoutData( FormDataFactory.filled().top( 0, 5 ).left( fileUpload, 20 ).create() );
-        label.setText( i18n.get( "label" ) );
-        log.warn( "not yet ported: label.setForeground( new Color( 0x60, 0x60, 0x60 ) ) " );
-        label.moveAbove( progress );
+            progressLabel = new Label( this, SWT.NONE );
+            progressLabel.setLayoutData( FormDataFactory.filled().top( 0, 5 ).left( fileUpload, 20 ).create() );
+            progressLabel.setText( i18n.get( "progressLabel" ) );
+            log.warn( "not yet ported: progressLabel.setForeground( new Color( 0x60, 0x60, 0x60 ) ) " );
+            progressLabel.moveAbove( progress );
+        }
     }
 
     @Override
@@ -182,7 +191,7 @@ public class Upload
                             progress.setMaximum( (int)contentLength );
                         }
                         //int percent = 100 * progress.getSelection() / progress.getMaximum();
-                        label.setText( name + " (" + FileUtils.byteCountToDisplaySize( count ) 
+                        progressLabel.setText( name + " (" + FileUtils.byteCountToDisplaySize( count ) 
                                 /*+ " - " + percent + "%"*/ + ")" );
                     }
                 });

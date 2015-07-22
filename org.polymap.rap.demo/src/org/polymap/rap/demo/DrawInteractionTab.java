@@ -26,9 +26,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlMap;
-import org.polymap.rap.openlayers.control.ScaleLineControl;
 import org.polymap.rap.openlayers.format.GeoJSONFormat;
-import org.polymap.rap.openlayers.geom.GeometryType;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.VectorSource;
@@ -62,13 +60,15 @@ public class DrawInteractionTab
     protected void createDemoControls( Composite parent ) {
         map = defaultMap( parent );
 
-        source = new VectorSource().format.put( new GeoJSONFormat() ).attributions.put( Arrays
-                .asList( new Attribution( "Steffen Stundzig" ) ) );
+        source = new VectorSource()
+                .format.put( new GeoJSONFormat() )
+                .attributions.put( Arrays.asList( new Attribution( "Steffen Stundzig" ) ) );
 
-        VectorLayer vector = new VectorLayer().style.put( new Style().fill
-                .put( new FillStyle().color.put( new Color( 0, 0, 255, 0.1f ) ) ).stroke
-                .put( new StrokeStyle().color.put( new Color( "red" ) ).width.put( 1f ) ) ).source
-                .put( source );
+        VectorLayer vector = new VectorLayer()
+                .style.put( new Style()
+                .fill.put( new FillStyle().color.put( new Color( 0, 0, 255, 0.1f ) ) )
+                .stroke.put( new StrokeStyle().color.put( new Color( "red" ) ).width.put( 1f ) ) )
+                .source.put( source );
 
         map.addLayer( vector );
 

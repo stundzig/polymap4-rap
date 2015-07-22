@@ -16,23 +16,15 @@ package org.polymap.rap.demo;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlMap;
-import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
-import org.polymap.rap.openlayers.source.ImageWMSSource;
 import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
@@ -122,11 +114,10 @@ public abstract class DemoTab {
 
 
     protected OlMap defaultMap( Composite parent ) {
-        OlMap map = new OlMap(
-                parent,
-                SWT.MULTI | SWT.WRAP | SWT.BORDER,
-                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).zoom.put( 3 ).center
-                        .put( new Coordinate(  -8161939, 6095025  ) ) );
+        OlMap map = new OlMap( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER, new View()
+                .projection.put( new Projection( "EPSG:3857", Units.m ) )
+                .zoom.put( 3 )
+                .center.put( new Coordinate( -8161939, 6095025 ) ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
         //

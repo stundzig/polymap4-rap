@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlFeature;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -62,16 +62,16 @@ public class VectorSource
      * TODO
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,List<Attribution>> attributions;
+    public Config2<VectorSource,List<Attribution>> attributions;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,String>            logo;
+    public Config2<VectorSource,String>            logo;
 
     /**
      * Experimental: The feature format used by the XHR feature loader when url is
      * set. Required if {@link #url} is set, otherwise ignored. Default is undefined.
      */
-    public Property2<VectorSource,FeatureFormat>     format;
+    public Config2<VectorSource,FeatureFormat>     format;
 
     /**
      * Experimental: Setting this option instructs the source to use an XHR loader
@@ -79,7 +79,7 @@ public class VectorSource
      * download of all features from that URL. Requires format to be set as well.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorSource,String>            url;
+    public Config2<VectorSource,String>            url;
 
 
     /**

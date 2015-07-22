@@ -21,7 +21,7 @@ package org.polymap.rap.openlayers.control;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.style.StrokeStyle;
@@ -44,7 +44,7 @@ public class ZoomControl
     /**
      * className string | undefined CSS class name. Default is ol-zoom.
      */
-    public Property2<ZoomControl,String> cssClass;
+    public Config2<ZoomControl,String> cssClass;
     /*
      * TODO
      * 

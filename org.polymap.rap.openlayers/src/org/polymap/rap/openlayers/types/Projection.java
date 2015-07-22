@@ -14,7 +14,7 @@ package org.polymap.rap.openlayers.types;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
@@ -35,11 +35,11 @@ public class Projection
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property<String> code;
+    public Config<String> code;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property<Units>  units;
+    public Config<Units>  units;
 
 
     public Projection( String code, Units units ) {

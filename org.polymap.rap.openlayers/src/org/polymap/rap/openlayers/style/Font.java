@@ -14,7 +14,7 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.ConfigurationFactory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
@@ -48,11 +48,11 @@ public class Font
         bold, normal
     }
 
-    public Property2<Font,Integer> size;
+    public Config2<Font,Integer> size;
 
-    public Property2<Font,Family>  family;
+    public Config2<Font,Family>  family;
 
-    public Property2<Font,Weight>  weight;
+    public Config2<Font,Weight>  weight;
 
 
     public Font() {

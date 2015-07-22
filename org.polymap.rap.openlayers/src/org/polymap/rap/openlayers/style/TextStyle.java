@@ -14,7 +14,7 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
@@ -46,42 +46,42 @@ public class TextStyle
     // TODO add all possible properties
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Align>       textAlign;
+    public Config2<TextStyle,Align>       textAlign;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Baseline>    textBaseline;
+    public Config2<TextStyle,Baseline>    textBaseline;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,StrokeStyle> stroke;
+    public Config2<TextStyle,StrokeStyle> stroke;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Font>        font;
+    public Config2<TextStyle,Font>        font;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,String>      text;
+    public Config2<TextStyle,String>      text;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,FillStyle>   fill;
+    public Config2<TextStyle,FillStyle>   fill;
 
     /**
      * Horizontal text offset in pixels. A positive will shift the text right.
      * Default is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Double>      offsetX;
+    public Config2<TextStyle,Double>      offsetX;
 
     /**
      * Vertical text offset in pixels. A positive will shift the text down. Default
      * is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Double>      offsetY;
+    public Config2<TextStyle,Double>      offsetY;
 
     /**
      * Rotation in radians (positive rotation clockwise). Default is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<TextStyle,Double>      rotation;
+    public Config2<TextStyle,Double>      rotation;
 
 
     public TextStyle() {

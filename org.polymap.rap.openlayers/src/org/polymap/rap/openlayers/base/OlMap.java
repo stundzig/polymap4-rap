@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
@@ -47,11 +47,11 @@ public class OlMap
 
     @Mandatory
     @Immutable
-    public Property2<OlMap,View>      view;
+    public Config2<OlMap,View>      view;
 
     @Mandatory
     @Immutable
-    private Property2<OlMap,Unquoted> target;
+    private Config2<OlMap,Unquoted> target;
 
     private Composite                 widget;
 

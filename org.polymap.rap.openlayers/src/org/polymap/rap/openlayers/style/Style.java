@@ -14,7 +14,7 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
@@ -31,16 +31,16 @@ public class Style
         extends OlObject {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<Style,StrokeStyle> stroke;
+    public Config2<Style,StrokeStyle> stroke;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<Style,ImageStyle>  image;
+    public Config2<Style,ImageStyle>  image;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<Style,FillStyle>   fill;
+    public Config2<Style,FillStyle>   fill;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<Style,TextStyle>   text;
+    public Config2<Style,TextStyle>   text;
 
 
     public Style() {

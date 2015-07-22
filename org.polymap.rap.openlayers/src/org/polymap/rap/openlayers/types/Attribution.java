@@ -14,7 +14,7 @@ package org.polymap.rap.openlayers.types;
 
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
@@ -28,7 +28,7 @@ public class Attribution
         implements Jsonable {
 
     @Mandatory
-    public Property<String> html;
+    public Config<String> html;
 
 
     public Attribution( String html ) {

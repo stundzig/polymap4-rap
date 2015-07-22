@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.polymap.core.runtime.config.ConfigurationFactory;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
@@ -51,7 +51,7 @@ public abstract class OlObject {
 
     /**
      * Create the JS instance on the client side using the values of all
-     * {@link Property} members.
+     * {@link Config} members.
      */
     protected void create() {
         assert jsClassname != null && !jsClassname.equals( UNKNOWN_CLASSNAME );

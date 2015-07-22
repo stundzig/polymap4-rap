@@ -17,7 +17,7 @@ import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.DefaultString;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.Jsonable;
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -43,15 +43,15 @@ public class ImageWMSSource
 
         @Mandatory
         @OlProperty("LAYERS")
-        public Property2<RequestParams,String> layers;
+        public Config2<RequestParams,String> layers;
 
         @DefaultString("")
         @OlProperty("STYLES")
-        public Property2<RequestParams,String> styles;
+        public Config2<RequestParams,String> styles;
 
         @DefaultString("1.3.0")
         @OlProperty("VERSION")
-        public Property2<RequestParams,String> version;
+        public Config2<RequestParams,String> version;
 
 
         @Override
@@ -63,15 +63,15 @@ public class ImageWMSSource
     @Mandatory
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property2<ImageWMSSource,String>        url;
+    public Config2<ImageWMSSource,String>        url;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<ImageWMSSource,String>        crossOrigin;
+    public Config2<ImageWMSSource,String>        crossOrigin;
 
     @Mandatory
     @Immutable
     // @Concern( OlPropertyConcern.class )
-    public Property2<ImageWMSSource,RequestParams> params;
+    public Config2<ImageWMSSource,RequestParams> params;
 
 
     // TODO properties

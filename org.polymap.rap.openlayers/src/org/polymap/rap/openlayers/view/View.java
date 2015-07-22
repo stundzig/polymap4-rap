@@ -14,7 +14,7 @@ package org.polymap.rap.openlayers.view;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlProperty;
@@ -40,37 +40,37 @@ public class View
 
     // @Mandatory
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Projection> projection;
+    public Config2<View,Projection> projection;
 
     @OlProperty("center")
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Coordinate> center;
+    public Config2<View,Coordinate> center;
 
     /**
      * The extent that constrains the {@link #center}, in other words, center cannot
      * be set outside this extent. Default is undefined.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Extent>     extent;
+    public Config2<View,Extent>     extent;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Double>     resolution;
+    public Config2<View,Double>     resolution;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Double>     minResolution;
+    public Config2<View,Double>     minResolution;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Double>     maxResolution;
+    public Config2<View,Double>     maxResolution;
 
     /**
      * Only used if resolution is not defined. Zoom level used to calculate the
      * initial resolution for the view.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Integer>    zoom;
+    public Config2<View,Integer>    zoom;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Integer>    minZoom;
+    public Config2<View,Integer>    minZoom;
 
     /**
      * The maximum zoom level used to determine the resolution constraint. It is used
@@ -79,7 +79,7 @@ public class View
      * given precedence over maxZoom.
      */
     @Concern(OlPropertyConcern.class)
-    public Property2<View,Integer>    maxZoom;
+    public Config2<View,Integer>    maxZoom;
 
 
     /**

@@ -14,7 +14,7 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Color;
@@ -32,10 +32,10 @@ public class StrokeStyle
         extends OlObject {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<StrokeStyle,Float> width;
+    public Config2<StrokeStyle,Float> width;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<StrokeStyle,Color> color;
+    public Config2<StrokeStyle,Color> color;
 
 
     public StrokeStyle() {

@@ -16,7 +16,7 @@ package org.polymap.rap.openlayers.style;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
@@ -30,19 +30,19 @@ public class CircleStyle
 
 
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,StrokeStyle> stroke;
+    public Config2<CircleStyle,StrokeStyle> stroke;
 
     @Immutable
     @Mandatory
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,Float>  radius;
+    public Config2<CircleStyle,Float>  radius;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,FillStyle>   fill;
+    public Config2<CircleStyle,FillStyle>   fill;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property2<CircleStyle,Boolean>   snapToPixel;
+    public Config2<CircleStyle,Boolean>   snapToPixel;
 
 
     public CircleStyle(Float radius) {

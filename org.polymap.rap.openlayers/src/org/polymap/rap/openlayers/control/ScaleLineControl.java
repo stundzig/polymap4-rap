@@ -21,7 +21,7 @@ package org.polymap.rap.openlayers.control;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlProperty;
@@ -45,18 +45,18 @@ public class ScaleLineControl
     }
 
     @Immutable
-    public Property2<OlMap,String> className;
+    public Config2<OlMap,String> className;
 
 //    @Immutable
-    public Property2<OlMap,String> target;
+    public Config2<OlMap,String> target;
 
 //    @Immutable
     @Concern(OlPropertyConcern.class)
     @OlProperty("units")
-    public Property2<OlMap,Units>  units;
+    public Config2<OlMap,Units>  units;
 
     @Immutable
-    public Property2<OlMap,Double> minWidth;
+    public Config2<OlMap,Double> minWidth;
 
 
     public ScaleLineControl( String cssName, Double minWidth ) {

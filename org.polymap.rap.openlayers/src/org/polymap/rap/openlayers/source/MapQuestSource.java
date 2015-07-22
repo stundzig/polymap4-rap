@@ -14,7 +14,7 @@ package org.polymap.rap.openlayers.source;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
@@ -38,7 +38,7 @@ public class MapQuestSource
     @Immutable
     @OlProperty("layer")
     @Concern(OlPropertyConcern.class)
-    public Property<Type> type;
+    public Config<Type> type;
 
 
     public MapQuestSource( Type type ) {

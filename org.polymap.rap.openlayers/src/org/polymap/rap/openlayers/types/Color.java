@@ -15,7 +15,7 @@ package org.polymap.rap.openlayers.types;
 import org.polymap.core.runtime.config.Check;
 import org.polymap.core.runtime.config.ConfigurationFactory;
 import org.polymap.core.runtime.config.NumberRangeValidator;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.Jsonable;
 
 /**
@@ -31,18 +31,18 @@ public class Color
         implements Jsonable {
 
     @Check(value = NumberRangeValidator.class, args = { "0", "255" })
-    public Property2<Color,Integer> red;
+    public Config2<Color,Integer> red;
 
     @Check(value = NumberRangeValidator.class, args = { "0", "255" })
-    public Property2<Color,Integer> green;
+    public Config2<Color,Integer> green;
 
     @Check(value = NumberRangeValidator.class, args = { "0", "255" })
-    public Property2<Color,Integer> blue;
+    public Config2<Color,Integer> blue;
 
     @Check(value = NumberRangeValidator.class, args = { "0", "1" })
-    public Property2<Color,Float>   alpha;
+    public Config2<Color,Float>   alpha;
 
-    public Property2<Color,String>  name;
+    public Config2<Color,String>  name;
 
 
     public Color( String color ) {

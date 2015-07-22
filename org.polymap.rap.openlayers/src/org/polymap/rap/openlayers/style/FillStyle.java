@@ -14,7 +14,7 @@
 package org.polymap.rap.openlayers.style;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Color;
@@ -29,7 +29,7 @@ public class FillStyle
         extends OlObject {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<FillStyle,Color> color;
+    public Config2<FillStyle,Color> color;
 
 
     public FillStyle() {

@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import org.json.JSONString;
 import org.polymap.core.runtime.config.ConfigurationException;
 import org.polymap.core.runtime.config.DefaultPropertyConcern;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 
 /**
- * Synchronizes the value of a {@link Property} of an {@link OlObject},
+ * Synchronizes the value of a {@link Config} of an {@link OlObject},
  * {@link Jsonable} or {@link Collection} thereof with the property of the JavaScript
  * object.
  * <p/>
@@ -42,7 +42,7 @@ public class OlPropertyConcern
 
 
     @Override
-    public Object doSet( Object obj, Property prop, Object value ) {
+    public Object doSet( Object obj, Config prop, Object value ) {
         // log.info( obj.getClass().getSimpleName() + "." + prop.info().getName() +
         // " = " + value );
 
@@ -99,7 +99,7 @@ public class OlPropertyConcern
 
 
     /**
-     * Creates a JSON representation of the {@link Property} members of an
+     * Creates a JSON representation of the {@link Config} members of an
      * {@link OlObject}.
      */
     public static String propertiesAsJson( Object obj ) {
@@ -107,9 +107,9 @@ public class OlPropertyConcern
         try {
             for (Class cl = obj.getClass(); cl != null; cl = cl.getSuperclass()) {
                 for (Field f : cl.getDeclaredFields()) {
-                    if (Property.class.isAssignableFrom( f.getType() )) {
+                    if (Config.class.isAssignableFrom( f.getType() )) {
                         f.setAccessible( true );
-                        Property prop = (Property)f.get( obj );
+                        Config prop = (Config)f.get( obj );
                         Object value = prop.get();
                         if (value != null) {
                             Object jsonValue = propertyAsJson( value );

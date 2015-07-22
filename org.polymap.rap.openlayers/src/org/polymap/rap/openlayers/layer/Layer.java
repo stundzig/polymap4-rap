@@ -15,7 +15,7 @@ package org.polymap.rap.openlayers.layer;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.source.Source;
 
@@ -36,7 +36,7 @@ public abstract class Layer<S extends Source>
     @Immutable
     @Mandatory
     @Concern(OlPropertyConcern.class)
-    public Property2<Layer<S>,S> source;
+    public Config2<Layer<S>,S> source;
 
 
     public Layer( String jsClassname ) {

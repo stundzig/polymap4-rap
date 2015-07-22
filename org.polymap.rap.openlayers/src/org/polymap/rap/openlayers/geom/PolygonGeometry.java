@@ -25,7 +25,7 @@ import java.util.List;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
@@ -42,7 +42,7 @@ public class PolygonGeometry
     @Immutable
     @Mandatory
     @Concern(OlPropertyConcern.class)
-    Property2<SimpleGeometry,List<Coordinate>> coordinates;
+    Config2<SimpleGeometry,List<Coordinate>> coordinates;
 
 
     public PolygonGeometry( Coordinate... coordinates ) {

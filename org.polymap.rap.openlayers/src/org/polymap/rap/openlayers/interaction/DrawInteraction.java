@@ -14,7 +14,7 @@ package org.polymap.rap.openlayers.interaction;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.rap.openlayers.base.Jsonable;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
@@ -61,11 +61,11 @@ public class DrawInteraction
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property<VectorSource> source;
+    public Config<VectorSource> source;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property<Type>         type;
+    public Config<Type>         type;
 
 
     public DrawInteraction( VectorSource source, Type type ) {

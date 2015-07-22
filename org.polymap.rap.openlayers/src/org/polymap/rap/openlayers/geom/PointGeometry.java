@@ -16,7 +16,7 @@ package org.polymap.rap.openlayers.geom;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
@@ -33,7 +33,7 @@ public class PointGeometry
     @Immutable
     @Mandatory
     @Concern(OlPropertyConcern.class)
-    Property2<SimpleGeometry,Coordinate>    coordinate;
+    Config2<SimpleGeometry,Coordinate>    coordinate;
 
     public PointGeometry(Coordinate coordinate) {
         super( "ol.geom.Point" );

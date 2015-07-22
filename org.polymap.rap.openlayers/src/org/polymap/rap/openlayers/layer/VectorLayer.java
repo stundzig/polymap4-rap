@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.source.VectorSource;
@@ -35,7 +35,7 @@ public class VectorLayer
         extends Layer<VectorSource> {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<VectorLayer,Style>     style;
+    public Config2<VectorLayer,Style>     style;
     
     
     /**

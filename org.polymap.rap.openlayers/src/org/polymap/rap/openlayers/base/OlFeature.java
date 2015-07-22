@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.geom.Geometry;
 import org.polymap.rap.openlayers.style.Style;
 import org.polymap.rap.openlayers.types.Coordinate;
@@ -35,29 +35,29 @@ public class OlFeature
     // @Mandatory
     // @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property2<OlFeature,Geometry>   geometry;
+    public Config2<OlFeature,Geometry>   geometry;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<OlFeature,Coordinate> labelPoint;
+    public Config2<OlFeature,Coordinate> labelPoint;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
     @OlSetter("setStyle")
-    public Property2<OlFeature,Style>      style;
+    public Config2<OlFeature,Style>      style;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
     // defaults to "geometry"
-    public Property2<OlFeature,String>     geometryName;
+    public Config2<OlFeature,String>     geometryName;
 
     // @Mandatory
     // @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property2<OlFeature,String>     name;
+    public Config2<OlFeature,String>     name;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Property2<OlFeature,String>     id;
+    public Config2<OlFeature,String>     id;
 
 
     public OlFeature() {

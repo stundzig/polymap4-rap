@@ -13,7 +13,7 @@
 package org.polymap.rap.openlayers.source;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Property2;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
@@ -27,10 +27,10 @@ public class TileJsonSource
         extends TileImageSource {
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TileJsonSource,String> url;
+    public Config2<TileJsonSource,String> url;
 
     @Concern(OlPropertyConcern.class)
-    public Property2<TileJsonSource,String> crossOrigin;
+    public Config2<TileJsonSource,String> crossOrigin;
 
 
     // TODO properties

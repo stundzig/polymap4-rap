@@ -21,10 +21,10 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.source.MapQuestSource;
-import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
@@ -116,8 +116,8 @@ public abstract class DemoTab {
     protected OlMap defaultMap( Composite parent ) {
         OlMap map = new OlMap( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER, new View()
                 .projection.put( new Projection( "EPSG:3857", Units.m ) )
-                .zoom.put( 3 )
-                .center.put( new Coordinate( -8161939, 6095025 ) ) );
+                .zoom.put( 3 ) );
+                //.center.put2( new Coordinate( -8161939, 6095025 ) ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
         //

@@ -12,16 +12,14 @@
  */
 package org.polymap.rap.openlayers;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.rap.rwt.RWT;
+
+import org.polymap.core.runtime.Closer;
+
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.http.HttpService;
-import org.osgi.service.http.NamespaceException;
-import org.osgi.util.tracker.ServiceTracker;
 import org.polymap.rap.openlayers.base.OlMap;
 
 /**
@@ -72,12 +70,7 @@ public class OlPlugin
                 RWT.getResourceManager().register( resource, inputStream );
             }
             finally {
-                try {
-                    inputStream.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Closer.create().close( inputStream ).rethrowOrWrap( RuntimeException.class );
             }
         }
     }

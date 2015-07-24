@@ -32,13 +32,13 @@ import org.polymap.rap.openlayers.view.View;
  * The Javascript and also the CSS for the map is loaded on demand and with a fully
  * working layout. To change the default theme, add another CSS file as resource
  * <strong>ol/css/ol.css<strong>.
- * <p>
+ * <p/>
  * 
  * This could be done in the application configuration like:
  * 
  * <pre>
- * application.addResource( "ol/css/ol.css", resourceName -> {
- *     return load( "./resources/css/my-ol.css" );
+ * application.addResource( &quot;ol/css/ol.css&quot;, resourceName -&gt; {
+ *     return load( &quot;./resources/css/my-ol.css&quot; );
  * } );
  * </pre>
  * 

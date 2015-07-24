@@ -51,7 +51,7 @@ public class ScaleLineControlTab
     @Override
     protected void createDemoControls( Composite parent ) {
         map = defaultMap( parent );
-        control = new ScaleLineControl( null, null );
+        control = new ScaleLineControl();
         control.units.set( ScaleLineControl.Units.degrees );
         map.addControl( control );
     }

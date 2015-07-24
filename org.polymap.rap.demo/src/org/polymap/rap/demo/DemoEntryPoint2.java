@@ -83,7 +83,7 @@ public class DemoEntryPoint2
 
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                map.addControl( new ScaleLineControl( null, null ) );
+                map.addControl( new ScaleLineControl() );
                 // view.removeEventListener( View.EVENT.center, listener );
             }
 

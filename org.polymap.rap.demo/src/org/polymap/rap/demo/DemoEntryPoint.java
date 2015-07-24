@@ -46,7 +46,7 @@ public class DemoEntryPoint
 
     private final static Log log         = LogFactory.getLog( DemoEntryPoint2.class );
 
-    final ServerPushSession  pushSession = new ServerPushSession();
+//    final ServerPushSession  pushSession = new ServerPushSession();
 
     private Tree             menu;
 
@@ -58,10 +58,10 @@ public class DemoEntryPoint
 
     @Override
     protected void createContents( Composite parent ) {
-        pushSession.start();
-        parent.addDisposeListener( e -> {
-            pushSession.stop();
-        } );
+//        pushSession.start();
+//        parent.addDisposeListener( e -> {
+//            pushSession.stop();
+//        } );
         parent.setLayout( new GridLayout( 2, false ) );
         Color backgroundColor = new Color( parent.getDisplay(), 0x31, 0x61, 0x9C );
         Composite header = new Composite( parent, SWT.NONE );

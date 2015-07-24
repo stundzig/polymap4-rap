@@ -118,7 +118,7 @@ public abstract class DemoTab {
                 new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).zoom
                         .put( 12 ).center.put( new Coordinate( 1401845.7269824906,6666952.61751981 ) ) );
 
-        map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
+//        map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
 
         // map.addLayer( new ImageLayer().source
         // .put( new ImageWMSSource().url.put(

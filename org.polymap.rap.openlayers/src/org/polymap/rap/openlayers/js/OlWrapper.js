@@ -15,26 +15,21 @@
 
 /**
  * JavaScript Part for the OpenLayers RAP Widget
- * 
- * @author Marcus -LiGi- Bueschleb mail to ligi (at) polymap (dot) de
  */
-/*
- * function loadScript(url, callback, context) { var script =
- * document.createElement("script");
- * 
- * script.type = "text/javascript";
- * 
- * if (script.readyState) { // IE script.onreadystatechange = function() { if
- * (script.readyState == "loaded" || script.readyState == "complete") {
- * script.onreadystatechange = null; callback(context); } }; } else { // Others
- * script.onload = function() { callback(context); }; }
- * 
- * script.src = url;
- * document.getElementsByTagName("head")[0].appendChild(script); }
- */
+function loadCSS(url) { 
+	var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = url; 
+    document.getElementsByTagName("head")[0].appendChild(link); 
+}
+
 (function() {
 	'use strict';
 
+	loadCSS('rwt-resources/ol/css/ol.css');
+	loadCSS('rwt-resources/ol/css/bootstrap.css');
+	
 	rap.registerTypeHandler("org.polymap.rap.openlayers.OlWidget", {
 
 		factory : function(properties) {
@@ -73,7 +68,7 @@
 		createDiv : function(id) {
 			console.log('create map in ' + id);
 			var parent = rap.getObject(id);
-//			console.log('parent is ' + parent.getAttribute('id'));
+// console.log('parent is ' + parent.getAttribute('id'));
 			var element = document.createElement('div');
 			element.setAttribute("id", id + id);
 			parent.append(element);
@@ -197,12 +192,14 @@
 					window.clearTimeout(oldTimeOut);
 				}
 				var that = this;
-				// wait 100ms for sending the event, newer events will remove this call
+				// wait 100ms for sending the event, newer events will remove
+				// this call
 				var newTimeOut = window.setTimeout(function() {console.log(properties.code);eval(properties.code);},100);
 				this.events[theEvent + theEvent.type] = newTimeOut;
 			}, this);
 			console.log('key:  ', key);
-			// listeners stored by key, do later remove them from the global goog context
+			// listeners stored by key, do later remove them from the global
+			// goog context
 			this.listenerKeys[properties.hashCode] = key;
 		},
 

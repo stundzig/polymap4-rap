@@ -12,12 +12,17 @@
  */
 package org.polymap.rap.openlayers;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.rap.rwt.RWT;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.osgi.util.tracker.ServiceTracker;
+import org.polymap.rap.openlayers.base.OlMap;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -28,7 +33,9 @@ public class OlPlugin
         extends Plugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.polymap.rap.openlayers";
+    public static final String PLUGIN_ID       = "org.polymap.rap.openlayers";
+
+    public static final String RESOURCE_PREFIX = "ol/";
 
     private static OlPlugin    plugin;
 
@@ -39,41 +46,45 @@ public class OlPlugin
 
     // instance *******************************************
 
-    private ServiceTracker httpServiceTracker;
-
-
     public void start( final BundleContext context ) throws Exception {
         super.start( context );
-
-        // register HTTP resource
-        httpServiceTracker = new ServiceTracker( context, HttpService.class.getName(), null ) {
-
-            public Object addingService( ServiceReference reference ) {
-                HttpService httpService = (HttpService)super.addingService( reference );
-                if (httpService != null) {
-                    try {
-                        httpService.registerResources( "/ol_js", "/resources/js", null );
-                        httpService.registerResources( "/ol_css", "/resources/css", null );
-                    }
-                    catch (NamespaceException e) {
-                        throw new RuntimeException( e );
-                    }
-                }
-                return httpService;
-            }
-        };
-        httpServiceTracker.open();
 
         plugin = this;
     }
 
 
     public void stop( BundleContext context ) throws Exception {
-        httpServiceTracker.close();
-        httpServiceTracker = null;
 
         plugin = null;
         super.stop( context );
+    }
+
+
+    public static void registerResource( String resourceName, String fileName ) {
+        String resource = RESOURCE_PREFIX + fileName;
+        if (!RWT.getResourceManager().isRegistered( resource )) {
+            ClassLoader classLoader = OlMap.class.getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream( resourceName );
+            if (inputStream == null) {
+                throw new IllegalStateException( resourceName + " could not be found" );
+            }
+            try {
+                RWT.getResourceManager().register( resource, inputStream );
+            }
+            finally {
+                try {
+                    inputStream.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public static String resourceLocation( String resource ) {
+        return RWT.getResourceManager().getLocation( RESOURCE_PREFIX + resource );
     }
 
 }

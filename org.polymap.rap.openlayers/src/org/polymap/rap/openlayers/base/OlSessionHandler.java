@@ -18,8 +18,6 @@
  */
 package org.polymap.rap.openlayers.base;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +34,7 @@ import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
 import org.eclipse.rap.rwt.remote.AbstractOperationHandler;
 import org.eclipse.rap.rwt.remote.Connection;
 import org.eclipse.rap.rwt.remote.RemoteObject;
+import org.polymap.rap.openlayers.OlPlugin;
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.util.Stringer;
 
@@ -44,6 +43,7 @@ import org.polymap.rap.openlayers.util.Stringer;
  * hash / id's
  * 
  * @author Marcus -LiGi- B&uuml;schleb < mail: ligi (at) polymap (dot) de >
+ * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class OlSessionHandler {
 
@@ -81,78 +81,52 @@ public class OlSessionHandler {
 
     private final AbstractOperationHandler operationHandler = new AbstractOperationHandler() {
 
-                                                                private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
 
-                                                                @Override
-                                                                public void handleCall(
-                                                                        String method,
-                                                                        JsonObject properties ) {
-                                                                    log.warn( this + ".handleCall "
-                                                                            + method + ";"
-                                                                            + properties.toString() );
-                                                                    if ("handleOnRender"
-                                                                            .equals( method )) {
-                                                                        isRendered = true;
-                                                                        for (RemoteCall call : calls) {
-                                                                            callRemote(
-                                                                                    call.method,
-                                                                                    call.json );
-                                                                        }
-                                                                        calls.clear();
-                                                                    }
-                                                                    else {
-                                                                        JsonValue objRefJS = properties
-                                                                                .get( "event_src_obj" );
-                                                                        if (objRefJS != null) {
-                                                                            String objRef = objRefJS
-                                                                                    .asString();
-                                                                            properties
-                                                                                    .remove( "event_src_obj" );
-                                                                            OlObject obj = getObject( objRef );
-                                                                            if (obj != null) {
-                                                                                OlEvent event = new OlEvent(
-                                                                                        obj,
-                                                                                        method,
-                                                                                        properties );
-                                                                                for (OlEventListener l : obj
-                                                                                        .getEventListener( method )) {
-                                                                                    l.handleEvent( event );
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            };
+        @Override
+        public void handleCall( String method, JsonObject properties ) {
+            log.warn( this + ".handleCall " + method + ";" + properties.toString() );
+            if ("handleOnRender".equals( method )) {
+                isRendered = true;
+                for (RemoteCall call : calls) {
+                    callRemote( call.method, call.json );
+                }
+                calls.clear();
+            }
+            else {
+                JsonValue objRefJS = properties.get( "event_src_obj" );
+                if (objRefJS != null) {
+                    String objRef = objRefJS.asString();
+                    properties.remove( "event_src_obj" );
+                    OlObject obj = getObject( objRef );
+                    if (obj != null) {
+                        OlEvent event = new OlEvent( obj, method, properties );
+                        for (OlEventListener l : obj.getEventListener( method )) {
+                            l.handleEvent( event );
+                        }
+                    }
+                }
+            }
+        }
+    };
 
 
     private void loadJavaScript() {
+
+        // if not set as resource before, add this default css
+        OlPlugin.registerResource( "resources/css/bootstrap-3.3.4.min.css", "css/bootstrap.css" );
+        OlPlugin.registerResource( "resources/css/ol-3.7.0.css", "css/ol.css" );
+
+        OlPlugin.registerResource( "resources/js/ol-3.7.0.js", "js/ol.js" );
+        OlPlugin.registerResource( "org/polymap/rap/openlayers/js/OlWrapper.js",
+                "js/OlWrapper.js" );
+
         JavaScriptLoader jsLoader = RWT.getClient().getService( JavaScriptLoader.class );
-        jsLoader.require( "/ol_js/ol-3.6.0.js" );
-
-        register( "org/polymap/rap/openlayers/js/OlWrapper.js", "OlWrapper.js" );
-        jsLoader.require( RWT.getResourceManager().getLocation( "ol_res/" + "OlWrapper.js" ) );
+        jsLoader.require( OlPlugin.resourceLocation( "js/ol.js" ) );
+        jsLoader.require( OlPlugin.resourceLocation( "js/OlWrapper.js" ) );
     }
 
-
-    private void register( String resourceName, String fileName ) {
-        ClassLoader classLoader = OlMap.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream( resourceName );
-        if (inputStream == null) {
-            throw new IllegalStateException( resourceName + " could not be found" );
-        }
-        try {
-            RWT.getResourceManager().register( "ol_res/" + fileName, inputStream );
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     // remote call
 
@@ -227,17 +201,15 @@ public class OlSessionHandler {
                 "var result = that.objs['", src.getObjRef(), "'].getProperties();",
                 "result['event_src_obj'] = '" + src.getObjRef() + "';", payloadStringer,
                 "rap.getRemoteObject(that).call( '", event, "', result);" ).toString();
-        callRemote(
-                "addListener",
+        callRemote( "addListener",
                 new JsonObject().add( "src", src.getObjRef() ).add( "code", command )
-                        .add( "event", event ).add( "hashCode", event + "_" + listener.hashCode() ) );
+                        .add( "event", event )
+                        .add( "hashCode", event + "_" + listener.hashCode() ) );
     }
 
 
     public void unregisterEventListener( OlObject src, String event, OlEventListener listener ) {
-        callRemote(
-                "removeListener",
-                new JsonObject().add( "src", src.getObjRef() ).add( "hashCode",
-                        event + "_" + listener.hashCode() ) );
+        callRemote( "removeListener", new JsonObject().add( "src", src.getObjRef() )
+                .add( "hashCode", event + "_" + listener.hashCode() ) );
     }
 }

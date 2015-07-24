@@ -29,8 +29,20 @@ import org.polymap.rap.openlayers.source.Source;
 import org.polymap.rap.openlayers.view.View;
 
 /**
+ * The Javascript and also the CSS for the map is loaded on demand and with a fully
+ * working layout. To change the default theme, add another CSS file as resource
+ * <strong>ol/css/ol.css<strong>. 
+ * <p>
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">Open Layers API Doc</a>
+ * This could be done in the application configuration like:
+ * <pre>
+ * application.addResource( "ol/css/ol.css", resourceName -> {
+ *     return load( "./resources/css/my-ol.css" );
+ * } );
+ * </pre>
+ * 
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.Map.html">Open Layers API
+ *      Doc</a>
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://mapzone.io">Steffen Stundzig</a>
@@ -53,7 +65,7 @@ public class OlMap
     @Immutable
     private Config2<OlMap,Unquoted> target;
 
-    private Composite                 widget;
+    private Composite               widget;
 
 
     public OlMap( Composite parent, int style, View view ) {
@@ -93,7 +105,8 @@ public class OlMap
     public void setLayoutData( Object layoutData ) {
         widget.setLayoutData( layoutData );
     }
-    
+
+
     /**
      * Adds the given layer to the top of this map.
      */

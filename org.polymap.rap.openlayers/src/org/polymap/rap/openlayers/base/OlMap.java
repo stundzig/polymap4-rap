@@ -18,9 +18,9 @@ import org.eclipse.rap.rwt.widgets.WidgetUtil;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
@@ -71,6 +71,7 @@ public class OlMap
     public OlMap( Composite parent, int style, View view ) {
         super( "ol.Map" );
         this.view.set( view );
+        view.setMap( this );
 
         widget = new Composite( parent, style );
         widget.setLayout( new Layout() {

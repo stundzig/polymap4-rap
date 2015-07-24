@@ -13,21 +13,25 @@
 package org.polymap.rap.openlayers.view;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rap.openlayers.base.OlEventListener;
+import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
+import org.polymap.rap.openlayers.types.Size;
 
 /**
  * An ol.View object represents a simple 2D view of the map. This is the object to
  * act upon to change the center, resolution, and rotation of the map.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.View.html">OpenLayers Doc</a>
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.View.html">OpenLayers
+ *      Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -61,6 +65,8 @@ public class View
 
     @Concern(OlPropertyConcern.class)
     public Config2<View,Double>     maxResolution;
+
+    private OlMap                   map;
 
     /**
      * Only used if resolution is not defined. Zoom level used to calculate the
@@ -107,24 +113,38 @@ public class View
         removeEventListener( "change:" + event.name(), listener );
     }
 
+
     public void addPropertyChangeListener( OlEventListener listener ) {
         addEventListener( "propertychange", listener, null );
     }
-    
-    // public static class Params {
-    // private Coordinate view;
-    // private Double maxResolution;
-    // private Double minResolution;
-    // private Integer maxZoom;
-    // private Integer minZoom;
-    // private Projection projection;
-    // private Double resolution;
-    // private Double rotation;
-    // private Integer zoom;
-    //
-    // private Params() {
-    //
-    // }
-    // }
+
+
+    /**
+     * Fit the given geometry or extent based on the given map size and border. The
+     * size is pixel dimensions of the box to fit the extent into. In most cases you
+     * will want to use the map size, that is map.getSize(). Takes care of the map
+     * angle.
+     * 
+     * @param geometry ol.geom.SimpleGeometry | ol.Extent Geometry.
+     * @param size ol.Size Box pixel size, if null the default map size is used.
+     */
+    public void fit( Extent geometry, Size size ) {
+        if (size == null) {
+
+        }
+        // call fit(geometry, size) or size = 'map.getSize()'
+        execute( "this.obj.fit(" + geometry.toJson() + ", " + this.map.getJSObjRef()
+                + ".getSize());" );
+
+    }
+
+    /**
+     * must only be called from the OlMap
+     * 
+     * @param map
+     */
+    public void setMap( OlMap map ) {
+        this.map = map;
+    }
 
 }

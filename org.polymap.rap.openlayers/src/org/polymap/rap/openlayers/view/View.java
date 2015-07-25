@@ -1,5 +1,7 @@
 /*
- * polymap.org Copyright 2015, Polymap GmbH. All rights reserved.
+ * polymap.org and individual contributors as indicated by the @authors tag.
+ * Copyright (C) 2009-2015 
+ * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
@@ -12,14 +14,14 @@
  */
 package org.polymap.rap.openlayers.view;
 
+import java.util.List;
+
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rap.openlayers.base.OlEventListener;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlObject;
-import org.polymap.rap.openlayers.base.OlProperty;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
@@ -42,41 +44,33 @@ public class View
         center, resolution, rotation
     }
 
-    // @Mandatory
-    @Concern(OlPropertyConcern.class)
-    public Config2<View,Projection> projection;
-
-    @OlProperty("center")
-    @Concern(OlPropertyConcern.class)
-    public Config2<View,Coordinate> center;
-
     /**
-     * The extent that constrains the {@link #center}, in other words, center cannot
-     * be set outside this extent. Default is undefined.
+     * The initial center for the view. The coordinate system for the center is
+     * specified with the projection option. Default is undefined, and layer sources
+     * will not be fetched if this is not set.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Extent>     extent;
-
-    @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>     resolution;
-
-    @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>     minResolution;
-
-    @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>     maxResolution;
-
-    private OlMap                   map;
+    public Config2<View,Coordinate>   center;
 
     /**
-     * Only used if resolution is not defined. Zoom level used to calculate the
-     * initial resolution for the view.
+     * The maximum resolution used to determine the resolution constraint. It is used
+     * together with minResolution (or maxZoom) and zoomFactor. If unspecified it is
+     * calculated in such a way that the projection's validity extent fits in a
+     * 256x256 px tile. If the projection is Spherical Mercator (the default) then
+     * maxResolution defaults to 40075016.68557849 / 256 = 156543.03392804097.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Integer>    zoom;
+    public Config2<View,Double>       maxResolution;
 
+    /**
+     * The minimum resolution used to determine the resolution constraint. It is used
+     * together with maxResolution (or minZoom) and zoomFactor. If unspecified it is
+     * calculated assuming 29 zoom levels (with a factor of 2). If the projection is
+     * Spherical Mercator (the default) then minResolution defaults to
+     * 40075016.68557849 / 256 / Math.pow(2, 28) = 0.0005831682455839253.
+     */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Integer>    minZoom;
+    public Config2<View,Double>       minResolution;
 
     /**
      * The maximum zoom level used to determine the resolution constraint. It is used
@@ -85,7 +79,70 @@ public class View
      * given precedence over maxZoom.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Integer>    maxZoom;
+    public Config2<View,Integer>      maxZoom;
+
+    /**
+     * The minimum zoom level used to determine the resolution constraint. It is used
+     * together with maxZoom (or minResolution) and zoomFactor. Default is 0. Note
+     * that if maxResolution is also provided, it is given precedence over minZoom.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Integer>      minZoom;
+
+    /**
+     * The projection. Default is EPSG:3857 (Spherical Mercator).
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Projection>   projection;
+
+    /**
+     * The initial resolution for the view. The units are projection units per pixel
+     * (e.g. meters per pixel). An alternative to setting this is to set zoom.
+     * Default is undefined, and layer sources will not be fetched if neither this
+     * nor zoom are defined.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Double>       resolution;
+
+    /**
+     * Resolutions to determine the resolution constraint. If set the maxResolution,
+     * minResolution, minZoom, maxZoom, and zoomFactor options are ignored.
+     * 
+     * Implementation Note: Resolutions must be added in descending order. And
+     * Resolutions must be set before adding the layers.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,List<Double>> resolutions;
+
+    /**
+     * The initial rotation for the view in radians (positive rotation clockwise).
+     * Default is 0.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Double>       rotation;
+
+    /**
+     * Only used if resolution is not defined. Zoom level used to calculate the
+     * initial resolution for the view.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Integer>      zoom;
+
+    /**
+     * The zoom factor used to determine the resolution constraint. Default is 2.
+     */
+    @Concern(OlPropertyConcern.class)
+    public Config2<View,Integer>      zoomFactor;
+
+    // /** experimental
+    // * The extent that constrains the {@link #center}, in other words, center
+    // cannot
+    // * be set outside this extent. Default is undefined.
+    // */
+    // @Concern(OlPropertyConcern.class)
+    // public Config2<View,Extent> extent;
+
+    private OlMap                     map;
 
 
     /**
@@ -99,7 +156,8 @@ public class View
 
 
     /**
-     * The event contains the new center, resolution and rotation
+     * The event contains all properties, also the new center, resolution and
+     * rotation
      * 
      * @param event
      * @param listener
@@ -130,13 +188,16 @@ public class View
      */
     public void fit( Extent geometry, Size size ) {
         if (size == null) {
-
+            // call fit(geometry, map.getSize());
+            execute( "this.obj.fit(" + geometry.toJson() + ", " + this.map.getJSObjRef()
+                    + ".getSize());" );
         }
-        // call fit(geometry, size) or size = 'map.getSize()'
-        execute( "this.obj.fit(" + geometry.toJson() + ", " + this.map.getJSObjRef()
-                + ".getSize());" );
-
+        else {
+            // call fit(geometry, size);
+            execute( "this.obj.fit(" + geometry.toJson() + ", " + size.toJson() + ");" );
+        }
     }
+
 
     /**
      * must only be called from the OlMap

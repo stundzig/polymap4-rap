@@ -12,12 +12,14 @@
  */
 package org.polymap.rap.openlayers.base;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.polymap.core.runtime.config.ConfigurationFactory;
+import org.json.JSONArray;
 import org.polymap.core.runtime.config.Config;
 
 import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
@@ -61,11 +63,11 @@ public abstract class OlObject {
     }
 
 
-    protected void create( @SuppressWarnings("hiding") String jsClassname, String options ) {
-        create( new Stringer( "new ", jsClassname, "(", options, ")" ).toString() );        
+    protected void create( @SuppressWarnings("hiding" ) String jsClassname, String options) {
+        create( new Stringer( "new ", jsClassname, "(", options, ")" ).toString() );
     }
-    
-    
+
+
     protected void create( String code ) {
         OlSessionHandler wp = OlSessionHandler.getInstance();
         objRef = wp.generateReference( this );
@@ -81,8 +83,8 @@ public abstract class OlObject {
 
 
     public void execute( String code ) {
-        OlSessionHandler.getInstance().executeCommand(
-                new OlCommand( new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
+        OlSessionHandler.getInstance().executeCommand( new OlCommand(
+                new Stringer( "this.obj=", getJSObjRef(), "; ", code ).toString() ) );
     }
 
 
@@ -126,15 +128,15 @@ public abstract class OlObject {
         prepareExecutionCode( function, obj );
     }
 
-//
-//    public void execute( String function, OlObject obj, boolean bool ) {
-//        prepareExecutionCode( function, obj, bool );
-//    }
-//
-//
-//    public void execute( String function, double dbl, boolean bool ) {
-//        prepareExecutionCode( function, dbl, bool );
-//    }
+    //
+    // public void execute( String function, OlObject obj, boolean bool ) {
+    // prepareExecutionCode( function, obj, bool );
+    // }
+    //
+    //
+    // public void execute( String function, double dbl, boolean bool ) {
+    // prepareExecutionCode( function, dbl, bool );
+    // }
 
 
     public void execute( String function, int val ) {
@@ -163,33 +165,44 @@ public abstract class OlObject {
         StringBuilder buf = new StringBuilder( 128 ).append( getJSObjRef() ).append( '.' )
                 .append( "set('" ).append( attr ).append( "'," );
 
-        if (arg instanceof OlObject) {
-            buf.append( ((OlObject)arg).getJSObjRef() );
-        }
-        else if (arg instanceof Number) {
-            buf.append( arg.toString() );
-        }
-        else if (arg instanceof Boolean) {
-            buf.append( arg.toString() );
-        }
-        else if (arg instanceof String) {
-            buf.append( '\'' ).append( (String)arg ).append( '\'' );
-        }
-        else if (arg instanceof Enum) {
-            buf.append( '\'' ).append( ((Enum)arg).name() ).append( '\'' );
-        }
-        else if (arg instanceof Unquoted) {
-            buf.append( ((Unquoted)arg).toJSONString() );
-        }
-        else {
-            throw new IllegalArgumentException( "Unknown arg type: " + arg );
-        }
+//        if (arg instanceof Collection) {
+//            JSONArray result = new JSONArray();
+//            ((Collection<Object>)arg).forEach( item -> {
+//                result.put( argToString( item ) );
+//            } );
+//            buf.append( result.toString() );
+//        } else {
+            buf.append( argToString( arg ) );
+//        }
         execute( buf.append( ");" ).toString() );
     }
 
 
+    private String argToString( Object arg ) {
+        if (arg instanceof OlObject) {
+            return ((OlObject)arg).getJSObjRef();
+        }
+        if (arg instanceof Number || arg instanceof Boolean) {
+            return arg.toString();
+        }
+        if (arg instanceof String) {
+            return '\'' + (String)arg + '\'';
+        }
+        if (arg instanceof Enum) {
+            return '\'' + ((Enum)arg).name() + '\'';
+        }
+        if (arg instanceof Unquoted) {
+            return ((Unquoted)arg).toJSONString();
+        }
+        if (arg instanceof JSONArray) {
+            return ((JSONArray)arg).toString();
+        }
+        throw new IllegalArgumentException( "Unknown arg type: " + arg.getClass() + ": " + arg );
+    }
+
+
     public String getObjRef() {
-//        lazyCreate();
+        // lazyCreate();
         return objRef;
     }
 
@@ -233,7 +246,8 @@ public abstract class OlObject {
     private Map<String,Set<OlEventListener>> eventListeners = new HashMap<String,Set<OlEventListener>>();
 
 
-    protected void addEventListener( final String event, OlEventListener listener, PayLoad payload ) {
+    protected void addEventListener( final String event, OlEventListener listener,
+            PayLoad payload ) {
         Set<OlEventListener> listeners = eventListeners.get( event );
         if (listeners == null) {
             listeners = new HashSet<OlEventListener>();

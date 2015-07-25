@@ -27,45 +27,45 @@ import org.polymap.rap.openlayers.types.Extent;
  * Abstract base class; normally only used for creating subclasses and not
  * instantiated in apps.
  * 
- * @see <a
- *      href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">OpenLayers</a>
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">
+ *      OpenLayers</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class Base
         extends OlObject {
 
-    @Check(value=NumberRangeValidator.class, args={"0","1"})
+    @Check(value = NumberRangeValidator.class, args = { "0", "1" })
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Float>        opacity;
+    public Config2<Base,Float>   opacity;
 
     /**
      * The visibility flag for the layer and hide/show & redraw accordingly. Fire
      * event unless otherwise specified.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Boolean>      visible;
+    public Config2<Base,Boolean> visible;
 
-    /** 
-     * The minimum resolution (inclusive) at which this layer will be visible. 
+    /**
+     * The minimum resolution (inclusive) at which this layer will be visible.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Float>        minResolution;
+    public Config2<Base,Float>   minResolution;
 
-    /** 
-     * The maximun resolution (exclusive) below which this layer will be visible. 
+    /**
+     * The maximun resolution (exclusive) below which this layer will be visible.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Float>        maxResolution;
+    public Config2<Base,Float>   maxResolution;
 
     /**
      * The bounding extent for layer rendering. The layer will not be rendered
      * outside of this extent.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Extent>       extent;
+    public Config2<Base,Extent>  extent;
 
-    
-	public Base( String jsClassname ) {
+
+    public Base( String jsClassname ) {
         super( jsClassname );
     }
 

@@ -12,43 +12,20 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rap.openlayers.types;
-
-import org.json.JSONArray;
-import org.polymap.rap.openlayers.base.Jsonable;
+package org.polymap.rap.openlayers.source;
 
 /**
- * An array of numbers representing an xy coordinate. Example: [16, 48].
+ * Set the grid pattern for sources accessing WMTS tiled-image servers.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.html#Coordinate
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.tilegrid.WMTS.html">
+ *      OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
+ *
  */
-public class Coordinate
-        implements Jsonable {
+public class WMTSTileGrid
+        extends TileGrid {
 
-    private double x;
-
-    private double y;
-
-
-    public Coordinate( double x, double y ) {
-        this.x = x;
-        this.y = y;
+    public WMTSTileGrid() {
+        super( "ol.tilegrid.WMTS" );
     }
-
-
-    //
-    // public double x() {
-    // return x;
-    // }
-    //
-    // public double y() {
-    // return y;
-    // }
-
-    @Override
-    public Object toJson() {
-        return new JSONArray().put( x ).put( y );
-    }
-
 }

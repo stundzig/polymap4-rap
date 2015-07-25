@@ -23,10 +23,7 @@ package org.polymap.rap.openlayers.source;
 public abstract class TileSource
         extends Source {
 
-    // TODO properties
-
     public TileSource( String jsClassname ) {
         super( jsClassname );
     }
-
 }

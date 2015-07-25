@@ -1,5 +1,7 @@
 /*
- * polymap.org Copyright 2009-2015, Polymap GmbH. All rights reserved.
+ * polymap.org and individual contributors as indicated by the @authors tag.
+ * Copyright (C) 2009-2015 
+ * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software

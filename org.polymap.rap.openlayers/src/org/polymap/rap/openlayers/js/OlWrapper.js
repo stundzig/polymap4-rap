@@ -41,7 +41,7 @@ function loadCSS(url) {
 
 		properties : [],
 
-		methods : [ "execute", "addListener", "removeListener"]
+		methods : [ "call", "addListener", "removeListener"]
 
 	});
 
@@ -172,8 +172,8 @@ function loadCSS(url) {
 			this.element.parentNode.removeChild(this.element);
 		},
 
-		execute : function(properties) {
-			console.log('eval', properties.code);
+		call : function(properties) {
+			//console.log('eval', properties.code);
 			eval(properties.code);
 		},
 		

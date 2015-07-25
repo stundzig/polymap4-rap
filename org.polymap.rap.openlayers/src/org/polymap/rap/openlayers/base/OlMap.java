@@ -31,10 +31,11 @@ import org.polymap.rap.openlayers.view.View;
 /**
  * The Javascript and also the CSS for the map is loaded on demand and with a fully
  * working layout. To change the default theme, add another CSS file as resource
- * <strong>ol/css/ol.css<strong>. 
+ * <strong>ol/css/ol.css<strong>.
  * <p>
  * 
  * This could be done in the application configuration like:
+ * 
  * <pre>
  * application.addResource( "ol/css/ol.css", resourceName -> {
  *     return load( "./resources/css/my-ol.css" );
@@ -92,14 +93,6 @@ public class OlMap
             }
         } );
         this.target.set( new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
-        // widget.setMap( this );
-        //
-        // JSONObject options = new JSONObject();
-        // options.put( "view", new Unquoted( view.getJSObjRef() ) );
-        // options.put( "target",
-        // new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
-        // create( new Stringer( "new ", jsClassname, "(", options.toString(), ");"
-        // ).toString() );
     }
 
 
@@ -112,13 +105,12 @@ public class OlMap
      * Adds the given layer to the top of this map.
      */
     public void addLayer( Layer<? extends Source> layer ) {
-        // layer2add.setWidget(widget);
-        execute( "addLayer", layer );
+        call( "addLayer", layer );
     }
 
 
     public void removeLayer( Layer<? extends Source> layer ) {
-        execute( "removeLayer", layer );
+        call( "removeLayer", layer );
     }
 
 
@@ -136,31 +128,23 @@ public class OlMap
     // }
 
     public void addControl( Control control ) {
-        // control.map.set( this );
-        control.setMap( this );
-        execute( "addControl", control );
+        call( "addControl", control );
+        control.map.set( this );
     }
 
 
-    //
-    // public void setProxy(String proxy) {
-    // execute("OpenLayers.ProxyHost='" + proxy + "';");
-    // }
-
     public void removeControl( Control control ) {
-        // control.map.set( this );
-        control.setMap( this );
-        execute( "removeControl", control );
+        call( "removeControl", control );
     }
 
 
     public void addInteraction( DrawInteraction di ) {
-        execute( "addInteraction", di );
+        call( "addInteraction", di );
     }
 
 
     public void removeInteraction( DrawInteraction di ) {
-        execute( "removeInteraction", di );
+        call( "removeInteraction", di );
     }
 
 
@@ -200,7 +184,7 @@ public class OlMap
 
 
     private void update() {
-        execute( "this.obj.updateSize();" );
+        call( "this.obj.updateSize();" );
     }
 
 
@@ -213,6 +197,6 @@ public class OlMap
 
 
     public void render() {
-        execute( "this.obj.render();" );
+        call( "this.obj.render();" );
     }
 }

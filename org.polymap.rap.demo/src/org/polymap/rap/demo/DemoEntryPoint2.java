@@ -192,9 +192,9 @@ public class DemoEntryPoint2
 
         DrawInteraction di = new DrawInteraction( source, DrawInteraction.Type.LineString );
         di.addEventListener( DrawInteraction.Event.drawstart,
-                event -> System.out.println( event.getProperties() ) );
+                event -> System.out.println( event.properties() ) );
         di.addEventListener( DrawInteraction.Event.drawend,
-                event -> System.out.println( event.getProperties() ) );
+                event -> System.out.println( event.properties() ) );
         map.addInteraction( di );
         // WMSLayer layer = new WMSLayer("OSM2",
         // "http://ows.terrestris.de/osm/service/", "OSM-WMS");
@@ -218,13 +218,13 @@ public class DemoEntryPoint2
         // }
         // };
         map.view.get().addEventListener( View.Event.center, event -> {
-            System.out.println( "CENTER: " + event.getProperties() );
+            System.out.println( "CENTER: " + event.properties() );
         } );
         map.view.get().addEventListener( View.Event.resolution, event -> {
-            System.out.println( "RESOLUTION: " + event.getProperties() );
+            System.out.println( "RESOLUTION: " + event.properties() );
         } );
         map.view.get().addPropertyChangeListener( event -> {
-            System.out.println( event.getProperties() );
+            System.out.println( event.properties() );
         } );
         // view2.addEventListener(View.EVENT.resolution, listener);
         // new OlEventListener() {

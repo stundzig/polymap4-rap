@@ -1,5 +1,7 @@
 /*
- * polymap.org Copyright 2015, Polymap GmbH. All rights reserved.
+ * polymap.org and individual contributors as indicated by the @authors tag.
+ * Copyright (C) 2009-2015 
+ * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
@@ -12,8 +14,12 @@
  */
 package org.polymap.rap.openlayers.control;
 
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.base.OlObject;
+import org.polymap.rap.openlayers.base.OlPropertyConcern;
+import org.polymap.rap.openlayers.base.OlSetter;
 
 /**
  * A control is a visible widget with a DOM element in a fixed position on the
@@ -30,24 +36,13 @@ import org.polymap.rap.openlayers.base.OlObject;
 public abstract class Control
         extends OlObject {
 
-    //
-    // @Mandatory
-    // @Immutable
-    // public Property2<Control,OlMap> map;
-
-    private OlMap map;
+    
+     @OlSetter("setMap")
+     @Concern(OlPropertyConcern.class)
+     public Config2<Control,OlMap> map;
 
 
     public Control( String jsClassname ) {
         super( jsClassname );
     }
-
-
-    public void setMap( OlMap map ) {
-        this.map = map;
-        if (map != null) {
-            execute( "setMap", map );
-        }
-    }
-
 }

@@ -101,10 +101,7 @@ public class OlSessionHandler {
                     properties.remove( "event_src_obj" );
                     OlObject obj = getObject( objRef );
                     if (obj != null) {
-                        OlEvent event = new OlEvent( obj, method, properties );
-                        for (OlEventListener l : obj.getEventListener( method )) {
-                            l.handleEvent( event );
-                        }
+                        obj.handleEvent(new OlEvent( obj, method, properties ));
                     }
                 }
             }
@@ -130,10 +127,38 @@ public class OlSessionHandler {
 
     // remote call
 
-    public void executeCommand( OlCommand command ) {
-        callRemote( "execute", command.getJson() );
+    public void call( OlCommand command ) {
+        callRemote( "call", command.getJson() );
+    }
+//
+//    public void call( String method, JsonObject json ) {
+//        callRemote( method, json );
+//    }
+
+
+    void registerEventListener( OlObject src, String event, OlEventListener listener,
+            PayLoad payload ) {
+        Stringer payloadStringer = new Stringer();
+        if (payload != null) {
+            payload.values().forEach(
+                    value -> payloadStringer.add( "result.", value.key(), " = ", value.value(), ";" ) );
+        }
+        String command = new Stringer(
+                // "console.log('", event, "');",
+                "var result = that.objs['", src.getObjRef(), "'].getProperties();",
+                "result['event_src_obj'] = '" + src.getObjRef() + "';", payloadStringer,
+                "rap.getRemoteObject(that).call( '", event, "', result);" ).toString();
+        callRemote( "addListener",
+                new JsonObject().add( "src", src.getObjRef() ).add( "code", command )
+                        .add( "event", event )
+                        .add( "hashCode", event + "_" + listener.hashCode() ) );
     }
 
+
+    void unregisterEventListener( OlObject src, String event, OlEventListener listener ) {
+        callRemote( "removeListener", new JsonObject().add( "src", src.getObjRef() )
+                .add( "hashCode", event + "_" + listener.hashCode() ) );
+    }
 
     private class RemoteCall {
 
@@ -149,7 +174,7 @@ public class OlSessionHandler {
     }
 
 
-    private void callRemote( String method, JsonObject json ) {
+    void callRemote( String method, JsonObject json ) {
         if (isRendered) {
             log.info( "callRemote: " + method + " with "
                     + json.toString().replaceAll( "\\\\\"", "'" ) );
@@ -184,32 +209,4 @@ public class OlSessionHandler {
         ref2obj.remove( objRef );
     }
 
-
-    public void registerEventListener( OlObject src, String event, OlEventListener listener,
-            PayLoad payload ) {
-        Stringer payloadStringer = new Stringer();
-        if (payload != null) {
-            payload.values().forEach(
-                    value -> payloadStringer.add( "result.", value.key, " = ", value.value, ";" ) );
-        }
-        if (src.getObjRef() == null) {
-            // the source was not created before, but here we need the id
-            src.create();
-        }
-        String command = new Stringer(
-                // "console.log('", event, "');",
-                "var result = that.objs['", src.getObjRef(), "'].getProperties();",
-                "result['event_src_obj'] = '" + src.getObjRef() + "';", payloadStringer,
-                "rap.getRemoteObject(that).call( '", event, "', result);" ).toString();
-        callRemote( "addListener",
-                new JsonObject().add( "src", src.getObjRef() ).add( "code", command )
-                        .add( "event", event )
-                        .add( "hashCode", event + "_" + listener.hashCode() ) );
-    }
-
-
-    public void unregisterEventListener( OlObject src, String event, OlEventListener listener ) {
-        callRemote( "removeListener", new JsonObject().add( "src", src.getObjRef() )
-                .add( "hashCode", event + "_" + listener.hashCode() ) );
-    }
 }

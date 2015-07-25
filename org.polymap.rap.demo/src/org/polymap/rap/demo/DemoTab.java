@@ -129,7 +129,7 @@ public abstract class DemoTab {
 
         map.view.get().addPropertyChangeListener( event -> {
             StatusBar.getInstance().addInfo( parent,
-                    name() + ": " + event.getProperties().toString() );
+                    name() + ": " + event.properties().toString() );
         } );
 
         return map;

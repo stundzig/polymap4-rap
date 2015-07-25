@@ -102,9 +102,9 @@ public class DrawInteractionTab
                 if (di == null) {
                     di = new DrawInteraction( source, DrawInteraction.Type.valueOf( selection ) );
                     di.addEventListener( DrawInteraction.Event.drawstart,
-                            event -> System.out.println( event.getProperties() ) );
+                            event -> System.out.println( event.properties() ) );
                     di.addEventListener( DrawInteraction.Event.drawend,
-                            event -> System.out.println( event.getProperties() ) );
+                            event -> System.out.println( event.properties() ) );
                     interactions.put( selection, di );
                 }
                 if (currentInteraction != null) {

@@ -1,5 +1,7 @@
 /*
- * polymap.org Copyright 2009-2015, Polymap GmbH. All rights reserved.
+ * polymap.org and individual contributors as indicated by the @authors tag.
+ * Copyright (C) 2009-2015 
+ * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
@@ -13,13 +15,14 @@
 package org.polymap.rap.openlayers.types;
 
 import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Config;
 import org.polymap.rap.openlayers.base.OlObject;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 
 /**
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.proj.Projection.html">OpenLayers Doc</a>
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.proj.Projection.html">
+ *      OpenLayers Doc</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
@@ -35,18 +38,17 @@ public class Projection
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Config<String> code;
+    public Config2<Projection,String> code;
 
     @Immutable
     @Concern(OlPropertyConcern.class)
-    public Config<Units>  units;
+    public Config2<Projection,Units>  units;
 
 
     public Projection( String code, Units units ) {
         super( "ol.proj.Projection" );
-        this.code.set( code );
-        this.units.set( units );
-        // create();
+        this.code.put( code );
+        this.units.put( units );
     }
 
 }

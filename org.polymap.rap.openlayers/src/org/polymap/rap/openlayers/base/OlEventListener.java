@@ -34,7 +34,7 @@ public interface OlEventListener {
 
     public class PayLoad {
 
-        List<Value> values = new ArrayList<Value>();
+        private final List<Value> values = new ArrayList<Value>();
 
 
         public void add( String key, String value ) {
@@ -42,7 +42,7 @@ public interface OlEventListener {
         }
 
 
-        public List<Value> values() {
+        List<Value> values() {
             return values;
         }
     }
@@ -50,14 +50,24 @@ public interface OlEventListener {
 
     public class Value {
 
-        String key;
+        private final String key;
 
-        String value;
+        private final String value;
 
 
-        public Value( String key, String value ) {
+        Value( String key, String value ) {
             this.key = key;
             this.value = value;
+        }
+
+
+        String key() {
+            return key;
+        }
+
+
+        String value() {
+            return value;
         }
     }
 }

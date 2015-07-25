@@ -52,7 +52,7 @@ public class OlPropertyConcern
         // setter
         if (setterAnnotation != null) {
             assert propertyAnnotation == null;
-            ((OlObject)obj).execute( setterAnnotation.value(), value );
+            ((OlObject)obj).call( setterAnnotation.value(), value );
         }
         
         // property
@@ -60,7 +60,7 @@ public class OlPropertyConcern
             assert setterAnnotation == null;
             // is the object created as JS on the client already?
             // if it is created, then we just set the attribute
-            if (((OlObject)obj).getObjRef() != null) {
+            if (((OlObject)obj).isCreated()) {
 
                 Object jsonValue = propertyAsJson( value );
 

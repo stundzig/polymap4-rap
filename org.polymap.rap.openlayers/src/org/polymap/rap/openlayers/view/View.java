@@ -189,12 +189,12 @@ public class View
     public void fit( Extent geometry, Size size ) {
         if (size == null) {
             // call fit(geometry, map.getSize());
-            execute( "this.obj.fit(" + geometry.toJson() + ", " + this.map.getJSObjRef()
+            call( "this.obj.fit(" + geometry.toJson() + ", " + this.map.getJSObjRef()
                     + ".getSize());" );
         }
         else {
             // call fit(geometry, size);
-            execute( "this.obj.fit(" + geometry.toJson() + ", " + size.toJson() + ");" );
+            call( "this.obj.fit(" + geometry.toJson() + ", " + size.toJson() + ");" );
         }
     }
 

@@ -129,7 +129,7 @@ public class VectorSource
             command.add( feature.getJSObjRef() );
         }
         command.add( "]);" );
-        execute( command.toString() );
+        call( command.toString() );
     }
 
 }

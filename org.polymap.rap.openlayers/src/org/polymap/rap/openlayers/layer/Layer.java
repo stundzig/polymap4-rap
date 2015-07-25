@@ -34,7 +34,7 @@ public abstract class Layer<S extends Source>
         extends Base {
 
     @Immutable
-    @Mandatory
+//    @Mandatory
     @Concern(OlPropertyConcern.class)
     public Config2<Layer<S>,S> source;
 

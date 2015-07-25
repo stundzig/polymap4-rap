@@ -30,7 +30,7 @@ import org.eclipse.rap.json.JsonObject;
  */
 public class OlCommand {
 
-    private String command;
+    private final String command;
 
 
     public OlCommand( String cmd ) {
@@ -47,4 +47,14 @@ public class OlCommand {
         return new JsonObject().add( "code", command );
     }
 
+
+    @Override
+    public boolean equals( Object obj ) {
+        return command.equals( ((OlCommand)obj).command );
+    }
+    
+    @Override
+    public String toString() {
+        return command;
+    }
 }

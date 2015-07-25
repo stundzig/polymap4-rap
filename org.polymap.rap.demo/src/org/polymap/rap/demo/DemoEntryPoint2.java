@@ -28,24 +28,21 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.polymap.rap.openlayers.base.OlMap;
 import org.polymap.rap.openlayers.control.ScaleLineControl;
-import org.polymap.rap.openlayers.control.ZoomControl;
 import org.polymap.rap.openlayers.format.GeoJSONFormat;
-import org.polymap.rap.openlayers.geom.GeometryType;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
 import org.polymap.rap.openlayers.layer.ImageLayer;
 import org.polymap.rap.openlayers.layer.TileLayer;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.ImageWMSSource;
-import org.polymap.rap.openlayers.source.ImageWMSSource.RequestParams;
 import org.polymap.rap.openlayers.source.MapQuestSource;
 import org.polymap.rap.openlayers.source.VectorSource;
+import org.polymap.rap.openlayers.source.WMSRequestParams;
 import org.polymap.rap.openlayers.style.FillStyle;
 import org.polymap.rap.openlayers.style.StrokeStyle;
 import org.polymap.rap.openlayers.style.Style;
 import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Color;
 import org.polymap.rap.openlayers.types.Coordinate;
-import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
 import org.polymap.rap.openlayers.view.View;
@@ -123,7 +120,7 @@ public class DemoEntryPoint2
 
         map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
                 .put( "http://ows.terrestris.de/osm/service/" ).params
-                .put( new RequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
+                .put( new WMSRequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
 

@@ -1,5 +1,5 @@
 /*
-  * polymap.org and individual contributors as indicated by the @authors tag.
+ * polymap.org and individual contributors as indicated by the @authors tag.
  * Copyright (C) 2009-2015 
  * All rights reserved.
  * 

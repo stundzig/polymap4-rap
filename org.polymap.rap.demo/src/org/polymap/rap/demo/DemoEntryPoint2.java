@@ -120,7 +120,7 @@ public class DemoEntryPoint2
 
         map.addLayer( new ImageLayer().source.put( new ImageWMSSource().url
                 .put( "http://ows.terrestris.de/osm/service/" ).params
-                .put( new WMSRequestParams().layers.put( "OSM-WMS" ) ) ).opacity.put( 0.5f ) );
+                .put( new WMSRequestParams().layers.put( "OSM-WMS" ).format.put( "image/jpeg" ) ) ).opacity.put( 0.5f ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.hyb ) ) );
 

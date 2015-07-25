@@ -68,20 +68,20 @@ public class TextStyle
      * Default is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<TextStyle,Double>      offsetX;
+    public Config2<TextStyle,Float>      offsetX;
 
     /**
      * Vertical text offset in pixels. A positive will shift the text down. Default
      * is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<TextStyle,Double>      offsetY;
+    public Config2<TextStyle,Float>      offsetY;
 
     /**
      * Rotation in radians (positive rotation clockwise). Default is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<TextStyle,Double>      rotation;
+    public Config2<TextStyle,Float>      rotation;
 
 
     public TextStyle() {

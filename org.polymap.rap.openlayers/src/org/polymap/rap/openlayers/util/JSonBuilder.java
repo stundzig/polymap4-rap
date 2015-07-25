@@ -54,7 +54,7 @@ public final class JSonBuilder {
     }
 
 
-    public JSonBuilder add( String key, Double width ) {
+    public JSonBuilder add( String key, Float width ) {
         return add( key, String.valueOf( width ) );
     }
 

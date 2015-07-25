@@ -49,11 +49,11 @@ public class ResolutionsTab
     protected void createDemoControls( Composite parent ) {
         View view = new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).center
                 .put( new Coordinate( 1401845.7269824906, 6666952.61751981 ) ).resolution
-                        .put( 4.5 );
+                        .put( 4.5f );
 
         OlMap map = new OlMap( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER, view );
 
-        map.view.get().resolutions.set( Arrays.asList( 100.0, 50.0, 20.0, 4.5, 2.0, 1.0 ) );
+        map.view.get().resolutions.set( Arrays.asList( 100.0f, 50.0f, 20.0f, 4.5f, 2.0f, 1.0f ) );
 
         map.addLayer( new TileLayer().source.put( new MapQuestSource( MapQuestSource.Type.osm ) ) );
 

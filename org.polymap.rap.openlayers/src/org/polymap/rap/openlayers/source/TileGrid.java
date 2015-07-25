@@ -1,8 +1,6 @@
 /*
- * Copyright (C) 2009-2015 
- * 
  * polymap.org and individual contributors as indicated by the @authors tag.
- * 
+ * Copyright (C) 2009-2015 
  * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
@@ -60,7 +58,7 @@ public abstract class TileGrid
      * have a length of maxZoom + 1.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<TileGrid,List<Double>>     resolutions;
+    public Config2<TileGrid,List<Float>>     resolutions;
 
     /**
      * Tile size. Default is [256, 256].

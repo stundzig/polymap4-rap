@@ -70,7 +70,7 @@ public class ImageWMSSource
      * Resolutions. If specified, requests will be made for these resolutions only.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<ImageWMSSource,List<Double>>    resolutions;
+    public Config2<ImageWMSSource,List<Float>>    resolutions;
 
     /**
      * Ratio. 1 means image requests are the size of the map viewport, 2 means twice
@@ -78,7 +78,7 @@ public class ImageWMSSource
      */
     @Check(value = NumberRangeValidator.class, args = { "1", "2" })
     @Concern(OlPropertyConcern.class)
-    public Config2<ImageWMSSource,Double>          ratio;
+    public Config2<ImageWMSSource,Float>          ratio;
 
     /**
      * Optional attributions for the source. If provided, these will be used instead

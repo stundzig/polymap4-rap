@@ -60,7 +60,7 @@ public class View
      * maxResolution defaults to 40075016.68557849 / 256 = 156543.03392804097.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>       maxResolution;
+    public Config2<View,Float>       maxResolution;
 
     /**
      * The minimum resolution used to determine the resolution constraint. It is used
@@ -70,7 +70,7 @@ public class View
      * 40075016.68557849 / 256 / Math.pow(2, 28) = 0.0005831682455839253.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>       minResolution;
+    public Config2<View,Float>       minResolution;
 
     /**
      * The maximum zoom level used to determine the resolution constraint. It is used
@@ -102,7 +102,7 @@ public class View
      * nor zoom are defined.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>       resolution;
+    public Config2<View,Float>       resolution;
 
     /**
      * Resolutions to determine the resolution constraint. If set the maxResolution,
@@ -112,14 +112,14 @@ public class View
      * Resolutions must be set before adding the layers.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,List<Double>> resolutions;
+    public Config2<View,List<Float>> resolutions;
 
     /**
      * The initial rotation for the view in radians (positive rotation clockwise).
      * Default is 0.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<View,Double>       rotation;
+    public Config2<View,Float>       rotation;
 
     /**
      * Only used if resolution is not defined. Zoom level used to calculate the

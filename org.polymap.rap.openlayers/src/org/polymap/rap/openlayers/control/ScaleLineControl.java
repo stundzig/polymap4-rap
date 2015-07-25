@@ -56,10 +56,10 @@ public class ScaleLineControl
     public Config2<OlMap,Units>  units;
 
     @Immutable
-    public Config2<OlMap,Double> minWidth;
+    public Config2<OlMap,Float> minWidth;
 
 
-    public ScaleLineControl( String cssName, Double minWidth ) {
+    public ScaleLineControl( String cssName, Float minWidth ) {
         super( "ol.control.ScaleLine" );
         this.className.set( cssName );
         this.minWidth.set( minWidth );

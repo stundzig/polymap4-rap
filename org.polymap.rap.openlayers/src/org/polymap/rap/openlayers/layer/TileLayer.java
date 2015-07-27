@@ -37,7 +37,7 @@ public class TileLayer
      * 0, which means no preloading.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<Base,Float> preload;
+    public Config2<TileLayer,Float>     preload;
 
 
     public TileLayer() {

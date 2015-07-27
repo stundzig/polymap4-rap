@@ -17,10 +17,14 @@ package org.polymap.rap.openlayers.source;
 import java.util.List;
 
 import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.ConfigurationException;
+import org.polymap.core.runtime.config.DefaultPropertyConcern;
 import org.polymap.core.runtime.config.DefaultString;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
+
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Attribution;
 
@@ -41,7 +45,7 @@ public class TileWMSSource
      * attributions advertised by the server will be used.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<VectorSource,List<Attribution>>  attributions;
+    public Config2<TileWMSSource,List<Attribution>> attributions;
 
     /**
      * WMS request parameters. At least a LAYERS param is required. STYLES is '' by
@@ -51,7 +55,7 @@ public class TileWMSSource
     @Mandatory
     @Immutable
     // @Concern( OlPropertyConcern.class )
-    public Config2<ImageWMSSource,WMSRequestParams> params;
+    public Config2<TileWMSSource,WMSRequestParams>  params;
 
     /**
      * 
@@ -63,7 +67,7 @@ public class TileWMSSource
      */
     @Concern(OlPropertyConcern.class)
     @DefaultString("Anonymous")
-    public Config2<ImageWMSSource,String>           crossOrigin;
+    public Config2<TileWMSSource,String>           crossOrigin;
 
     /**
      * undefined The size in pixels of the gutter around image tiles to ignore. By
@@ -97,7 +101,7 @@ public class TileWMSSource
      * WMS service url.
      */
     @Concern(OlPropertyConcern.class)
-    @Mandatory
+    @Concern(CheckUrlsConcern.class)  
     public Config2<TileWMSSource,String>            url;
 
     /**
@@ -105,11 +109,54 @@ public class TileWMSSource
      * for GetMap requests.
      */
     @Concern(OlPropertyConcern.class)
-    @Mandatory
+    @Concern(CheckUrlsConcern.class)  
     public Config2<TileWMSSource,List<String>>      urls;
 
 
     public TileWMSSource() {
         super( "ol.source.TileWMS" );
     }
+    
+    
+    /**
+     * Check mutual exclusion of {@link TileWMSSource#url} and
+     * {@link TileWMSSource#urls}.
+     */
+    public static class CheckUrlsConcern
+            extends DefaultPropertyConcern {
+
+        /**
+         * Check that *at least* one is set.
+         */
+        @Override
+        public Object doGet( Object obj, Config prop, Object value ) {
+            if (value == null) {
+                TileWMSSource source = (TileWMSSource)obj;
+                if (prop.info().getName().equals( "url" ) && !source.urls.isPresent()) {
+                    throw new ConfigurationException( "TileWMSSOurce: set at least one config property: 'url' or 'urls'" );
+                }
+                if (prop.info().getName().equals( "urls" ) && !source.url.isPresent()) {
+                    throw new ConfigurationException( "TileWMSSOurce: set at least one config property: 'url' or 'urls'" );
+                }
+            }
+            return value;
+        }
+
+        /**
+         * Check that *just* one is set.
+         */
+        @Override
+        public Object doSet( Object obj, Config prop, Object value ) {
+            TileWMSSource source = (TileWMSSource)obj;
+            if (prop.info().getName().equals( "url" ) && source.urls.isPresent()) {
+                throw new ConfigurationException( "TileWMSSOurce: set config property 'url' OR 'urls'" );
+            }
+            if (prop.info().getName().equals( "urls" ) && source.url.isPresent()) {
+                throw new ConfigurationException( "TileWMSSOurce: set config property 'url' OR 'urls'" );
+            }
+            return value;
+        }
+        
+    }
+    
 }

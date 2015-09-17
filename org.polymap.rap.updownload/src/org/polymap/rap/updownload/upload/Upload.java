@@ -28,11 +28,13 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 
+import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.client.ClientFile;
 import org.eclipse.rap.rwt.widgets.FileUpload;
 
@@ -79,6 +81,9 @@ public class Upload
         fileUpload = new FileUpload( this, SWT.NONE );
         fileUpload.setLayoutData( FormDataFactory.filled().create() );
         fileUpload.setText( i18n.get( "select" ) );
+        fileUpload.setData( RWT.TOOLTIP_MARKUP_ENABLED, Boolean.TRUE );
+        setData( RWT.TOOLTIP_MARKUP_ENABLED, Boolean.TRUE );
+
         fileUpload.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected( SelectionEvent ev ) {
                 UIUtils.activateCallback( "upload" );
@@ -116,12 +121,19 @@ public class Upload
         return handler;
     }
     
-    public void setText( String text ) {
+    public Upload setText( String text ) {
         fileUpload.setText( text );
+        return this;
     }
 
-    public void setHandler( IUploadHandler handler ) {
+    public Upload setImage( Image image ) {
+        fileUpload.setImage( image );
+        return this;
+    }
+    
+    public Upload setHandler( IUploadHandler handler ) {
         this.handler = handler;
+        return this;
     }
 
     @Override

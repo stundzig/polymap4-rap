@@ -80,7 +80,7 @@ public class TileWMSSource
      * this. See http://mapserver.org/output/tile_mode.html.
      */
     @Concern(OlPropertyConcern.class)
-    public Config2<TileWMSSource,Float>            gutter;
+    public Config2<TileWMSSource,Float>             gutter;
 
     /**
      * Logo.

@@ -28,7 +28,7 @@ function loadCSS(url) {
 	'use strict';
 
 	loadCSS('rwt-resources/ol/css/ol.css');
-	loadCSS('rwt-resources/ol/css/bootstrap.css');
+	//loadCSS('rwt-resources/ol/css/bootstrap.css');
 	
 	rap.registerTypeHandler("org.polymap.rap.openlayers.OlWidget", {
 

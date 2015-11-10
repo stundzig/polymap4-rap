@@ -176,8 +176,7 @@ public class OlSessionHandler {
 
     void callRemote( String method, JsonObject json ) {
         if (isRendered) {
-            log.info( "callRemote: " + method + " with "
-                    + json.toString().replaceAll( "\\\\\"", "'" ) );
+            log.debug( "callRemote: " + method + " with " + json.toString().replaceAll( "\\\\\"", "'" ) );
             remote.call( method, json );
         }
         else {

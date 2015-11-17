@@ -14,13 +14,17 @@ package org.polymap.rap.openlayers.base;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
+
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
+
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
+
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
@@ -79,28 +83,25 @@ public class OlMap
 
             private static final long serialVersionUID = 1L;
 
-
             @Override
             protected void layout( Composite composite, boolean flushCache ) {
                 update();
             }
 
-
             @Override
-            protected Point computeSize( Composite composite, int wHint, int hHint,
-                    boolean flushCache ) {
+            protected Point computeSize( Composite composite, int wHint, int hHint, boolean flushCache ) {
                 return new Point( wHint, hHint );
             }
         } );
         this.target.set( new Unquoted( "this.createDiv('" + WidgetUtil.getId( widget ) + "')" ) );
     }
 
-
-    public void setLayoutData( Object layoutData ) {
-        widget.setLayoutData( layoutData );
+    
+    public Composite getControl() {
+        return widget;
     }
 
-
+    
     /**
      * Adds the given layer to the top of this map.
      */
@@ -126,6 +127,7 @@ public class OlMap
     // public void setLayerIndex(Layer layer, int index) {
     // callObjFunction("setLayerIndex", layer, index);
     // }
+
 
     public void addControl( Control control ) {
         call( "addControl", control );

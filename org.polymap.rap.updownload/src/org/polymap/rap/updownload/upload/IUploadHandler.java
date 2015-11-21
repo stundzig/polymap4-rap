@@ -37,7 +37,7 @@ public interface IUploadHandler {
      * @param contentLength The content length of the request. This is approx(!) the
      *        size of the bytes available for reading. -1 signals that the content
      *        length could not be determined.
-     * @param in
+     * @param in Stream to read uploaded content from. Auto closed by caller. 
      * @throws Exception
      */
     public void uploadStarted( ClientFile clientFile, InputStream in ) throws Exception;

@@ -115,6 +115,7 @@ public class OlSessionHandler {
         OlPlugin.registerResource( "resources/css/bootstrap-3.3.4.min.css", "css/bootstrap.css" );
         OlPlugin.registerResource( "resources/css/ol-3.7.0.css", "css/ol.css" );
 
+//        OlPlugin.registerResource( "resources/js/ol-3.7.0.debug.js", "js/ol.js" );
         OlPlugin.registerResource( "resources/js/ol-3.7.0.js", "js/ol.js" );
         OlPlugin.registerResource( "org/polymap/rap/openlayers/js/OlWrapper.js",
                 "js/OlWrapper.js" );
@@ -143,9 +144,17 @@ public class OlSessionHandler {
             payload.values().forEach(
                     value -> payloadStringer.add( "result.", value.key(), " = ", value.value(), ";" ) );
         }
-        String command = new Stringer(
+        // FIXME call OlMap.getProperties() would cause 'TypeError: cyclic object value'
+        String command = null;
+        if(src instanceof OlMap) {
+            command = "var result = {};";
+        } else {
+            command = new Stringer(
+                    "var result = that.objs['", src.getObjRef(), "'].getProperties();").toString();
+        }
+        command = new Stringer(
                 // "console.log('", event, "');",
-                "var result = that.objs['", src.getObjRef(), "'].getProperties();",
+                command ,
                 "result['event_src_obj'] = '" + src.getObjRef() + "';", payloadStringer,
                 "rap.getRemoteObject(that).call( '", event, "', result);" ).toString();
         callRemote( "addListener",

@@ -14,17 +14,14 @@ package org.polymap.rap.openlayers.base;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
-
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-
+import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
@@ -182,6 +179,16 @@ public class OlMap
 
     public void removeEventListener( EVENT event, OlEventListener listener ) {
         removeEventListener( "change:" + event.name(), listener );
+    }
+    
+    
+    public void addClickEventListener( OlEventListener listener, PayLoad payload ) {
+        addEventListener( "click", listener, payload );
+    }
+
+    
+    public void removeClickEventListener( OlEventListener listener ) {
+        removeEventListener( "click", listener);
     }
 
 

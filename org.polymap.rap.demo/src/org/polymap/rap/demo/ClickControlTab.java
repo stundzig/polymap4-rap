@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.rap.json.JsonArray;
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.swt.widgets.Composite;
-import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlMap;
 
 
@@ -42,18 +41,13 @@ public class ClickControlTab
     protected void createDemoControls( Composite parent ) {
         OlMap map = defaultMap( parent );
 
-        PayLoad payload = new PayLoad();
-        payload.add( "feature", "{}" );
-        payload.add( "feature.pixel", "theEvent.pixel" );
-        payload.add( "feature.coordinate", map.getJSObjRef() + ".getCoordinateFromPixel(theEvent.pixel)" );
-        map.addClickEventListener( event -> {
+        map.addEventListener(OlMap.EVENT.click, event -> {
             JsonObject json = event.properties();
-            JsonObject feature = (JsonObject) json.get( "feature" );
-            JsonArray pixel = (JsonArray) feature.get( "pixel" );
-            JsonArray coordinate = (JsonArray) feature.get( "coordinate" );
+            JsonArray pixel = (JsonArray) json.get( "feature.pixel" );
+            JsonArray coordinate = (JsonArray) json.get( "feature.coordinate" );
             StatusBar.getInstance().addInfo( parent, String.format( "%s - pixel clicked: (x=%s, y=%s) => coordinate=(x=%s, y=%s)", 
                     name(), pixel.get( 0 ), pixel.get( 1 ), coordinate.get( 0 ), coordinate.get( 1 )));
-        }, payload );
+        });
     }
 
 

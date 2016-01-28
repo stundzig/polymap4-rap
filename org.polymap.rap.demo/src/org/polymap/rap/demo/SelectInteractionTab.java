@@ -133,12 +133,13 @@ public class SelectInteractionTab
         payload.add( "feature.pixel", "theEvent.pixel" );
         payload.add( "feature.coordinate", map.getJSObjRef().replace( "this.objs", "that.objs" )
                 + ".getCoordinateFromPixel(theEvent.pixel)" );
-        map.addClickEventListener( event -> {
+        
+        map.addEventListener( OlMap.EVENT.click, event -> {
             JsonObject json = event.properties();
             JsonObject feature = (JsonObject)json.get( "feature" );
             JsonArray coordinate = (JsonArray)feature.get( "coordinate" );
             handleSelectionEvent( coordinate.get( 0 ).asDouble(), coordinate.get( 1 ).asDouble(), true );
-        }, payload );
+        });
         
         selectionListener = new ISelectionChangedListener() {
 
@@ -147,22 +148,13 @@ public class SelectInteractionTab
                 IStructuredSelection selection = (IStructuredSelection)event.getSelection();
                 Map.Entry<Pair<Double,Double>,OlFeature> first = (Map.Entry<Pair<Double,Double>,OlFeature>)selection
                         .getFirstElement();
-                final List<String> fids = new ArrayList<String>();
-                fids.add( first.getValue().id.get() );
-                Pair<Double,Double> coord = first.getKey();
-                UIThreadExecutor.async( ( ) -> handleSelectionEvent( coord.getLeft(), coord.getRight(), false ),
-                        UIThreadExecutor.logErrorMsg( "" ) );
-                // try {
-                // List<Layer> layers = new ArrayList<Layer>();
-                // layers.add( vector );
-                // UIThreadExecutor.async(
-                // ( ) -> map.getInteraction( SelectInteraction.class
-                // ).selectFids( fids, layers ),
-                // UIThreadExecutor.logErrorMsg( "" ) );
-                // }
-                // catch (Exception e) {
-                // e.printStackTrace();
-                // }
+                if(first != null) {
+                    final List<String> fids = new ArrayList<String>();
+                    fids.add( first.getValue().id.get() );
+                    Pair<Double,Double> coord = first.getKey();
+                    UIThreadExecutor.async( ( ) -> handleSelectionEvent( coord.getLeft(), coord.getRight(), false ),
+                            UIThreadExecutor.logErrorMsg( "" ) );
+                }
             }
         };
     }

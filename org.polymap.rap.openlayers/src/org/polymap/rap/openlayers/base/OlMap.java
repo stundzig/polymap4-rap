@@ -210,7 +210,6 @@ public class OlMap
             payload.add( "feature", "{}" );
             payload.add( "feature.pixel", "theEvent.pixel" );
             payload.add( "feature.coordinate", "that.objs['" + getObjRef() + "'].getCoordinateFromPixel(theEvent.pixel)" );
-            addEventListener( "click", listener, payload );
         } else if(event == EVENT.boxstart || event == EVENT.boxend) {
             payload = new PayLoad();
             payload.add( "feature", "{}" );
@@ -221,9 +220,6 @@ public class OlMap
     }
 
     public void removeEventListener( EVENT event, OlEventListener listener ) {
-        if(event == EVENT.click) {
-            
-        }
         removeEventListener( event.getEventName(), listener );
     }
 
@@ -236,22 +232,11 @@ public class OlMap
     @Override
     public void dispose() {
         // TODO clear the widget and the map
-
         super.dispose();
     }
 
 
     public void render() {
         call( "this.obj.render();" );
-    }
-
-
-    public void addClickEventListener( OlEventListener listener, PayLoad payload ) {
-        addEventListener( "click", listener, payload );
-    }
-
-    
-    public void removeClickEventListener( OlEventListener listener ) {
-        removeEventListener( "click", listener);
     }
 }

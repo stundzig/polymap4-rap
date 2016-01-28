@@ -43,14 +43,14 @@ public class VectorLayer
      *
      * @param initializers Initialize at least all {@link Mandatory} properties.
      */
-	public VectorLayer( Consumer<VectorLayer>... initializers ) {
-		super( "ol.layer.Vector" );
+    public VectorLayer( Consumer<VectorLayer>... initializers ) {
+        super( "ol.layer.Vector" );
         Arrays.asList( initializers ).forEach( initializer -> initializer.accept( this ) );
-	}
+    }
 
-	
-	protected VectorLayer( String jsClassname ) {
-	    super( jsClassname );
-	}
-	
+    
+    protected VectorLayer( String jsClassname ) {
+        super( jsClassname );
+    }
+    
 }

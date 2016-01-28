@@ -167,7 +167,7 @@ public abstract class OlObject {
      * 
      * @return
      */
-    String getObjRef() {
+    public String getObjRef() {
         lazyCreate();
         return objRef;
     }

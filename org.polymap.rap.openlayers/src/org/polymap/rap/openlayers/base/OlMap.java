@@ -12,22 +12,23 @@
  */
 package org.polymap.rap.openlayers.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.rap.rwt.widgets.WidgetUtil;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
-
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
-
+import org.polymap.rap.openlayers.base.OlEventListener.PayLoad;
 import org.polymap.rap.openlayers.base.OlPropertyConcern.Unquoted;
 import org.polymap.rap.openlayers.control.Control;
 import org.polymap.rap.openlayers.interaction.DrawInteraction;
+import org.polymap.rap.openlayers.interaction.Interaction;
 import org.polymap.rap.openlayers.layer.Layer;
 import org.polymap.rap.openlayers.source.Source;
 import org.polymap.rap.openlayers.view.View;
@@ -59,12 +60,25 @@ public class OlMap
 
 
     public enum EVENT {
-        layerGroup, size, target, view
+        layerGroup("change:layerGroup"), size("change:size"), target("change:target"), view("change:view"),
+        click("click"), boxstart("boxstart"), boxend("boxend");
+        
+        private String eventName;
+        
+        EVENT(String eventName) {
+            this.eventName = eventName;
+        }
+        
+        public String getEventName() {
+            return eventName;
+        }
     }
 
     @Mandatory
     @Immutable
     public Config2<OlMap,View>      view;
+    
+    private Config2<OlMap,List<Interaction>> interactions;
 
     @Mandatory
     @Immutable
@@ -76,6 +90,7 @@ public class OlMap
     public OlMap( Composite parent, int style, View view ) {
         super( "ol.Map" );
         this.view.set( view );
+        this.interactions.set( new ArrayList<Interaction>() );
         view.setMap( this );
 
         widget = new Composite( parent, style );
@@ -100,6 +115,19 @@ public class OlMap
     public Composite getControl() {
         return widget;
     }
+    
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Interaction> T getInteraction( Class<T> clazz ) {
+        if(interactions.get() != null) {
+            for(Interaction interaction : interactions.get()) {
+                if(clazz.isAssignableFrom( interaction.getClass() )) {
+                    return (T) interaction;
+                }
+            }
+        }
+        return null;
+    }    
 
     
     /**
@@ -176,15 +204,30 @@ public class OlMap
      * @param listener
      */
     public void addEventListener( EVENT event, OlEventListener listener ) {
-        addEventListener( "change:" + event.name(), listener, null );
+        PayLoad payload = null;
+        if(event == EVENT.click) {
+            payload = new PayLoad();
+            payload.add( "feature", "{}" );
+            payload.add( "feature.pixel", "theEvent.pixel" );
+            payload.add( "feature.coordinate", "that.objs['" + getObjRef() + "'].getCoordinateFromPixel(theEvent.pixel)" );
+            addEventListener( "click", listener, payload );
+        } else if(event == EVENT.boxstart || event == EVENT.boxend) {
+            payload = new PayLoad();
+            payload.add( "feature", "{}" );
+            payload.add( "feature.pixel", "that.objs['" + getObjRef() + "'].getPixelFromCoordinate(theEvent.coordinate)" );
+            payload.add( "feature.coordinate", "theEvent.coordinate" );
+        }
+        addEventListener( event.getEventName(), listener, payload );
     }
-
 
     public void removeEventListener( EVENT event, OlEventListener listener ) {
-        removeEventListener( "change:" + event.name(), listener );
+        if(event == EVENT.click) {
+            
+        }
+        removeEventListener( event.getEventName(), listener );
     }
 
-
+    
     private void update() {
         call( "this.obj.updateSize();" );
     }
@@ -200,5 +243,15 @@ public class OlMap
 
     public void render() {
         call( "this.obj.render();" );
+    }
+
+
+    public void addClickEventListener( OlEventListener listener, PayLoad payload ) {
+        addEventListener( "click", listener, payload );
+    }
+
+    
+    public void removeClickEventListener( OlEventListener listener ) {
+        removeEventListener( "click", listener);
     }
 }

@@ -14,32 +14,35 @@
 package org.polymap.rap.openlayers.geom;
 
 import org.polymap.core.runtime.config.Concern;
-import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.config.Config2;
-
+import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.rap.openlayers.base.OlCtorAndSeparateSetter;
 import org.polymap.rap.openlayers.base.OlPropertyConcern;
 import org.polymap.rap.openlayers.types.Coordinate;
 
 /**
  * Point Geometry.
  * 
- * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.Point.html">OpenLayers Doc</a>
+ * @see <a href="http://openlayers.org/en/master/apidoc/ol.geom.Point.html">
+ *      OpenLayers Doc</a>
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
  */
 public class PointGeometry
         extends SimpleGeometry {
 
-    @Immutable
+//    @Immutable
     @Mandatory
     @Concern(OlPropertyConcern.class)
-    Config2<SimpleGeometry,Coordinate>    coordinate;
+    @OlCtorAndSeparateSetter(value = "setCoordinates")
+    public Config2<PointGeometry,Coordinate> coordinate;
 
-    public PointGeometry(Coordinate coordinate) {
+
+    public PointGeometry( Coordinate coordinate ) {
         super( "ol.geom.Point" );
         this.coordinate.set( coordinate );
     }
-    
+
+
     @Override
     protected void create() {
         super.create( jsClassname, coordinate.get().toJson().toString() );

@@ -66,6 +66,10 @@ public class OlFeature
     public Config2<OlFeature,String>     id;
 
 
+    public OlFeature() {
+        this( null, null );
+    }
+    
     public OlFeature( String id ) {
         this( id, null );
     }

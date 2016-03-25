@@ -1,9 +1,11 @@
 /*
- * polymap.org Copyright (C) 2009-2015 Polymap GmbH. All rights reserved.
+ * polymap.org 
+ * Copyright (C) 2016 individual contributors as indicated by the @authors tag. 
+ * All rights reserved.
  * 
  * This is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
- * Foundation; either version 2.1 of the License, or (at your option) any later
+ * Foundation; either version 3 of the License, or (at your option) any later
  * version.
  * 
  * This software is distributed in the hope that it will be useful, but WITHOUT ANY
@@ -13,8 +15,6 @@
 package org.polymap.rap.demo;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,26 +23,22 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.polymap.rap.openlayers.base.OlFeature;
 import org.polymap.rap.openlayers.base.OlMap;
+import org.polymap.rap.openlayers.control.ZoomSliderControl;
 import org.polymap.rap.openlayers.format.GeoJSONFormat;
-import org.polymap.rap.openlayers.geom.PointGeometry;
-import org.polymap.rap.openlayers.geom.PolygonGeometry;
-import org.polymap.rap.openlayers.interaction.DrawInteraction;
+import org.polymap.rap.openlayers.graph.OlFeatureGraph;
+import org.polymap.rap.openlayers.interaction.SelectInteraction;
 import org.polymap.rap.openlayers.layer.VectorLayer;
 import org.polymap.rap.openlayers.source.VectorSource;
 import org.polymap.rap.openlayers.style.CircleStyle;
 import org.polymap.rap.openlayers.style.FillStyle;
-import org.polymap.rap.openlayers.style.Font;
 import org.polymap.rap.openlayers.style.StrokeStyle;
-import org.polymap.rap.openlayers.style.Style;
-import org.polymap.rap.openlayers.style.TextStyle;
+import org.polymap.rap.openlayers.style.StyleContainer;
 import org.polymap.rap.openlayers.types.Attribution;
 import org.polymap.rap.openlayers.types.Color;
-import org.polymap.rap.openlayers.types.Coordinate;
 import org.polymap.rap.openlayers.types.Extent;
 import org.polymap.rap.openlayers.types.Projection;
 import org.polymap.rap.openlayers.types.Projection.Units;
@@ -51,101 +47,100 @@ import org.polymap.rap.openlayers.view.View;
 /**
  * 
  * @author <a href="http://stundzig.it">Steffen Stundzig</a>
- *
  */
-public class GraphInteractionTab extends DemoTab {
+public class GraphInteractionTab
+        extends DemoTab {
 
     private VectorSource source;
 
-    private OlMap map;
+    private OlMap        map;
+
 
     public GraphInteractionTab() {
-        super("GraphInteraction");
+        super( "GraphInteraction" );
     }
 
-    private final static Log log = LogFactory.getLog(GraphInteractionTab.class);
+    private final static Log log = LogFactory.getLog( GraphInteractionTab.class );
+
 
     @Override
-    protected void createDemoControls(Composite parent) {
-        map = new OlMap(parent, SWT.MULTI | SWT.WRAP | SWT.BORDER,
-                new View().projection.put(new Projection("EPSG:3857", Units.m)).zoom.put(12));// .center.put(
-                                                                                              // new
-                                                                                              // Coordinate(
-                                                                                              // 1401845.7269824906,6666952.61751981
-                                                                                              // )
-                                                                                              // )
-                                                                                              // );
+    protected void createDemoControls( Composite parent ) {
+        map = new OlMap( parent, SWT.MULTI | SWT.WRAP | SWT.BORDER,
+                new View().projection.put( new Projection( "EPSG:3857", Units.m ) ).zoom.put( 12 ) );
+        // should be refined after the final node event flush
+        Extent envelope = new Extent( -100.0, -100.0, 100.0, 100.0 );
+        map.view.get().fit( envelope, null );
 
-        Extent envelope = new Extent(-100.0, -100.0, 100.0, 100.0);
-        map.view.get().fit(envelope, null);
-
-        source = new VectorSource().format.put(new GeoJSONFormat()).attributions
-                .put(Arrays.asList(new Attribution("Steffen Stundzig")));
+        source = new VectorSource().format.put( new GeoJSONFormat() ).attributions
+                .put( Arrays.asList( new Attribution( "Steffen Stundzig" ) ) );
 
         VectorLayer vector = new VectorLayer().style
-                .put(new Style().fill.put(new FillStyle().color.put(new Color(0, 0, 255, 0.1f))).stroke
-                        .put(new StrokeStyle().color.put(new Color("red")).width.put(1f))).source.put(source);
+                .put( new StyleContainer().fill.put( new FillStyle().color.put( new Color( 0, 0, 255, 0.1f ) ) ).stroke
+                        .put( new StrokeStyle().color.put( new Color( "red" ) ).width.put( 1f ) ) ).source
+                                .put( source );
 
-        map.addLayer(vector);
-
-        // vector.addEventListener(VectorSource.EVENT.addfeature, event ->
-        // System.out.println(event.getProperties()));
+        map.addLayer( vector );
+        map.addControl( new ZoomSliderControl() );
+        SelectInteraction selectInteraction = new SelectInteraction( vector );
+        map.addInteraction( selectInteraction );
+        selectInteraction.addEventListener( SelectInteraction.Event.select, event -> StatusBar.getInstance()
+                .addInfo( parent, "Selected: " + event.properties().get( "selected" ).toString() ) );
     }
 
+
     @Override
-    protected void createStyleControls(Composite parent) {
-        Composite group = new Composite(parent, SWT.NONE);
-        group.setLayout(new GridLayout(2, false));
+    protected void createStyleControls( Composite parent ) {
+        Composite group = new Composite( parent, SWT.NONE );
+        group.setLayout( new GridLayout( 2, false ) );
 
-        new Label(group, SWT.NONE).setText("");
+        new Label( group, SWT.NONE ).setText( "" );
 
-        Button center = new Button(group, SWT.BORDER);
-        center.setText("Add Features");
-        center.addSelectionListener(new SelectionAdapter() {
+        Button center = new Button( group, SWT.BORDER );
+        center.setText( "Add Features" );
+        center.addSelectionListener( new SelectionAdapter() {
+
+            private final OlFeatureGraph olFeatureGraph = new OlFeatureGraph( source, map );
+
+            private final StyleContainer nodeStyle      = new StyleContainer().zIndex.put( 0f ).image
+                    .put( new CircleStyle( 5.0f ).fill.put( new FillStyle().color.put( new Color( "red" ) ) ) );
+
+            private int                  click          = 0;
+
+            private final OlFeature      masterFeature  = new OlFeature( "P1" );
+
+            private final OlFeature      masterFeature2 = new OlFeature( "P2" );
+
+            private boolean              odd            = true;
+
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
-//                System.out.println(map.view.get().center.get().toJson());
-                OlFeature feature = new OlFeature();
-                feature.name.set("Point");
-                Coordinate coordinate = new Coordinate(4.54283042823805, -6.6573374317520475);
-                feature.labelPoint.set(coordinate);
-                feature.geometry.set(new PointGeometry(coordinate));
-                feature.style.put(new Style().text.put(new TextStyle().text.put("MY MESSAGE").font.put(
-                        new Font().family.put(Font.Family.CourierNew).weight.put(Font.Weight.bold).size.put(24)).stroke
-                                .put(new StrokeStyle().color.put(new Color("green")).width.put(2f))).image.put(
-                                        new CircleStyle(5.0f).fill.put(new FillStyle().color.put(new Color("red")))));
-//                source.addFeature(feature);
-                
-                OlFeature feature2 = new OlFeature();
-                feature2.name.set("Point");
-                Coordinate coordinate2 = new Coordinate(0.0, 0.0);
-                feature2.labelPoint.set(coordinate2);
-                feature2.geometry.set(new PointGeometry(coordinate2));
-                feature2.style.put(new Style().text.put(new TextStyle().text.put("MY MESSAGE").font.put(
-                        new Font().family.put(Font.Family.CourierNew).weight.put(Font.Weight.bold).size.put(24)).stroke
-                                .put(new StrokeStyle().color.put(new Color("green")).width.put(2f))).image.put(
-                                        new CircleStyle(5.0f).fill.put(new FillStyle().color.put(new Color("red")))));
-                
-                source.addFeatures(feature, feature2);
-                //
-                // OlFeature feature2 = new OlFeature();
-                // feature2.name.set( "Polygon" );
-                // feature2.labelPoint.set( map.view.get().center.get() );
-                // feature2.geometry.set( new PolygonGeometry( new Coordinate(
-                // -12393642.369994164,
-                // 9388521.61821717 ),
-                // new Coordinate( -13351395.095766516, 7297102.400714279 ), new
-                // Coordinate(
-                // -10888602.372351898, 7688021.880621362 ), new Coordinate(
-                // -12393642.369994164, 9388521.61821717 ) ) );
-                // feature2.style.put( new Style().fill.put( new
-                // FillStyle().color.put( new Color(
-                // "red" ) ) ).stroke.put( new StrokeStyle().color.put( new
-                // Color( "blue" ) ).width
-                // .put( 10f ) ) );
-                // source.addFeatures( feature, feature2 );
+            public void widgetSelected( SelectionEvent e ) {
+
+                if (click == 0) {
+                    click = 1;
+                    masterFeature.style.put( nodeStyle );
+                    olFeatureGraph.addOrUpdateNode( masterFeature );
+
+                    masterFeature2.style.put( nodeStyle );
+                    olFeatureGraph.addOrUpdateNode( masterFeature2 );
+
+                    olFeatureGraph.addOrUpdateEdge( masterFeature, masterFeature2 );
+                }
+                else {
+                    final OlFeature feature2 = new OlFeature( null );
+                    feature2.style.put( nodeStyle );
+                    olFeatureGraph.addOrUpdateNode( feature2 );
+
+                    if (odd) {
+                        olFeatureGraph.addOrUpdateEdge( masterFeature, feature2 );
+                        odd = false;
+                    }
+                    else {
+                        olFeatureGraph.addOrUpdateEdge( masterFeature2, feature2 );
+                        odd = true;
+                    }
+                }
             }
-        });
+        } );
     }
 }

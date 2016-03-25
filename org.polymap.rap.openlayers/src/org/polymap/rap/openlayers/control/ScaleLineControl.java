@@ -64,17 +64,17 @@ public class ScaleLineControl
     }
 
 
-    public enum EVENT {
+    public enum Event {
         units
     }
 
 
-    public void addEventListener( EVENT event, OlEventListener listener ) {
+    public void addEventListener( Event event, OlEventListener listener ) {
         addEventListener( "change:" + event.name(), listener, null );
     }
 
 
-    public void removeEventListener( EVENT event, OlEventListener listener ) {
+    public void removeEventListener( Event event, OlEventListener listener ) {
         removeEventListener( "change:" + event.name(), listener );
     }
 }

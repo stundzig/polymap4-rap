@@ -41,7 +41,7 @@ public class ClickControlTab
     protected void createDemoControls( Composite parent ) {
         OlMap map = defaultMap( parent );
 
-        map.addEventListener(OlMap.EVENT.click, event -> {
+        map.addEventListener(OlMap.Event.click, event -> {
             JsonObject json = event.properties();
             JsonArray pixel = (JsonArray) json.get( "feature").asObject().get( "pixel" );
             JsonArray coordinate = (JsonArray) json.get( "feature").asObject().get( "coordinate" );
